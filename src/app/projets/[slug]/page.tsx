@@ -19,7 +19,7 @@ import {
 } from "@/lib/github";
 import { formatMonth, languageColors } from "@/lib/utils";
 
-export const revalidate = 3600;
+export const revalidate = 60;
 
 type Props = { params: Promise<{ slug: string }> };
 

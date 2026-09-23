@@ -42,7 +42,7 @@ async function notifyByEmail(m: { name: string; email: string; subject: string; 
   const { profile } = await getContent();
   const to = process.env.CONTACT_TO_EMAIL || profile.email;
   if (!to) return;
-  await fetch("https://api.resend.com/emails", {
+  const res = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -53,4 +53,6 @@ async function notifyByEmail(m: { name: string; email: string; subject: string; 
       text: `${m.name} <${m.email}>\n\n${m.message}`,
     }),
   });
+  // Resend répond en JSON même en cas d'erreur (clé invalide, destinataire non autorisé…).
+  if (!res.ok) throw new Error(`Resend ${res.status} : ${await res.text()}`);
 }

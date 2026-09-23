@@ -12,8 +12,8 @@ import { getContent } from "@/lib/content";
 import { buildProjects, getRepos, prettify, visibleRepos } from "@/lib/github";
 import { timeAgo } from "@/lib/utils";
 
-// Régénération au plus toutes les heures (et immédiatement après une modification dans /admin).
-export const revalidate = 3600;
+// Régénération au plus toutes les minutes (et dès la visite suivante après une modification dans /admin).
+export const revalidate = 60;
 
 export default async function HomePage() {
   const content = await getContent();
