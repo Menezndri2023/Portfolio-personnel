@@ -1,0 +1,199 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* ------------------------------------------------------------------ Tokens */
+
+:root {
+  --bg: #f7f6f2;
+  --bg-elev: #ffffff;
+  --card: #ffffff;
+  --fg: #121318;
+  --muted: #5d6170;
+  --subtle: #8a8e9b;
+  --line: rgb(18 19 24 / 0.09);
+  --line-strong: rgb(18 19 24 / 0.16);
+  --accent: #e14a12;
+  --accent-soft: rgb(225 74 18 / 0.1);
+  --accent-fg: #ffffff;
+  --ok: #138a52;
+  --grid: rgb(18 19 24 / 0.05);
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --bg: #0a0b0f;
+  --bg-elev: #111319;
+  --card: #14161d;
+  --fg: #eceef3;
+  --muted: #9aa0ae;
+  --subtle: #6b7180;
+  --line: rgb(255 255 255 / 0.08);
+  --line-strong: rgb(255 255 255 / 0.15);
+  --accent: #ff6a33;
+  --accent-soft: rgb(255 106 51 / 0.12);
+  --accent-fg: #0a0b0f;
+  --ok: #34d399;
+  --grid: rgb(255 255 255 / 0.035);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-elev: var(--bg-elev);
+  --color-card: var(--card);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-fg: var(--accent-fg);
+  --color-ok: var(--ok);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-grotesk), var(--font-inter), ui-sans-serif, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, "SFMono-Regular", monospace;
+
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-blink: blink 1s step-end infinite;
+  --animate-pulse-dot: pulse-dot 2s ease-out infinite;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes blink {
+  50% { opacity: 0; }
+}
+@keyframes pulse-dot {
+  0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--ok) 55%, transparent); }
+  100% { box-shadow: 0 0 0 10px transparent; }
+}
+
+/* ------------------------------------------------------------------ Base */
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-fg);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ------------------------------------------------------------------ Utilitaires */
+
+@utility container-page {
+  width: 100%;
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+  @media (width >= 48rem) {
+    padding-inline: 2rem;
+  }
+}
+
+@utility bg-grid {
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+@utility text-balance {
+  text-wrap: balance;
+}
+
+@utility mask-fade-x {
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+}
+
+@utility mask-fade-b {
+  mask-image: linear-gradient(180deg, #000 55%, transparent);
+}
+
+/* Champs de formulaire partagés (site + admin) */
+@utility field {
+  width: 100%;
+  border-radius: 0.75rem;
+  border: 1px solid var(--line-strong);
+  background: var(--bg-elev);
+  padding: 0.65rem 0.85rem;
+  font-size: 0.925rem;
+  color: var(--fg);
+  transition: border-color 0.15s, box-shadow 0.15s;
+  &::placeholder { color: var(--subtle); }
+  &:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+}
+
+/* Rendu Markdown (descriptions de projets, README GitHub) */
+.markdown {
+  --tw-prose-body: var(--muted);
+  --tw-prose-headings: var(--fg);
+  --tw-prose-links: var(--accent);
+  --tw-prose-bold: var(--fg);
+  --tw-prose-bullets: var(--accent);
+  --tw-prose-counters: var(--subtle);
+  --tw-prose-code: var(--fg);
+  --tw-prose-pre-bg: var(--bg-elev);
+  --tw-prose-pre-code: var(--fg);
+  --tw-prose-quotes: var(--fg);
+  --tw-prose-quote-borders: var(--accent);
+  --tw-prose-hr: var(--line);
+  --tw-prose-th-borders: var(--line-strong);
+  --tw-prose-td-borders: var(--line);
+}
+.markdown pre {
+  border: 1px solid var(--line);
+}
+.markdown :where(code):not(pre code) {
+  background: var(--accent-soft);
+  padding: 0.1em 0.35em;
+  border-radius: 0.35em;
+  font-weight: 500;
+}
+.markdown :where(code):not(pre code)::before,
+.markdown :where(code):not(pre code)::after {
+  content: none;
+}
+.markdown table {
+  display: block;
+  overflow-x: auto;
+}
+.markdown img {
+  border-radius: 0.75rem;
+  display: inline-block;
+}

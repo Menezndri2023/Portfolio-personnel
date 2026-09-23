@@ -1,0 +1,1001 @@
+{
+  "profile": {
+    "name": "Manassé N'dri N'guessan",
+    "shortName": "Manassé N'dri",
+    "title": "Développeur Fullstack JavaScript",
+    "rotatingRoles": [
+      "React.js",
+      "Next.js",
+      "Node.js",
+      "des API REST sécurisées"
+    ],
+    "headline": "Je conçois des produits web complets, de l'interface à l'API.",
+    "intro": "Développeur fullstack basé au Maroc, je construis des applications React / Next.js et des API Node.js sécurisées — pensées pour de vrais utilisateurs et livrées en production.",
+    "bio": "Tout a commencé en 2023 sur les bancs de GOMYCODE, un Demo Day à la clé. Depuis, je livre des plateformes complètes : marketplace automobile multi-pays, covoiturage avec cartographie interactive, sites institutionnels multilingues. Je pars d'un besoin, je modélise les données, je construis l'API et l'interface, et je mène le tout jusqu'à la mise en ligne.\n\nFormé à la sécurité numérique par l'ANSSI (SecNumacadémie), j'intègre la sécurité dès la conception : authentification JWT, gestion des rôles, validation systématique des entrées. Mes années en relation client m'ont appris l'essentiel — un produit se juge du point de vue de celui qui l'utilise.\n\nJe m'approprie vite un code existant, je documente ce que je fais et j'aime travailler main dans la main avec le produit et le design.",
+    "location": "Maroc",
+    "email": "ndrimanasse437@gmail.com",
+    "phone": "",
+    "showPhone": false,
+    "available": true,
+    "availabilityLabel": "Disponible pour un poste ou une mission",
+    "photo": "/images/moi.png",
+    "photoCaption": "Demo Day GOMYCODE — là où tout a commencé.",
+    "avatar": "/images/avatar.png",
+    "cvUrl": "",
+    "socials": {
+      "github": "https://github.com/Menezndri2023",
+      "linkedin": "https://www.linkedin.com/in/manass%C3%A9-ndri-959b80263/",
+      "twitter": "",
+      "website": ""
+    },
+    "languages": [
+      {
+        "name": "Français",
+        "level": "Natif"
+      },
+      {
+        "name": "Anglais",
+        "level": "Technique"
+      }
+    ],
+    "softSkills": [
+      "Adaptabilité aux priorités changeantes",
+      "Autonomie et curiosité",
+      "Forte capacité d'apprentissage",
+      "Résolution de problèmes",
+      "Travail en équipe produit / design / dev",
+      "Communication claire",
+      "Sens de l'utilisateur"
+    ]
+  },
+  "services": [
+    {
+      "id": "svc-fullstack",
+      "title": "Applications web fullstack",
+      "description": "Du schéma de données à l'écran : React et Next.js côté client, Node.js et Express côté serveur, MongoDB pour la persistance.",
+      "icon": "layers"
+    },
+    {
+      "id": "svc-api",
+      "title": "API REST sécurisées",
+      "description": "Authentification JWT, rôles et permissions, validation des entrées : les bonnes pratiques SSI appliquées dès la première route.",
+      "icon": "shield"
+    },
+    {
+      "id": "svc-ui",
+      "title": "Interfaces responsives",
+      "description": "Des interfaces rapides et lisibles sur mobile comme sur desktop, construites composant par composant.",
+      "icon": "layout"
+    },
+    {
+      "id": "svc-legacy",
+      "title": "Reprise et évolution de code",
+      "description": "Débogage, refactorisation, montée de version : je reprends un projet existant et je le fais avancer sans rien casser.",
+      "icon": "wrench"
+    }
+  ],
+  "skills": [
+    {
+      "id": "sk-front",
+      "title": "Front-end",
+      "description": "Interfaces modernes, accessibles et responsives.",
+      "icon": "monitor",
+      "items": [
+        "React.js",
+        "Next.js",
+        "JavaScript ES6+",
+        "HTML5 / CSS3",
+        "Responsive design"
+      ],
+      "learning": false
+    },
+    {
+      "id": "sk-back",
+      "title": "Back-end",
+      "description": "API robustes et données bien modélisées.",
+      "icon": "server",
+      "items": [
+        "Node.js",
+        "Express.js",
+        "API REST",
+        "Authentification JWT",
+        "MongoDB",
+        "Mongoose"
+      ],
+      "learning": false
+    },
+    {
+      "id": "sk-tools",
+      "title": "Outils & pratiques",
+      "description": "Ce qui rend un projet maintenable dans la durée.",
+      "icon": "git",
+      "items": [
+        "Git & GitHub",
+        "Débogage",
+        "Architecture web",
+        "Sécurité numérique (SSI)"
+      ],
+      "learning": false
+    },
+    {
+      "id": "sk-learning",
+      "title": "En montée en compétence",
+      "description": "Ce que j'intègre actuellement à mes projets.",
+      "icon": "sparkles",
+      "items": [
+        "TypeScript",
+        "Tailwind CSS",
+        "Prisma",
+        "PostgreSQL",
+        "MySQL"
+      ],
+      "learning": true
+    }
+  ],
+  "experiences": [
+    {
+      "id": "exp-fullstack",
+      "role": "Développeur Fullstack",
+      "company": "Projets indépendants",
+      "location": "Maroc · à distance",
+      "period": "2024 — aujourd'hui",
+      "current": true,
+      "summary": "Conception et livraison de plateformes web complètes, du cadrage fonctionnel au déploiement.",
+      "highlights": [
+        "Marketplace automobile (vente, location, import/export) : API Node.js / Express, MongoDB, espaces vendeur et admin",
+        "Plateforme de covoiturage : authentification JWT, gestion des rôles, réservations et carte interactive",
+        "Recherche avancée et filtres multicritères côté API et interface",
+        "Sécurisation des routes, validation des entrées, refactorisation continue du code"
+      ],
+      "tags": [
+        "React.js",
+        "Next.js",
+        "Node.js",
+        "Express",
+        "MongoDB",
+        "JWT"
+      ]
+    },
+    {
+      "id": "exp-audit",
+      "role": "Prestataire d'audit de sécurité",
+      "company": "Missions de prestation",
+      "location": "",
+      "period": "",
+      "current": false,
+      "summary": "Évaluation de la sécurité de systèmes et accompagnement vers les bonnes pratiques.",
+      "highlights": [
+        "Réalisation d'audits de sécurité",
+        "Recommandations de bonnes pratiques adaptées à chaque structure"
+      ],
+      "tags": [
+        "SSI",
+        "Audit",
+        "Bonnes pratiques"
+      ]
+    },
+    {
+      "id": "exp-support",
+      "role": "Relation client & support utilisateur",
+      "company": "Ecom by CS",
+      "location": "Abidjan, Côte d'Ivoire",
+      "period": "2023",
+      "current": false,
+      "summary": "Accompagnement des clients par téléphone, e-mail et chat, avec outils CRM.",
+      "highlights": [
+        "Traitement des demandes et réclamations, résolution de problèmes utilisateurs",
+        "Communication orale et écrite, gestion des priorités et du stress"
+      ],
+      "tags": [
+        "Relation client",
+        "CRM",
+        "Communication"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "id": "edu-gomycode",
+      "title": "Développeur Full-Stack JavaScript",
+      "school": "GOMYCODE",
+      "period": "Juil. 2023 — Fév. 2024",
+      "highlights": [
+        "React.js, JavaScript ES6+, Node.js, Express.js, API REST",
+        "MongoDB (NoSQL), Git & GitHub, travail collaboratif sur projets"
+      ]
+    },
+    {
+      "id": "edu-anssi",
+      "title": "Sécurité numérique",
+      "school": "SecNumacadémie — ANSSI (France)",
+      "period": "",
+      "highlights": [
+        "Panorama de la sécurité des systèmes d'information",
+        "Sécurité de l'authentification",
+        "Sécurité sur Internet",
+        "Sécurité du poste de travail et nomadisme"
+      ]
+    }
+  ],
+  "projects": [],
+  "repoOverrides": {
+    "vit-auto": {
+      "title": "VIT AUTO",
+      "summary": "Marketplace automobile internationale : vente, location et import/export de véhicules, sur le web et en application mobile.",
+      "description": "VIT AUTO réunit acheteurs, vendeurs et loueurs de véhicules sur une même plateforme, pensée pour plusieurs pays, devises et langues (FR / EN / AR).\n\n### Ce que j'ai construit\n\n- **API REST Node.js / Express** découpée par domaine métier (contrôleur, service, routes)\n- **Authentification JWT** avec rôles vendeur et administrateur, espaces dédiés et modération des annonces\n- **Recherche avancée** et filtres multicritères côté API et côté interface\n- **Tableaux de bord** et statistiques pour les vendeurs et l'administration\n- **Applications iOS et Android** à partir de la même base React grâce à Capacitor\n- Tâches asynchrones (Redis / BullMQ), validation des entrées, rate limiting\n\n### Stack\n\nReact 19 + Vite, Node.js / Express, MongoDB, Redis, Capacitor — déployé sur Vercel et Railway.",
+      "tags": [
+        "React",
+        "Vite",
+        "Node.js",
+        "Express",
+        "MongoDB",
+        "JWT",
+        "Capacitor",
+        "Redis"
+      ],
+      "demoUrl": "https://vit-auto.com",
+      "featured": true,
+      "showReadme": false
+    },
+    "NationalSecurityProgram": {
+      "title": "PSN — Programme de Sécurité Nationale",
+      "summary": "Infrastructure de gestion des urgences et de coordination des secours conçue pour les États africains.",
+      "description": "PSN est une infrastructure de type *Computer-Aided Dispatch* : signalement citoyen, centre de commandement, application terrain, coordination médicale, gestion de crise et analytique, avec des accès RBAC stricts et une supervision humaine obligatoire.",
+      "tags": [
+        "TypeScript",
+        "NestJS",
+        "PostgreSQL",
+        "Redis",
+        "Kafka",
+        "Elasticsearch",
+        "Docker"
+      ],
+      "featured": true
+    },
+    "vit-global-technologies": {
+      "title": "VIT Global Technologies",
+      "summary": "Site officiel multilingue (FR / EN / AR) avec back-office, prise de rendez-vous, devis et candidatures.",
+      "tags": [
+        "Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Prisma",
+        "next-intl"
+      ],
+      "featured": true
+    },
+    "covApp": {
+      "title": "CovApp — Covoiturage",
+      "summary": "Plateforme de covoiturage : publication de trajets, réservation de places et carte interactive, sur une API sécurisée par JWT.",
+      "description": "CovApp met en relation conducteurs et passagers.\n\n### Fonctionnalités\n\n- Inscription, connexion et **authentification JWT**, routes privées côté client\n- **Publication de trajets**, recherche filtrée et réservation de places\n- Suivi de ses réservations et gestion du profil\n- **Carte interactive** des trajets avec Leaflet\n- Interface responsive mobile et desktop\n\n### Architecture\n\nFront-end React (React Router, Axios) et back-end Node.js / Express organisé en contrôleurs, middlewares et routes.",
+      "tags": [
+        "React",
+        "Node.js",
+        "Express",
+        "JWT",
+        "Leaflet",
+        "React Router"
+      ],
+      "pinned": true,
+      "featured": true,
+      "showReadme": false
+    },
+    "african-foods": {
+      "title": "African Foods",
+      "summary": "Application React de découverte de la cuisine africaine : plats classés par pays, panier et géolocalisation.",
+      "description": "African Foods met la richesse culinaire du continent à portée de clic : mafé sénégalais, ndolé camerounais, attiéké ivoirien… Les plats sont classés par pays, ajoutables au panier, avec une recherche de restaurants à proximité.\n\nUn de mes premiers projets React : composants, routing et CSS Modules.",
+      "tags": [
+        "React",
+        "React Router",
+        "CSS Modules"
+      ],
+      "pinned": true,
+      "showReadme": false,
+      "image": "/images/projects/african-foods.png"
+    },
+    "family-shopping": {
+      "title": "Family Shopping",
+      "summary": "Boutique en ligne React pour toute la famille : catalogues homme, femme et enfant, panier et parcours d'achat.",
+      "tags": [
+        "React",
+        "E-commerce"
+      ],
+      "showReadme": false,
+      "image": "/images/projects/family-shopping.png"
+    },
+    "memo": {
+      "hidden": true
+    },
+    "auto-market": {
+      "hidden": true
+    },
+    "react-portfolio": {
+      "hidden": true
+    },
+    "nouveau-portfolio": {
+      "hidden": true
+    },
+    "portfolio_projet": {
+      "hidden": true
+    },
+    "Mon_portfolio": {
+      "hidden": true
+    },
+    "projet-africanFoods": {
+      "hidden": true
+    }
+  },
+  "settings": {
+    "githubUsername": "Menezndri2023",
+    "githubLimit": 5,
+    "excludeForks": true,
+    "seoTitle": "Manassé N'dri — Développeur Fullstack JavaScript",
+    "seoDescription": "Développeur fullstack React.js, Next.js et Node.js basé au Maroc. Applications web complètes, API REST sécurisées, projets livrés en production.",
+    "siteUrl": ""
+  },
+  "githubSnapshot": {
+    "syncedAt": "2026-09-23T14:28:44.725Z",
+    "repos": [
+      {
+        "name": "vit-auto",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/vit-auto",
+        "homepage": "https://vit-auto.vercel.app",
+        "language": "JavaScript",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 11120,
+        "pushedAt": "2026-09-22T17:14:07Z",
+        "createdAt": "2026-03-18T15:10:58Z"
+      },
+      {
+        "name": "NationalSecurityProgram",
+        "description": "Programme de sécurité nationale _PSN",
+        "url": "https://github.com/Menezndri2023/NationalSecurityProgram",
+        "homepage": "",
+        "language": "TypeScript",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 887,
+        "pushedAt": "2026-08-04T10:51:44Z",
+        "createdAt": "2026-08-01T22:43:39Z"
+      },
+      {
+        "name": "vit-global-technologies",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/vit-global-technologies",
+        "homepage": "",
+        "language": "TypeScript",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 309,
+        "pushedAt": "2026-08-01T10:49:56Z",
+        "createdAt": "2026-07-25T10:00:51Z"
+      },
+      {
+        "name": "auto-market",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/auto-market",
+        "homepage": "",
+        "language": "",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 0,
+        "pushedAt": "2025-07-31T01:09:05Z",
+        "createdAt": "2025-07-31T01:09:05Z"
+      },
+      {
+        "name": "memo",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/memo",
+        "homepage": "",
+        "language": "HTML",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 68,
+        "pushedAt": "2025-07-30T21:58:53Z",
+        "createdAt": "2025-07-29T21:43:56Z"
+      },
+      {
+        "name": "covApp",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/covApp",
+        "homepage": "",
+        "language": "JavaScript",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 4431,
+        "pushedAt": "2025-05-09T00:29:42Z",
+        "createdAt": "2025-05-04T20:41:53Z"
+      },
+      {
+        "name": "react-portfolio",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/react-portfolio",
+        "homepage": "",
+        "language": "JavaScript",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 2964,
+        "pushedAt": "2025-05-01T17:00:42Z",
+        "createdAt": "2025-05-01T00:08:58Z"
+      },
+      {
+        "name": "family-shopping",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/family-shopping",
+        "homepage": "",
+        "language": "JavaScript",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 7987,
+        "pushedAt": "2025-04-29T14:40:27Z",
+        "createdAt": "2025-04-19T23:33:13Z"
+      },
+      {
+        "name": "family-shop",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/family-shop",
+        "homepage": "",
+        "language": "JavaScript",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 173,
+        "pushedAt": "2025-04-19T23:09:57Z",
+        "createdAt": "2025-04-19T21:45:09Z"
+      },
+      {
+        "name": "nouveau-portfolio",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/nouveau-portfolio",
+        "homepage": "",
+        "language": "JavaScript",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 5725,
+        "pushedAt": "2025-04-18T01:51:40Z",
+        "createdAt": "2025-04-11T13:39:13Z"
+      },
+      {
+        "name": "projet-africanFoods",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/projet-africanFoods",
+        "homepage": "",
+        "language": "",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 0,
+        "pushedAt": "2024-02-19T15:38:39Z",
+        "createdAt": "2024-02-19T15:38:38Z"
+      },
+      {
+        "name": "african-foods",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/african-foods",
+        "homepage": "",
+        "language": "JavaScript",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 1902,
+        "pushedAt": "2024-01-08T16:10:31Z",
+        "createdAt": "2024-01-06T12:18:43Z"
+      },
+      {
+        "name": "portfolio_projet",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/portfolio_projet",
+        "homepage": "",
+        "language": "JavaScript",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 1366,
+        "pushedAt": "2023-12-25T19:30:29Z",
+        "createdAt": "2023-12-25T17:05:39Z"
+      },
+      {
+        "name": "lab_phase_projet",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/lab_phase_projet",
+        "homepage": "",
+        "language": "JavaScript",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 4712,
+        "pushedAt": "2023-12-18T11:11:22Z",
+        "createdAt": "2023-12-07T10:46:40Z"
+      },
+      {
+        "name": "backend_lab_phase",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/backend_lab_phase",
+        "homepage": "",
+        "language": "",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 0,
+        "pushedAt": "2023-12-11T09:41:32Z",
+        "createdAt": "2023-12-11T09:41:32Z"
+      },
+      {
+        "name": "mongooseprojet",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/mongooseprojet",
+        "homepage": "",
+        "language": "JavaScript",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 3413,
+        "pushedAt": "2023-11-30T09:05:31Z",
+        "createdAt": "2023-11-30T09:03:54Z"
+      },
+      {
+        "name": "projet-mongodb",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/projet-mongodb",
+        "homepage": "",
+        "language": "",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 75,
+        "pushedAt": "2023-11-28T16:30:38Z",
+        "createdAt": "2023-11-24T20:34:14Z"
+      },
+      {
+        "name": "projet-express",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/projet-express",
+        "homepage": "",
+        "language": "HTML",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 46,
+        "pushedAt": "2023-11-27T11:57:51Z",
+        "createdAt": "2023-11-21T16:02:39Z"
+      },
+      {
+        "name": "projet-nodejs",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/projet-nodejs",
+        "homepage": "",
+        "language": "JavaScript",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 40,
+        "pushedAt": "2023-11-23T12:12:13Z",
+        "createdAt": "2023-11-19T14:45:08Z"
+      },
+      {
+        "name": "reactlab",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/reactlab",
+        "homepage": "",
+        "language": "JavaScript",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 254,
+        "pushedAt": "2023-11-21T16:05:13Z",
+        "createdAt": "2023-11-21T13:24:09Z"
+      },
+      {
+        "name": "projet-api",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/projet-api",
+        "homepage": "",
+        "language": "JavaScript",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 40,
+        "pushedAt": "2023-11-20T10:27:36Z",
+        "createdAt": "2023-11-16T11:32:44Z"
+      },
+      {
+        "name": "react-router",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/react-router",
+        "homepage": "",
+        "language": "JavaScript",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 40,
+        "pushedAt": "2023-11-16T10:49:43Z",
+        "createdAt": "2023-11-09T09:52:26Z"
+      },
+      {
+        "name": "image-generateur",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/image-generateur",
+        "homepage": "",
+        "language": "JavaScript",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 42,
+        "pushedAt": "2023-11-14T16:40:50Z",
+        "createdAt": "2023-11-07T16:14:54Z"
+      },
+      {
+        "name": "emojiGenerateur",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/emojiGenerateur",
+        "homepage": "",
+        "language": "CSS",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 38,
+        "pushedAt": "2023-11-04T20:53:08Z",
+        "createdAt": "2023-11-04T20:48:27Z"
+      },
+      {
+        "name": "rebus-kyu",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/rebus-kyu",
+        "homepage": "",
+        "language": "JavaScript",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 39,
+        "pushedAt": "2023-10-29T17:14:22Z",
+        "createdAt": "2023-10-26T09:59:03Z"
+      },
+      {
+        "name": "emple-Projet",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/emple-Projet",
+        "homepage": "",
+        "language": "",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 0,
+        "pushedAt": "2023-10-29T13:49:07Z",
+        "createdAt": "2023-10-29T13:45:31Z"
+      },
+      {
+        "name": "dark-mode",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/dark-mode",
+        "homepage": "",
+        "language": "JavaScript",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 282,
+        "pushedAt": "2023-10-26T09:50:13Z",
+        "createdAt": "2023-10-24T16:06:18Z"
+      },
+      {
+        "name": "react-code-render",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/react-code-render",
+        "homepage": "",
+        "language": "JavaScript",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 282,
+        "pushedAt": "2023-10-24T15:56:40Z",
+        "createdAt": "2023-10-24T15:50:24Z"
+      },
+      {
+        "name": "projet-Es6",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/projet-Es6",
+        "homepage": "",
+        "language": "HTML",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 3,
+        "pushedAt": "2023-10-23T12:08:48Z",
+        "createdAt": "2023-10-17T12:32:15Z"
+      },
+      {
+        "name": "projetCard",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/projetCard",
+        "homepage": "",
+        "language": "HTML",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 172,
+        "pushedAt": "2023-10-09T10:15:25Z",
+        "createdAt": "2023-10-05T20:04:03Z"
+      },
+      {
+        "name": "toDoList",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/toDoList",
+        "homepage": "",
+        "language": "HTML",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 2,
+        "pushedAt": "2023-10-05T09:03:20Z",
+        "createdAt": "2023-10-03T10:33:53Z"
+      },
+      {
+        "name": "ProjetCompteur",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/ProjetCompteur",
+        "homepage": "",
+        "language": "JavaScript",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 1,
+        "pushedAt": "2023-10-03T10:28:04Z",
+        "createdAt": "2023-10-02T09:22:05Z"
+      },
+      {
+        "name": "conception_recursion",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/conception_recursion",
+        "homepage": "",
+        "language": "",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 0,
+        "pushedAt": "2023-09-14T11:51:49Z",
+        "createdAt": "2023-09-14T11:36:34Z"
+      },
+      {
+        "name": "pureCss",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/pureCss",
+        "homepage": "",
+        "language": "",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 0,
+        "pushedAt": "2023-09-12T14:26:52Z",
+        "createdAt": "2023-09-12T14:25:02Z"
+      },
+      {
+        "name": "css_2",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/css_2",
+        "homepage": "",
+        "language": "HTML",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 313,
+        "pushedAt": "2023-09-11T11:27:19Z",
+        "createdAt": "2023-09-04T12:07:28Z"
+      },
+      {
+        "name": "PriceTableStarter",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/PriceTableStarter",
+        "homepage": "",
+        "language": "HTML",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 162,
+        "pushedAt": "2023-09-07T09:06:05Z",
+        "createdAt": "2023-09-05T13:12:48Z"
+      },
+      {
+        "name": "travail_css",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/travail_css",
+        "homepage": "",
+        "language": "CSS",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 1,
+        "pushedAt": "2023-08-29T15:17:46Z",
+        "createdAt": "2023-08-28T13:01:04Z"
+      },
+      {
+        "name": "Auberge.com",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/Auberge.com",
+        "homepage": "",
+        "language": "",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 0,
+        "pushedAt": "2023-08-23T17:14:14Z",
+        "createdAt": "2023-08-23T17:11:08Z"
+      },
+      {
+        "name": "Exercice_Css",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/Exercice_Css",
+        "homepage": "",
+        "language": "",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 0,
+        "pushedAt": "2023-08-22T14:48:12Z",
+        "createdAt": "2023-08-22T14:42:13Z"
+      },
+      {
+        "name": "Mon_essai",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/Mon_essai",
+        "homepage": "",
+        "language": "HTML",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 94,
+        "pushedAt": "2023-08-22T13:29:03Z",
+        "createdAt": "2023-08-18T10:21:49Z"
+      },
+      {
+        "name": "Mon_portfolio",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/Mon_portfolio",
+        "homepage": "",
+        "language": "",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 0,
+        "pushedAt": "2023-08-20T17:31:23Z",
+        "createdAt": "2023-08-20T17:23:53Z"
+      },
+      {
+        "name": "GOMYCODE",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/GOMYCODE",
+        "homepage": "",
+        "language": "HTML",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 6,
+        "pushedAt": "2023-08-17T10:35:32Z",
+        "createdAt": "2023-08-17T09:31:10Z"
+      },
+      {
+        "name": "learn_git",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/learn_git",
+        "homepage": "",
+        "language": "",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 0,
+        "pushedAt": "2023-08-15T13:21:07Z",
+        "createdAt": "2023-08-12T11:53:11Z"
+      },
+      {
+        "name": "myFirstRepo",
+        "description": "",
+        "url": "https://github.com/Menezndri2023/myFirstRepo",
+        "homepage": "",
+        "language": "",
+        "topics": [],
+        "stars": 0,
+        "forks": 0,
+        "fork": false,
+        "archived": false,
+        "size": 0,
+        "pushedAt": "2023-08-10T12:29:50Z",
+        "createdAt": "2023-08-10T12:14:50Z"
+      }
+    ]
+  }
+}
