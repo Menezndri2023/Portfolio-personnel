@@ -1,3 +1,5 @@
+import type { Translations } from "./translations";
+
 /**
  * Modèle de contenu du portfolio.
  * Tout ce qui est décrit ici est éditable depuis /admin et persisté par le store
@@ -131,6 +133,8 @@ export type SiteContent = {
   repoOverrides: Record<string, RepoOverride>;
   settings: Settings;
   githubSnapshot: RepoSnapshot | null;
+  /** Version anglaise des textes (surcouche du français, voir lib/translations.ts). */
+  translations: { en: Translations };
 };
 
 export type ContentSection = keyof SiteContent;
@@ -179,4 +183,6 @@ export type Message = {
   message: string;
   createdAt: string;
   read: boolean;
+  /** Langue de la page depuis laquelle le message a été envoyé. */
+  lang?: "fr" | "en";
 };

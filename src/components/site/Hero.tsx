@@ -1,4 +1,5 @@
 import { ArrowDown, ArrowUpRight, Download, MapPin } from "lucide-react";
+import { getDictionary, type Locale } from "@/lib/i18n";
 import type { Profile } from "@/lib/types";
 import { GithubIcon, LinkedinIcon, XIcon } from "../ui/Icon";
 import { HeroTerminal, type TerminalCommit } from "./HeroTerminal";
@@ -6,14 +7,17 @@ import { RotatingWord } from "./RotatingWord";
 import { Spotlight } from "./Spotlight";
 
 export function Hero({
+  locale,
   profile,
   commits,
   stack,
 }: {
+  locale: Locale;
   profile: Profile;
   commits: TerminalCommit[];
   stack: Record<string, string[]>;
 }) {
+  const t = getDictionary(locale).hero;
   const socials = [
     { href: profile.socials.github, label: "GitHub", Icon: GithubIcon },
     { href: profile.socials.linkedin, label: "LinkedIn", Icon: LinkedinIcon },
@@ -43,7 +47,7 @@ export function Hero({
           </h1>
 
           <p className="mt-6 text-lg text-muted md:text-xl">
-            Spécialisé en <RotatingWord words={profile.rotatingRoles} />
+            {t.specialized} <RotatingWord words={profile.rotatingRoles} />
           </p>
 
           <p className="mt-4 max-w-xl leading-relaxed text-muted">{profile.intro}</p>
@@ -53,7 +57,7 @@ export function Hero({
               href="#projets"
               className="group inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-accent-fg shadow-[0_8px_30px_-8px_var(--accent)] transition hover:-translate-y-0.5"
             >
-              Voir mes projets
+              {t.seeProjects}
               <ArrowDown className="size-4 transition group-hover:translate-y-0.5" />
             </a>
             {profile.cvUrl ? (
@@ -63,14 +67,14 @@ export function Hero({
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-full border border-line-strong px-6 py-3 text-sm font-medium transition hover:border-fg"
               >
-                <Download className="size-4" /> Télécharger mon CV
+                <Download className="size-4" /> {t.downloadCv}
               </a>
             ) : (
               <a
                 href="#contact"
                 className="inline-flex items-center gap-2 rounded-full border border-line-strong px-6 py-3 text-sm font-medium transition hover:border-fg"
               >
-                Me contacter <ArrowUpRight className="size-4" />
+                {t.contactMe} <ArrowUpRight className="size-4" />
               </a>
             )}
           </div>
@@ -95,7 +99,7 @@ export function Hero({
           </div>
         </div>
 
-        <HeroTerminal name={profile.shortName} title={profile.title} commits={commits} stack={stack} />
+        <HeroTerminal recentLabel={t.recentRepos} name={profile.shortName} title={profile.title} commits={commits} stack={stack} />
       </div>
     </section>
   );

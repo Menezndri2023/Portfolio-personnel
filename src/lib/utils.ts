@@ -1,3 +1,5 @@
+import { getDictionary, type Locale } from "./i18n";
+
 export function cn(...classes: (string | false | null | undefined)[]) {
   return classes.filter(Boolean).join(" ");
 }
@@ -6,22 +8,21 @@ export function uid(prefix = "id") {
   return `${prefix}-${Math.random().toString(36).slice(2, 9)}`;
 }
 
-const dateFmt = new Intl.DateTimeFormat("fr-FR", { month: "short", year: "numeric" });
-
-export function formatMonth(iso: string) {
-  return iso ? dateFmt.format(new Date(iso)) : "";
+export function formatMonth(iso: string, locale: Locale = "fr") {
+  if (!iso) return "";
+  return new Intl.DateTimeFormat(getDictionary(locale).dateLocale, { month: "short", year: "numeric" }).format(new Date(iso));
 }
 
-export function timeAgo(iso: string) {
+export function timeAgo(iso: string, locale: Locale = "fr") {
   if (!iso) return "";
+  const t = getDictionary(locale).time;
   const days = Math.floor((Date.now() - new Date(iso).getTime()) / 86_400_000);
-  if (days < 1) return "aujourd'hui";
-  if (days < 2) return "hier";
-  if (days < 30) return `il y a ${days} jours`;
+  if (days < 1) return t.today;
+  if (days < 2) return t.yesterday;
+  if (days < 30) return t.days(days);
   const months = Math.floor(days / 30);
-  if (months < 12) return `il y a ${months} mois`;
-  const years = Math.floor(months / 12);
-  return `il y a ${years} an${years > 1 ? "s" : ""}`;
+  if (months < 12) return t.months(months);
+  return t.years(Math.floor(months / 12));
 }
 
 /** Couleurs officielles GitHub des langages les plus courants. */

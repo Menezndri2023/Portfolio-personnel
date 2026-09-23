@@ -1,23 +1,33 @@
 import { Briefcase, GraduationCap } from "lucide-react";
+import { getDictionary, type Locale } from "@/lib/i18n";
 import type { Education, Experience } from "@/lib/types";
 import { Reveal } from "../ui/Reveal";
 import { SectionHeading } from "../ui/SectionHeading";
 
-export function Journey({ experiences, education }: { experiences: Experience[]; education: Education[] }) {
+export function Journey({
+  locale,
+  experiences,
+  education,
+}: {
+  locale: Locale;
+  experiences: Experience[];
+  education: Education[];
+}) {
+  const t = getDictionary(locale).journey;
   return (
     <section id="parcours" className="py-24 md:py-32">
       <div className="container-page">
         <SectionHeading
           index="04"
-          eyebrow="Parcours"
-          title="Expériences et formation."
-          lead="Du support client à l'architecture d'API : chaque étape a façonné ma manière de construire."
+          eyebrow={t.eyebrow}
+          title={t.title}
+          lead={t.lead}
         />
 
         <div className="grid gap-16 lg:grid-cols-[1.35fr_1fr]">
           <div>
             <h3 className="mb-8 flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-subtle">
-              <Briefcase className="size-4 text-accent" /> Expériences
+              <Briefcase className="size-4 text-accent" /> {t.experiences}
             </h3>
             <ol className="relative space-y-10 border-l border-line pl-8">
               {experiences.map((e, i) => (
@@ -32,7 +42,7 @@ export function Journey({ experiences, education }: { experiences: Experience[];
                       {e.period && <span className="font-mono text-xs text-accent">{e.period}</span>}
                       {e.current && (
                         <span className="rounded-full bg-accent-soft px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-accent">
-                          En cours
+                          {t.current}
                         </span>
                       )}
                     </div>
@@ -68,7 +78,7 @@ export function Journey({ experiences, education }: { experiences: Experience[];
 
           <div>
             <h3 className="mb-8 flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-subtle">
-              <GraduationCap className="size-4 text-accent" /> Formation
+              <GraduationCap className="size-4 text-accent" /> {t.education}
             </h3>
             <div className="space-y-4">
               {education.map((ed, i) => (

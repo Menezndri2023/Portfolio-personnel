@@ -4,24 +4,29 @@ import { AnimatePresence, motion } from "motion/react";
 import { ArrowUpRight, ChevronDown, Pin, Search, Star } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { getDictionary, localePath, type Locale } from "@/lib/i18n";
 import type { ProjectView } from "@/lib/types";
 import { cn, formatMonth, languageColors } from "@/lib/utils";
 import { GithubIcon } from "../ui/Icon";
 import { ProjectCover } from "./ProjectCover";
 
-const ALL = "Tous";
+/** Valeur interne du filtre « tous les projets » (le libellé vient du dictionnaire). */
+const ALL = "*";
 
 export function Projects({
+  locale,
   showcase,
   archive,
   githubUrl,
   live,
 }: {
+  locale: Locale;
   showcase: ProjectView[];
   archive: ProjectView[];
   githubUrl: string;
   live: boolean;
 }) {
+  const t = getDictionary(locale).projects;
   const [filter, setFilter] = useState(ALL);
   const [showArchive, setShowArchive] = useState(false);
   const [query, setQuery] = useState("");
@@ -46,7 +51,7 @@ export function Projects({
   return (
     <>
       <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
-        <div className="flex flex-wrap gap-2" role="group" aria-label="Filtrer par technologie">
+        <div className="flex flex-wrap gap-2" role="group" aria-label={t.filterAria}>
           {filters.map((f) => (
             <button
               key={f}
@@ -60,13 +65,13 @@ export function Projects({
                   : "border-line text-muted hover:border-line-strong hover:text-fg",
               )}
             >
-              {f}
+              {f === ALL ? t.all : f}
             </button>
           ))}
         </div>
         <p className="flex items-center gap-2 font-mono text-xs text-subtle">
           <span className={cn("size-1.5 rounded-full", live ? "bg-ok" : "bg-subtle")} />
-          {live ? "Synchronisé avec GitHub" : "Données GitHub en cache"}
+          {live ? t.live : t.cached}
         </p>
       </div>
 
@@ -84,7 +89,7 @@ export function Projects({
                 transition={{ duration: 0.3 }}
                 className={cn(big && "md:col-span-2 lg:row-span-2")}
               >
-                <ProjectCard project={p} big={big} />
+                <ProjectCard locale={locale} project={p} big={big} />
               </motion.li>
             );
           })}
@@ -92,7 +97,7 @@ export function Projects({
       </motion.ul>
 
       {visible.length === 0 && (
-        <p className="py-16 text-center text-muted">Aucun projet pour ce filtre pour l&apos;instant.</p>
+        <p className="py-16 text-center text-muted">{t.empty}</p>
       )}
 
       {archive.length > 0 && (
@@ -103,7 +108,7 @@ export function Projects({
             aria-expanded={showArchive}
             className="mx-auto flex items-center gap-2 rounded-full border border-line-strong px-5 py-2.5 text-sm font-medium transition hover:border-fg"
           >
-            {showArchive ? "Masquer l'archive" : `Explorer les ${archive.length} dépôts publics`}
+            {showArchive ? t.hideArchive : t.showArchive(archive.length)}
             <ChevronDown className={cn("size-4 transition", showArchive && "rotate-180")} />
           </button>
 
@@ -121,9 +126,9 @@ export function Projects({
                     <input
                       value={query}
                       onChange={(e) => setQuery(e.target.value)}
-                      placeholder="Rechercher un dépôt, un langage…"
+                      placeholder={t.searchPlaceholder}
                       className="h-12 w-full bg-transparent text-sm outline-none placeholder:text-subtle"
-                      aria-label="Rechercher dans les dépôts"
+                      aria-label={t.searchAria}
                     />
                     <span className="shrink-0 font-mono text-xs text-subtle">{archiveResults.length}</span>
                   </div>
@@ -131,7 +136,7 @@ export function Projects({
                     {archiveResults.map((p) => (
                       <li key={p.slug}>
                         <Link
-                          href={`/projets/${encodeURIComponent(p.slug)}`}
+                          href={localePath(locale, `/projets/${encodeURIComponent(p.slug)}`)}
                           className="group flex items-center gap-4 px-5 py-3.5 transition hover:bg-elev"
                         >
                           <span className="w-16 shrink-0 font-mono text-xs text-subtle">{p.year}</span>
@@ -161,7 +166,7 @@ export function Projects({
                     rel="noopener noreferrer"
                     className="mt-4 inline-flex items-center gap-2 text-sm text-muted hover:text-fg"
                   >
-                    <GithubIcon className="size-4" /> Voir le profil GitHub complet
+                    <GithubIcon className="size-4" /> {t.fullProfile}
                   </a>
                 )}
               </motion.div>
@@ -173,22 +178,23 @@ export function Projects({
   );
 }
 
-function ProjectCard({ project: p, big }: { project: ProjectView; big: boolean }) {
+function ProjectCard({ locale, project: p, big }: { locale: Locale; project: ProjectView; big: boolean }) {
+  const t = getDictionary(locale).projects;
   return (
     <Link
-      href={`/projets/${encodeURIComponent(p.slug)}`}
+      href={localePath(locale, `/projets/${encodeURIComponent(p.slug)}`)}
       className="group flex h-full flex-col overflow-hidden rounded-3xl border border-line bg-card transition duration-300 hover:-translate-y-1 hover:border-line-strong hover:shadow-[0_24px_60px_-30px_rgb(0_0_0/0.5)]"
     >
-      <ProjectCover project={p} large={big} className={cn("border-b border-line", big ? "aspect-[16/10] lg:flex-1" : "aspect-[16/10]")} />
+      <ProjectCover locale={locale} project={p} large={big} className={cn("border-b border-line", big ? "aspect-[16/10] lg:flex-1" : "aspect-[16/10]")} />
       <div className="flex flex-1 flex-col p-6">
         <div className="mb-3 flex items-center gap-3 font-mono text-[11px] text-subtle">
-          {p.featured && <span className="rounded-full bg-accent-soft px-2 py-0.5 text-accent">À la une</span>}
+          {p.featured && <span className="rounded-full bg-accent-soft px-2 py-0.5 text-accent">{t.featured}</span>}
           {p.pinned && !p.featured && (
             <span className="inline-flex items-center gap-1">
-              <Pin className="size-3" /> Épinglé
+              <Pin className="size-3" /> {t.pinned}
             </span>
           )}
-          <span>{p.source === "github" ? `Mis à jour ${formatMonth(p.updatedAt)}` : p.year}</span>
+          <span>{p.source === "github" ? t.updated(formatMonth(p.updatedAt, locale)) : p.year}</span>
           {p.stars > 0 && (
             <span className="inline-flex items-center gap-1">
               <Star className="size-3" /> {p.stars}

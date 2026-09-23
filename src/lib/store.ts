@@ -2,6 +2,7 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import { MongoClient, type Db } from "mongodb";
 import seed from "../../data/content.json";
+import { emptyTranslations } from "./translations";
 import type { Message, SiteContent } from "./types";
 
 /**
@@ -30,12 +31,13 @@ export class ReadOnlyStoreError extends Error {
 
 /** Complète un contenu stocké avec les champs ajoutés au seed depuis sa création. */
 function withDefaults(stored: Partial<SiteContent> | null | undefined): SiteContent {
-  if (!stored) return structuredClone(SEED);
+  if (!stored) return withDefaults({});
   return {
     ...structuredClone(SEED),
     ...stored,
     profile: { ...SEED.profile, ...stored.profile, socials: { ...SEED.profile.socials, ...stored.profile?.socials } },
     settings: { ...SEED.settings, ...stored.settings },
+    translations: { en: { ...emptyTranslations(), ...SEED.translations?.en, ...stored.translations?.en } },
   };
 }
 

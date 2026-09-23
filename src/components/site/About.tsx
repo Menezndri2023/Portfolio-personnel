@@ -1,11 +1,13 @@
 import Image from "next/image";
 import { Languages, Sparkle } from "lucide-react";
+import { getDictionary, type Locale } from "@/lib/i18n";
 import type { Profile, Service } from "@/lib/types";
 import { Icon } from "../ui/Icon";
 import { Reveal } from "../ui/Reveal";
 import { SectionHeading } from "../ui/SectionHeading";
 
-export function About({ profile, services }: { profile: Profile; services: Service[] }) {
+export function About({ locale, profile, services }: { locale: Locale; profile: Profile; services: Service[] }) {
+  const t = getDictionary(locale).about;
   const paragraphs = profile.bio.split(/\n\s*\n/).filter(Boolean);
 
   return (
@@ -13,8 +15,8 @@ export function About({ profile, services }: { profile: Profile; services: Servi
       <div className="container-page">
         <SectionHeading
           index="01"
-          eyebrow="À propos"
-          title="Du besoin métier à la mise en production."
+          eyebrow={t.eyebrow}
+          title={t.title}
         />
 
         <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
@@ -25,7 +27,7 @@ export function About({ profile, services }: { profile: Profile; services: Servi
                 {profile.photo && (
                   <Image
                     src={profile.photo}
-                    alt={`Portrait de ${profile.name}`}
+                    alt={`${t.portrait} ${profile.name}`}
                     fill
                     unoptimized={profile.photo.startsWith("http")}
                     sizes="(min-width: 1024px) 40vw, 100vw"
@@ -54,7 +56,7 @@ export function About({ profile, services }: { profile: Profile; services: Servi
             <Reveal delay={0.1} className="mt-10 grid gap-6 sm:grid-cols-2">
               <div>
                 <h3 className="mb-3 flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-subtle">
-                  <Languages className="size-3.5" /> Langues
+                  <Languages className="size-3.5" /> {t.languages}
                 </h3>
                 <ul className="space-y-2">
                   {profile.languages.map((l) => (
@@ -66,7 +68,7 @@ export function About({ profile, services }: { profile: Profile; services: Servi
                 </ul>
               </div>
               <div>
-                <h3 className="mb-3 font-mono text-xs uppercase tracking-widest text-subtle">Savoir-être</h3>
+                <h3 className="mb-3 font-mono text-xs uppercase tracking-widest text-subtle">{t.softSkills}</h3>
                 <ul className="flex flex-wrap gap-1.5">
                   {profile.softSkills.map((s) => (
                     <li key={s} className="rounded-full border border-line px-2.5 py-1 text-xs text-muted">

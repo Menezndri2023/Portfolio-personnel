@@ -1,6 +1,6 @@
 "use client";
 
-import { Plus, X } from "lucide-react";
+import { CornerDownLeft, Plus, X } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Icon, iconNames } from "../ui/Icon";
@@ -16,6 +16,8 @@ export type FieldDef = {
   full?: boolean;
   /** Pour `pairs` : libellés des deux colonnes. */
   pairLabels?: [string, string];
+  /** Traduction : texte français affiché au-dessus du champ, avec sa valeur pour le recopier. */
+  reference?: { text: string; value: unknown };
 };
 
 type AnyObj = Record<string, unknown>;
@@ -76,6 +78,7 @@ export function Field({ def, value, onChange }: { def: FieldDef; value: unknown;
       <label htmlFor={id} className="mb-1.5 block text-sm font-medium">
         {def.label}
       </label>
+      {def.reference && <Reference reference={def.reference} onCopy={onChange} />}
       {renderInput(def, id, value, onChange)}
       {def.help && <p className="mt-1.5 text-xs text-muted">{def.help}</p>}
     </div>
@@ -156,6 +159,24 @@ function renderInput(def: FieldDef, id: string, value: unknown, onChange: (v: un
         />
       );
   }
+}
+
+function Reference({ reference, onCopy }: { reference: NonNullable<FieldDef["reference"]>; onCopy: (v: unknown) => void }) {
+  if (!reference.text) return null;
+  return (
+    <div className="mb-2 flex items-start gap-3 rounded-lg border border-dashed border-line-strong px-3 py-2 text-xs text-muted">
+      <span className="font-mono text-[10px] font-semibold text-subtle">FR</span>
+      <p className="max-h-32 min-w-0 flex-1 overflow-y-auto whitespace-pre-line">{reference.text}</p>
+      <button
+        type="button"
+        onClick={() => onCopy(structuredClone(reference.value))}
+        title="Recopier le texte français dans le champ, pour le modifier"
+        className="inline-flex shrink-0 items-center gap-1 text-subtle hover:text-fg"
+      >
+        <CornerDownLeft className="size-3.5" /> Recopier
+      </button>
+    </div>
+  );
 }
 
 export function Toggle({ id, checked, onChange }: { id?: string; checked: boolean; onChange: (v: boolean) => void }) {

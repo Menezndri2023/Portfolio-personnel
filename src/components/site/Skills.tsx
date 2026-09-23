@@ -1,10 +1,12 @@
+import { getDictionary, type Locale } from "@/lib/i18n";
 import type { SkillGroup } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { Icon } from "../ui/Icon";
 import { Reveal } from "../ui/Reveal";
 import { SectionHeading } from "../ui/SectionHeading";
 
-export function Skills({ groups }: { groups: SkillGroup[] }) {
+export function Skills({ locale, groups }: { locale: Locale; groups: SkillGroup[] }) {
+  const t = getDictionary(locale).skills;
   const all = groups.flatMap((g) => g.items);
 
   return (
@@ -12,9 +14,9 @@ export function Skills({ groups }: { groups: SkillGroup[] }) {
       <div className="container-page">
         <SectionHeading
           index="02"
-          eyebrow="Compétences"
-          title="Une stack JavaScript de bout en bout."
-          lead="Le même langage de la base de données jusqu'au navigateur : moins de friction, plus de vitesse de livraison."
+          eyebrow={t.eyebrow}
+          title={t.title}
+          lead={t.lead}
         />
 
         <div className="grid gap-4 md:grid-cols-2">

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import type { Dictionary } from "./i18n";
 import type { ContentSection } from "./types";
 
 /**
@@ -101,6 +102,37 @@ const settings = z.object({
   siteUrl: safeUrl,
 });
 
+/** Version anglaise : mêmes limites que le français, tous les champs facultatifs. */
+const byId = <S extends z.ZodObject>(item: S) => z.record(z.string().max(100), item.partial());
+
+const translations = z.object({
+  en: z.object({
+    profile: profile
+      .pick({
+        title: true,
+        location: true,
+        availabilityLabel: true,
+        headline: true,
+        rotatingRoles: true,
+        intro: true,
+        bio: true,
+        softSkills: true,
+        languages: true,
+        photoCaption: true,
+      })
+      .partial(),
+    services: byId(service.pick({ title: true, description: true })),
+    skills: byId(skillGroup.pick({ title: true, description: true, items: true })),
+    experiences: byId(
+      experience.pick({ role: true, company: true, period: true, location: true, summary: true, highlights: true }),
+    ),
+    education: byId(education.pick({ title: true, school: true, period: true, highlights: true })),
+    projects: byId(manualProject.pick({ title: true, summary: true, description: true })),
+    repoOverrides: byId(z.object({ title: text(160), summary: text(400), description: longText(10000) })),
+    settings: settings.pick({ seoTitle: true, seoDescription: true }).partial(),
+  }),
+});
+
 /** Sections modifiables depuis l'admin (l'instantané GitHub est géré par la synchro). */
 export const sectionSchemas = {
   profile,
@@ -111,15 +143,18 @@ export const sectionSchemas = {
   projects: z.array(manualProject).max(60),
   repoOverrides: z.record(z.string().max(100), repoOverride),
   settings,
+  translations,
 } satisfies Partial<Record<ContentSection, z.ZodType>>;
 
 export type EditableSection = keyof typeof sectionSchemas;
 
-export const contactSchema = z.object({
-  name: text(100).min(2, "Indiquez votre nom"),
-  email: z.email("Adresse e-mail invalide").max(200),
-  subject: text(150),
-  message: z.string().trim().min(10, "Votre message est un peu court").max(5000),
-  /** Champ piège invisible : rempli uniquement par les robots. */
-  website: z.string().max(0).optional(),
-});
+/** Formulaire de contact, avec des messages d'erreur dans la langue du visiteur. */
+export const contactSchema = (t: Dictionary["contactErrors"]) =>
+  z.object({
+    name: z.string({ error: t.name }).trim().min(2, t.name).max(100, t.tooLong),
+    email: z.email({ error: t.email }).max(200, t.tooLong),
+    subject: z.string({ error: t.invalid }).trim().max(150, t.tooLong).default(""),
+    message: z.string({ error: t.message }).trim().min(10, t.message).max(5000, t.tooLong),
+    /** Champ piège invisible : rempli uniquement par les robots. */
+    website: z.string().max(0).optional(),
+  });

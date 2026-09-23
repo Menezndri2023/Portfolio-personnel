@@ -18,13 +18,16 @@ import {
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import type { EditableSection } from "@/lib/schemas";
+import { TRANSLATABLE, type TranslatableSection, type Translations } from "@/lib/translations";
 import type { Education, Experience, ManualProject, Message, Service, SiteContent, SkillGroup } from "@/lib/types";
 import { cn, uid } from "@/lib/utils";
 import { ThemeToggle } from "../ui/ThemeToggle";
 import { CollectionEditor } from "./CollectionEditor";
-import { GithubManager } from "./GithubManager";
+import type { FieldDef } from "./fields";
+import { GithubManager, overrideFields } from "./GithubManager";
 import { MessagesInbox } from "./MessagesInbox";
-import { ObjectEditor } from "./ObjectEditor";
+import { ObjectEditor, type FieldSection } from "./ObjectEditor";
+import { TranslateCollection, TranslateGithub, TranslateObject } from "./TranslationEditors";
 import { Toasts, type Toast } from "./ui";
 
 type Tab =
@@ -52,11 +55,125 @@ const NAV: { id: Tab; label: string; icon: typeof User }[] = [
   { id: "settings", label: "Paramètres", icon: Settings },
 ];
 
+/* ------------------------------------------------------------------ Champs de chaque section */
+
+const PROFILE_SECTIONS: FieldSection[] = [
+  {
+    title: "Identité",
+    fields: [
+      { key: "name", label: "Nom complet", type: "text" },
+      { key: "shortName", label: "Nom court (navigation)", type: "text" },
+      { key: "title", label: "Titre professionnel", type: "text" },
+      { key: "location", label: "Localisation", type: "text" },
+      { key: "available", label: "Disponible", type: "toggle", help: "Affiche le badge de disponibilité dans le hero." },
+      { key: "availabilityLabel", label: "Texte du badge", type: "text" },
+    ],
+  },
+  {
+    title: "Accroche & présentation",
+    fields: [
+      { key: "headline", label: "Titre principal (hero)", type: "text", full: true },
+      { key: "rotatingRoles", label: "Spécialités qui défilent", type: "tags" },
+      { key: "intro", label: "Introduction courte", type: "textarea" },
+      { key: "bio", label: "Biographie (« À propos »)", type: "textarea", help: "Séparez les paragraphes par une ligne vide." },
+      { key: "softSkills", label: "Savoir-être", type: "tags" },
+      { key: "languages", label: "Langues", type: "pairs", pairLabels: ["Langue", "Niveau"] },
+    ],
+  },
+  {
+    title: "Médias",
+    fields: [
+      { key: "photo", label: "Photo (À propos)", type: "url", help: "Chemin dans /public (ex. /images/moi.png) ou URL https." },
+      { key: "photoCaption", label: "Légende de la photo", type: "text" },
+      { key: "cvUrl", label: "Lien du CV (PDF)", type: "url", help: "Déposez le fichier dans public/ (ex. /cv.pdf) ou collez une URL. Vide = bouton masqué." },
+      { key: "avatar", label: "Avatar", type: "url" },
+    ],
+  },
+  {
+    title: "Contact & réseaux",
+    fields: [
+      { key: "email", label: "E-mail", type: "text" },
+      { key: "phone", label: "Téléphone", type: "text" },
+      { key: "showPhone", label: "Afficher le téléphone publiquement", type: "toggle" },
+      { key: "socials.github", label: "GitHub", type: "url" },
+      { key: "socials.linkedin", label: "LinkedIn", type: "url" },
+      { key: "socials.twitter", label: "X / Twitter", type: "url" },
+      { key: "socials.website", label: "Site web", type: "url" },
+    ],
+  },
+];
+
+const SERVICE_FIELDS: FieldDef[] = [
+  { key: "title", label: "Titre", type: "text" },
+  { key: "icon", label: "Icône", type: "icon" },
+  { key: "description", label: "Description", type: "textarea" },
+];
+
+const SKILL_FIELDS: FieldDef[] = [
+  { key: "title", label: "Nom du groupe", type: "text" },
+  { key: "description", label: "Sous-titre", type: "text" },
+  { key: "items", label: "Compétences", type: "tags" },
+  { key: "icon", label: "Icône", type: "icon", full: true },
+  { key: "learning", label: "En cours d'apprentissage", type: "toggle" },
+];
+
+const EXPERIENCE_FIELDS: FieldDef[] = [
+  { key: "role", label: "Poste", type: "text" },
+  { key: "company", label: "Entreprise / contexte", type: "text" },
+  { key: "period", label: "Période", type: "text", placeholder: "2024 — aujourd'hui" },
+  { key: "location", label: "Lieu", type: "text" },
+  { key: "current", label: "Poste actuel", type: "toggle", full: true },
+  { key: "summary", label: "Résumé", type: "textarea" },
+  { key: "highlights", label: "Réalisations", type: "lines" },
+  { key: "tags", label: "Technologies / compétences", type: "tags" },
+];
+
+const EDUCATION_FIELDS: FieldDef[] = [
+  { key: "title", label: "Intitulé", type: "text" },
+  { key: "school", label: "Établissement", type: "text" },
+  { key: "period", label: "Période", type: "text" },
+  { key: "highlights", label: "Contenu / points clés", type: "lines" },
+];
+
+const PROJECT_FIELDS: FieldDef[] = [
+  { key: "title", label: "Titre", type: "text" },
+  { key: "year", label: "Année", type: "text" },
+  { key: "summary", label: "Résumé (carte)", type: "textarea" },
+  { key: "tags", label: "Technologies", type: "tags" },
+  { key: "demoUrl", label: "Lien de démo", type: "url" },
+  { key: "repoUrl", label: "Lien du code", type: "url" },
+  { key: "image", label: "Image de couverture", type: "url", full: true, help: "Vide = couverture générée." },
+  { key: "featured", label: "À la une", type: "toggle" },
+  { key: "hidden", label: "Masquer du site", type: "toggle" },
+  { key: "description", label: "Description détaillée (Markdown)", type: "markdown" },
+];
+
+const SETTINGS_SECTIONS: FieldSection[] = [
+  {
+    title: "GitHub",
+    fields: [
+      { key: "githubUsername", label: "Nom d'utilisateur GitHub", type: "text" },
+      { key: "githubLimit", label: "Nombre de dépôts récents affichés", type: "number" },
+      { key: "excludeForks", label: "Ignorer les forks", type: "toggle", full: true },
+    ],
+  },
+  {
+    title: "Référencement (SEO)",
+    fields: [
+      { key: "seoTitle", label: "Titre du site", type: "text", full: true },
+      { key: "seoDescription", label: "Description", type: "textarea" },
+      { key: "siteUrl", label: "URL publique du site", type: "url", placeholder: "https://manasse.dev", full: true },
+    ],
+  },
+];
+
 export function AdminApp() {
   const router = useRouter();
   const [content, setContent] = useState<SiteContent | null>(null);
   const [store, setStore] = useState("");
   const [tab, setTab] = useState<Tab>("overview");
+  /** Langue du contenu en cours d'édition : le français, ou sa traduction anglaise. */
+  const [editLang, setEditLang] = useState<"fr" | "en">("fr");
   const [messages, setMessages] = useState<Message[]>([]);
   const [messagesLoading, setMessagesLoading] = useState(true);
   const [toasts, setToasts] = useState<Toast[]>([]);
@@ -121,6 +238,84 @@ export function AdminApp() {
 
   const unread = messages.filter((m) => !m.read).length;
 
+  const en = content.translations.en;
+  const saveTranslation = <S extends TranslatableSection>(section: S, data: Translations[S]) =>
+    save("translations", { en: { ...en, [section]: data } });
+
+  /** Onglet en mode anglais (null pour les onglets sans texte à traduire). */
+  const translation = (() => {
+    if (editLang !== "en") return null;
+    const collection = <S extends "services" | "skills" | "experiences" | "education" | "projects">(
+      section: S,
+      title: string,
+      fields: FieldDef[],
+      itemTitle: (item: SiteContent[S][number]) => string,
+    ) => (
+      <TranslateCollection<SiteContent[S][number]>
+        key={`en-${section}`}
+        title={title}
+        description="Traduisez chaque élément ; l'ordre et les options se gèrent en français."
+        items={content[section] as SiteContent[S][number][]}
+        fields={fields}
+        keys={TRANSLATABLE[section]}
+        value={en[section] as Record<string, Record<string, unknown>>}
+        itemTitle={itemTitle}
+        onSave={(v) => saveTranslation(section, v as Translations[S])}
+      />
+    );
+    switch (tab) {
+      case "profile":
+        return (
+          <TranslateObject
+            key="en-profile"
+            title="Profil"
+            description="Textes d'accroche et de présentation."
+            sections={PROFILE_SECTIONS}
+            keys={TRANSLATABLE.profile}
+            source={content.profile}
+            value={en.profile}
+            onSave={(v) => saveTranslation("profile", v)}
+          />
+        );
+      case "services":
+        return collection("services", "Services", SERVICE_FIELDS, (s) => s.title);
+      case "skills":
+        return collection("skills", "Compétences", SKILL_FIELDS, (g) => g.title);
+      case "experiences":
+        return collection("experiences", "Expériences", EXPERIENCE_FIELDS, (e) => e.role);
+      case "education":
+        return collection("education", "Formation", EDUCATION_FIELDS, (e) => e.title);
+      case "projects":
+        return collection("projects", "Projets manuels", PROJECT_FIELDS, (p) => p.title);
+      case "github":
+        return (
+          <TranslateGithub
+            key="en-github"
+            content={content}
+            fields={overrideFields}
+            keys={TRANSLATABLE.repoOverrides}
+            value={en.repoOverrides}
+            onSave={(v) => saveTranslation("repoOverrides", v)}
+          />
+        );
+      case "settings":
+        return (
+          <TranslateObject
+            key="en-settings"
+            title="Paramètres"
+            description="Titre et description du site pour les moteurs de recherche."
+            sections={SETTINGS_SECTIONS}
+            keys={TRANSLATABLE.settings}
+            source={content.settings}
+            value={en.settings}
+            onSave={(v) => saveTranslation("settings", v)}
+          />
+        );
+      default:
+        return null;
+    }
+  })();
+
   return (
     <div className="min-h-dvh lg:grid lg:grid-cols-[250px_1fr]">
       <aside className="border-b border-line bg-elev lg:sticky lg:top-0 lg:h-dvh lg:border-r lg:border-b-0">
@@ -133,6 +328,30 @@ export function AdminApp() {
             </span>
           </div>
           <ThemeToggle className="lg:hidden" />
+        </div>
+        <div className="px-3 pb-3">
+          <p className="mb-1.5 px-2 text-[11px] text-subtle">Langue du contenu</p>
+          <div className="grid grid-cols-2 gap-1 rounded-xl border border-line p-1" role="group" aria-label="Langue du contenu édité">
+            {(
+              [
+                ["fr", "Français"],
+                ["en", "English"],
+              ] as const
+            ).map(([l, label]) => (
+              <button
+                key={l}
+                type="button"
+                onClick={() => setEditLang(l)}
+                aria-pressed={editLang === l}
+                className={cn(
+                  "rounded-lg px-2 py-1.5 text-xs font-medium transition",
+                  editLang === l ? "bg-fg text-bg" : "text-muted hover:text-fg",
+                )}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
         </div>
         <nav className="flex gap-1 overflow-x-auto px-3 pb-3 lg:flex-col lg:overflow-visible" aria-label="Sections du back-office">
           {NAV.map(({ id, label, icon: I }) => (
@@ -154,7 +373,7 @@ export function AdminApp() {
           ))}
         </nav>
         <div className="hidden space-y-1 border-t border-line p-3 lg:absolute lg:inset-x-0 lg:bottom-0 lg:block">
-          <a href="/" target="_blank" className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm text-muted hover:bg-card hover:text-fg">
+          <a href={editLang === "en" ? "/en" : "/"} target="_blank" className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm text-muted hover:bg-card hover:text-fg">
             <ExternalLink className="size-4" /> Voir le site
           </a>
           <div className="flex items-center justify-between">
@@ -167,222 +386,130 @@ export function AdminApp() {
       </aside>
 
       <main className="mx-auto w-full max-w-4xl p-5 md:p-10">
-        {tab === "overview" && <Overview content={content} unread={unread} messages={messages.length} store={store} go={setTab} onLogout={logout} />}
+        {translation ?? (
+          <>
+            {tab === "overview" && <Overview content={content} unread={unread} messages={messages.length} store={store} go={setTab} onLogout={logout} />}
 
-        {tab === "profile" && (
-          <ObjectEditor
-            title="Profil"
-            description="Identité, textes d'accroche, coordonnées et liens."
-            value={content.profile}
-            onSave={(v) => save("profile", v)}
-            sections={[
-              {
-                title: "Identité",
-                fields: [
-                  { key: "name", label: "Nom complet", type: "text" },
-                  { key: "shortName", label: "Nom court (navigation)", type: "text" },
-                  { key: "title", label: "Titre professionnel", type: "text" },
-                  { key: "location", label: "Localisation", type: "text" },
-                  { key: "available", label: "Disponible", type: "toggle", help: "Affiche le badge de disponibilité dans le hero." },
-                  { key: "availabilityLabel", label: "Texte du badge", type: "text" },
-                ],
-              },
-              {
-                title: "Accroche & présentation",
-                fields: [
-                  { key: "headline", label: "Titre principal (hero)", type: "text", full: true },
-                  { key: "rotatingRoles", label: "Spécialités qui défilent", type: "tags" },
-                  { key: "intro", label: "Introduction courte", type: "textarea" },
-                  { key: "bio", label: "Biographie (« À propos »)", type: "textarea", help: "Séparez les paragraphes par une ligne vide." },
-                  { key: "softSkills", label: "Savoir-être", type: "tags" },
-                  { key: "languages", label: "Langues", type: "pairs", pairLabels: ["Langue", "Niveau"] },
-                ],
-              },
-              {
-                title: "Médias",
-                fields: [
-                  { key: "photo", label: "Photo (À propos)", type: "url", help: "Chemin dans /public (ex. /images/moi.png) ou URL https." },
-                  { key: "photoCaption", label: "Légende de la photo", type: "text" },
-                  { key: "cvUrl", label: "Lien du CV (PDF)", type: "url", help: "Déposez le fichier dans public/ (ex. /cv.pdf) ou collez une URL. Vide = bouton masqué." },
-                  { key: "avatar", label: "Avatar", type: "url" },
-                ],
-              },
-              {
-                title: "Contact & réseaux",
-                fields: [
-                  { key: "email", label: "E-mail", type: "text" },
-                  { key: "phone", label: "Téléphone", type: "text" },
-                  { key: "showPhone", label: "Afficher le téléphone publiquement", type: "toggle" },
-                  { key: "socials.github", label: "GitHub", type: "url" },
-                  { key: "socials.linkedin", label: "LinkedIn", type: "url" },
-                  { key: "socials.twitter", label: "X / Twitter", type: "url" },
-                  { key: "socials.website", label: "Site web", type: "url" },
-                ],
-              },
-            ]}
-          />
-        )}
+            {tab === "profile" && (
+              <ObjectEditor
+                title="Profil"
+                description="Identité, textes d'accroche, coordonnées et liens."
+                value={content.profile}
+                onSave={(v) => save("profile", v)}
+                sections={PROFILE_SECTIONS}
+              />
+            )}
 
-        {tab === "services" && (
-          <CollectionEditor<Service>
-            title="Services"
-            description="Ce que vous proposez, affiché sous « À propos »."
-            items={content.services}
-            addLabel="Nouveau service"
-            itemTitle={(s) => s.title}
-            createItem={() => ({ id: uid("svc"), title: "", description: "", icon: "code" })}
-            fields={[
-              { key: "title", label: "Titre", type: "text" },
-              { key: "icon", label: "Icône", type: "icon" },
-              { key: "description", label: "Description", type: "textarea" },
-            ]}
-            onSave={(items) => save("services", items)}
-          />
-        )}
+            {tab === "services" && (
+              <CollectionEditor<Service>
+                title="Services"
+                description="Ce que vous proposez, affiché sous « À propos »."
+                items={content.services}
+                addLabel="Nouveau service"
+                itemTitle={(s) => s.title}
+                createItem={() => ({ id: uid("svc"), title: "", description: "", icon: "code" })}
+                fields={SERVICE_FIELDS}
+                onSave={(items) => save("services", items)}
+              />
+            )}
 
-        {tab === "skills" && (
-          <CollectionEditor<SkillGroup>
-            title="Compétences"
-            description="Groupes de compétences. Cochez « en apprentissage » pour un style distinct."
-            items={content.skills}
-            addLabel="Nouveau groupe"
-            itemTitle={(g) => g.title}
-            itemSubtitle={(g) => g.items.join(" · ")}
-            createItem={() => ({ id: uid("sk"), title: "", description: "", icon: "code", items: [], learning: false })}
-            fields={[
-              { key: "title", label: "Nom du groupe", type: "text" },
-              { key: "description", label: "Sous-titre", type: "text" },
-              { key: "items", label: "Compétences", type: "tags" },
-              { key: "icon", label: "Icône", type: "icon", full: true },
-              { key: "learning", label: "En cours d'apprentissage", type: "toggle" },
-            ]}
-            onSave={(items) => save("skills", items)}
-          />
-        )}
+            {tab === "skills" && (
+              <CollectionEditor<SkillGroup>
+                title="Compétences"
+                description="Groupes de compétences. Cochez « en apprentissage » pour un style distinct."
+                items={content.skills}
+                addLabel="Nouveau groupe"
+                itemTitle={(g) => g.title}
+                itemSubtitle={(g) => g.items.join(" · ")}
+                createItem={() => ({ id: uid("sk"), title: "", description: "", icon: "code", items: [], learning: false })}
+                fields={SKILL_FIELDS}
+                onSave={(items) => save("skills", items)}
+              />
+            )}
 
-        {tab === "experiences" && (
-          <CollectionEditor<Experience>
-            title="Expériences"
-            description="Votre parcours professionnel, du plus récent au plus ancien."
-            items={content.experiences}
-            addLabel="Nouvelle expérience"
-            itemTitle={(e) => e.role}
-            itemSubtitle={(e) => [e.company, e.period].filter(Boolean).join(" · ")}
-            createItem={() => ({
-              id: uid("exp"),
-              role: "",
-              company: "",
-              location: "",
-              period: "",
-              current: false,
-              summary: "",
-              highlights: [],
-              tags: [],
-            })}
-            fields={[
-              { key: "role", label: "Poste", type: "text" },
-              { key: "company", label: "Entreprise / contexte", type: "text" },
-              { key: "period", label: "Période", type: "text", placeholder: "2024 — aujourd'hui" },
-              { key: "location", label: "Lieu", type: "text" },
-              { key: "current", label: "Poste actuel", type: "toggle", full: true },
-              { key: "summary", label: "Résumé", type: "textarea" },
-              { key: "highlights", label: "Réalisations", type: "lines" },
-              { key: "tags", label: "Technologies / compétences", type: "tags" },
-            ]}
-            onSave={(items) => save("experiences", items)}
-          />
-        )}
+            {tab === "experiences" && (
+              <CollectionEditor<Experience>
+                title="Expériences"
+                description="Votre parcours professionnel, du plus récent au plus ancien."
+                items={content.experiences}
+                addLabel="Nouvelle expérience"
+                itemTitle={(e) => e.role}
+                itemSubtitle={(e) => [e.company, e.period].filter(Boolean).join(" · ")}
+                createItem={() => ({
+                  id: uid("exp"),
+                  role: "",
+                  company: "",
+                  location: "",
+                  period: "",
+                  current: false,
+                  summary: "",
+                  highlights: [],
+                  tags: [],
+                })}
+                fields={EXPERIENCE_FIELDS}
+                onSave={(items) => save("experiences", items)}
+              />
+            )}
 
-        {tab === "education" && (
-          <CollectionEditor<Education>
-            title="Formation"
-            description="Diplômes, bootcamps et certifications."
-            items={content.education}
-            addLabel="Nouvelle formation"
-            itemTitle={(e) => e.title}
-            itemSubtitle={(e) => [e.school, e.period].filter(Boolean).join(" · ")}
-            createItem={() => ({ id: uid("edu"), title: "", school: "", period: "", highlights: [] })}
-            fields={[
-              { key: "title", label: "Intitulé", type: "text" },
-              { key: "school", label: "Établissement", type: "text" },
-              { key: "period", label: "Période", type: "text" },
-              { key: "highlights", label: "Contenu / points clés", type: "lines" },
-            ]}
-            onSave={(items) => save("education", items)}
-          />
-        )}
+            {tab === "education" && (
+              <CollectionEditor<Education>
+                title="Formation"
+                description="Diplômes, bootcamps et certifications."
+                items={content.education}
+                addLabel="Nouvelle formation"
+                itemTitle={(e) => e.title}
+                itemSubtitle={(e) => [e.school, e.period].filter(Boolean).join(" · ")}
+                createItem={() => ({ id: uid("edu"), title: "", school: "", period: "", highlights: [] })}
+                fields={EDUCATION_FIELDS}
+                onSave={(items) => save("education", items)}
+              />
+            )}
 
-        {tab === "github" && (
-          <GithubManager content={content} notify={notify} onSave={(o) => save("repoOverrides", o)} />
-        )}
+            {tab === "github" && (
+              <GithubManager content={content} notify={notify} onSave={(o) => save("repoOverrides", o)} />
+            )}
 
-        {tab === "projects" && (
-          <CollectionEditor<ManualProject>
-            title="Projets manuels"
-            description="Projets hors GitHub (clients, dépôts privés…). Ils s'affichent avec les projets GitHub."
-            items={content.projects}
-            addLabel="Nouveau projet"
-            itemTitle={(p) => p.title}
-            itemSubtitle={(p) => p.summary}
-            isHidden={(p) => p.hidden}
-            createItem={() => ({
-              id: uid("prj"),
-              title: "",
-              summary: "",
-              description: "",
-              tags: [],
-              image: "",
-              repoUrl: "",
-              demoUrl: "",
-              year: String(new Date().getFullYear()),
-              featured: false,
-              hidden: false,
-            })}
-            fields={[
-              { key: "title", label: "Titre", type: "text" },
-              { key: "year", label: "Année", type: "text" },
-              { key: "summary", label: "Résumé (carte)", type: "textarea" },
-              { key: "tags", label: "Technologies", type: "tags" },
-              { key: "demoUrl", label: "Lien de démo", type: "url" },
-              { key: "repoUrl", label: "Lien du code", type: "url" },
-              { key: "image", label: "Image de couverture", type: "url", full: true, help: "Vide = couverture générée." },
-              { key: "featured", label: "À la une", type: "toggle" },
-              { key: "hidden", label: "Masquer du site", type: "toggle" },
-              { key: "description", label: "Description détaillée (Markdown)", type: "markdown" },
-            ]}
-            onSave={(items) => save("projects", items)}
-          />
-        )}
+            {tab === "projects" && (
+              <CollectionEditor<ManualProject>
+                title="Projets manuels"
+                description="Projets hors GitHub (clients, dépôts privés…). Ils s'affichent avec les projets GitHub."
+                items={content.projects}
+                addLabel="Nouveau projet"
+                itemTitle={(p) => p.title}
+                itemSubtitle={(p) => p.summary}
+                isHidden={(p) => p.hidden}
+                createItem={() => ({
+                  id: uid("prj"),
+                  title: "",
+                  summary: "",
+                  description: "",
+                  tags: [],
+                  image: "",
+                  repoUrl: "",
+                  demoUrl: "",
+                  year: String(new Date().getFullYear()),
+                  featured: false,
+                  hidden: false,
+                })}
+                fields={PROJECT_FIELDS}
+                onSave={(items) => save("projects", items)}
+              />
+            )}
 
-        {tab === "messages" && (
-          <MessagesInbox messages={messages} setMessages={setMessages} loading={messagesLoading} notify={notify} />
-        )}
+            {tab === "messages" && (
+              <MessagesInbox messages={messages} setMessages={setMessages} loading={messagesLoading} notify={notify} />
+            )}
 
-        {tab === "settings" && (
-          <ObjectEditor
-            title="Paramètres"
-            description="Synchronisation GitHub et référencement."
-            value={content.settings}
-            onSave={(v) => save("settings", v)}
-            sections={[
-              {
-                title: "GitHub",
-                fields: [
-                  { key: "githubUsername", label: "Nom d'utilisateur GitHub", type: "text" },
-                  { key: "githubLimit", label: "Nombre de dépôts récents affichés", type: "number" },
-                  { key: "excludeForks", label: "Ignorer les forks", type: "toggle", full: true },
-                ],
-              },
-              {
-                title: "Référencement (SEO)",
-                fields: [
-                  { key: "seoTitle", label: "Titre du site", type: "text", full: true },
-                  { key: "seoDescription", label: "Description", type: "textarea" },
-                  { key: "siteUrl", label: "URL publique du site", type: "url", placeholder: "https://manasse.dev", full: true },
-                ],
-              },
-            ]}
-          />
+            {tab === "settings" && (
+              <ObjectEditor
+                title="Paramètres"
+                description="Synchronisation GitHub et référencement."
+                value={content.settings}
+                onSave={(v) => save("settings", v)}
+                sections={SETTINGS_SECTIONS}
+              />
+            )}
+          </>
         )}
       </main>
 

@@ -3,12 +3,14 @@
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowUpRight, Check, Copy, Loader2, Mail, MapPin, Phone, Send } from "lucide-react";
 import { useState } from "react";
+import { getDictionary, type Locale } from "@/lib/i18n";
 import type { Profile } from "@/lib/types";
 import { GithubIcon, LinkedinIcon } from "../ui/Icon";
 
 type Status = { kind: "idle" } | { kind: "sending" } | { kind: "sent" } | { kind: "error"; message: string };
 
-export function ContactPanel({ profile }: { profile: Profile }) {
+export function ContactPanel({ locale, profile }: { locale: Locale; profile: Profile }) {
+  const t = getDictionary(locale).contact;
   const [status, setStatus] = useState<Status>({ kind: "idle" });
   const [copied, setCopied] = useState(false);
 
@@ -21,10 +23,10 @@ export function ContactPanel({ profile }: { profile: Profile }) {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, lang: locale }),
       });
       const json = (await res.json().catch(() => ({}))) as { error?: string };
-      if (!res.ok) throw new Error(json.error || "Envoi impossible pour le moment.");
+      if (!res.ok) throw new Error(json.error || t.failed);
       form.reset();
       setStatus({ kind: "sent" });
     } catch (err) {
@@ -45,10 +47,7 @@ export function ContactPanel({ profile }: { profile: Profile }) {
   return (
     <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
       <div className="flex flex-col">
-        <p className="text-lg leading-relaxed text-muted">
-          Un poste, une mission freelance ou une idée à structurer ? Décrivez-moi votre besoin :
-          je vous réponds sous 48 heures avec une première analyse.
-        </p>
+        <p className="text-lg leading-relaxed text-muted">{t.intro}</p>
 
         <ul className="mt-10 space-y-3">
           {profile.email && (
@@ -62,12 +61,12 @@ export function ContactPanel({ profile }: { profile: Profile }) {
                   <Mail className="size-4" />
                 </span>
                 <span className="min-w-0 flex-1">
-                  <span className="block text-xs text-subtle">E-mail</span>
+                  <span className="block text-xs text-subtle">{t.email}</span>
                   <span className="block truncate text-sm font-medium">{profile.email}</span>
                 </span>
                 <span className="flex items-center gap-1.5 text-xs text-muted">
                   {copied ? <Check className="size-4 text-ok" /> : <Copy className="size-4" />}
-                  {copied ? "Copié" : "Copier"}
+                  {copied ? t.copied : t.copy}
                 </span>
               </button>
             </li>
@@ -82,7 +81,7 @@ export function ContactPanel({ profile }: { profile: Profile }) {
                   <Phone className="size-4" />
                 </span>
                 <span>
-                  <span className="block text-xs text-subtle">Téléphone</span>
+                  <span className="block text-xs text-subtle">{t.phone}</span>
                   <span className="block text-sm font-medium">{profile.phone}</span>
                 </span>
               </a>
@@ -93,8 +92,10 @@ export function ContactPanel({ profile }: { profile: Profile }) {
               <MapPin className="size-4" />
             </span>
             <span>
-              <span className="block text-xs text-subtle">Localisation</span>
-              <span className="block text-sm font-medium">{profile.location} · ouvert au télétravail</span>
+              <span className="block text-xs text-subtle">{t.location}</span>
+              <span className="block text-sm font-medium">
+                {profile.location} · {t.remote}
+              </span>
             </span>
           </li>
         </ul>
@@ -126,20 +127,20 @@ export function ContactPanel({ profile }: { profile: Profile }) {
       <form onSubmit={onSubmit} className="relative rounded-3xl border border-line bg-card p-6 md:p-8" noValidate={false}>
         <div className="grid gap-4 sm:grid-cols-2">
           <label className="block">
-            <span className="mb-1.5 block text-sm font-medium">Nom</span>
-            <input name="name" required minLength={2} maxLength={100} autoComplete="name" className="field" placeholder="Votre nom" />
+            <span className="mb-1.5 block text-sm font-medium">{t.name}</span>
+            <input name="name" required minLength={2} maxLength={100} autoComplete="name" className="field" placeholder={t.namePlaceholder} />
           </label>
           <label className="block">
-            <span className="mb-1.5 block text-sm font-medium">E-mail</span>
-            <input name="email" type="email" required maxLength={200} autoComplete="email" className="field" placeholder="vous@entreprise.com" />
+            <span className="mb-1.5 block text-sm font-medium">{t.email}</span>
+            <input name="email" type="email" required maxLength={200} autoComplete="email" className="field" placeholder={t.emailPlaceholder} />
           </label>
         </div>
         <label className="mt-4 block">
-          <span className="mb-1.5 block text-sm font-medium">Sujet</span>
-          <input name="subject" maxLength={150} className="field" placeholder="Poste de développeur fullstack, mission…" />
+          <span className="mb-1.5 block text-sm font-medium">{t.subject}</span>
+          <input name="subject" maxLength={150} className="field" placeholder={t.subjectPlaceholder} />
         </label>
         <label className="mt-4 block">
-          <span className="mb-1.5 block text-sm font-medium">Message</span>
+          <span className="mb-1.5 block text-sm font-medium">{t.message}</span>
           <textarea
             name="message"
             required
@@ -147,7 +148,7 @@ export function ContactPanel({ profile }: { profile: Profile }) {
             maxLength={5000}
             rows={6}
             className="field resize-y"
-            placeholder="Parlez-moi de votre projet, de votre équipe, de vos délais…"
+            placeholder={t.messagePlaceholder}
           />
         </label>
         {/* Champ piège anti-spam, invisible pour les humains */}
@@ -157,7 +158,7 @@ export function ContactPanel({ profile }: { profile: Profile }) {
           <AnimatePresence mode="wait">
             {status.kind === "sent" && (
               <motion.p key="ok" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex items-center gap-2 text-sm text-ok" role="status">
-                <Check className="size-4" /> Message envoyé, merci ! Je reviens vers vous rapidement.
+                <Check className="size-4" /> {t.sent}
               </motion.p>
             )}
             {status.kind === "error" && (
@@ -172,7 +173,7 @@ export function ContactPanel({ profile }: { profile: Profile }) {
             className="ml-auto inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-accent-fg transition hover:-translate-y-0.5 disabled:opacity-60"
           >
             {status.kind === "sending" ? <Loader2 className="size-4 animate-spin" /> : <Send className="size-4" />}
-            Envoyer le message
+            {t.send}
           </button>
         </div>
       </form>

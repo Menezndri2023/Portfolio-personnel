@@ -72,7 +72,14 @@ export function MessagesInbox({
                 >
                   <span className="flex items-center justify-between gap-2">
                     <span className={cn("truncate text-sm", !m.read && "font-semibold")}>{m.name}</span>
-                    {!m.read && <span className="size-2 shrink-0 rounded-full bg-accent" />}
+                    <span className="flex shrink-0 items-center gap-1.5">
+                      {m.lang === "en" && (
+                        <span className="rounded bg-elev px-1 font-mono text-[10px] text-muted" title="Envoyé depuis la version anglaise">
+                          EN
+                        </span>
+                      )}
+                      {!m.read && <span className="size-2 rounded-full bg-accent" />}
+                    </span>
                   </span>
                   <span className="block truncate text-xs text-muted">{m.subject || m.message}</span>
                   <span className="mt-1 block text-[11px] text-subtle">{new Date(m.createdAt).toLocaleString("fr-FR")}</span>
@@ -89,7 +96,10 @@ export function MessagesInbox({
                   <p className="mt-1 text-sm text-muted">
                     {current.name} · <a className="hover:text-accent" href={`mailto:${current.email}`}>{current.email}</a>
                   </p>
-                  <p className="text-xs text-subtle">{new Date(current.createdAt).toLocaleString("fr-FR")}</p>
+                  <p className="text-xs text-subtle">
+                    {new Date(current.createdAt).toLocaleString("fr-FR")}
+                    {current.lang === "en" && " · envoyé depuis la version anglaise"}
+                  </p>
                 </div>
                 <div className="flex gap-2">
                   <a

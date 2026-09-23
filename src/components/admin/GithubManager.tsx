@@ -8,7 +8,7 @@ import { cn, formatMonth, languageColors } from "@/lib/utils";
 import { FieldGrid, Toggle, type FieldDef } from "./fields";
 import { SaveBar } from "./ui";
 
-const overrideFields: FieldDef[] = [
+export const overrideFields: FieldDef[] = [
   { key: "title", label: "Titre affiché", type: "text", placeholder: "Par défaut : nom du dépôt" },
   { key: "demoUrl", label: "Lien de démo", type: "url", placeholder: "https://… (par défaut : homepage GitHub)" },
   { key: "summary", label: "Résumé (carte)", type: "textarea", placeholder: "Par défaut : description GitHub" },

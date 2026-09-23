@@ -997,5 +997,175 @@
         "createdAt": "2023-08-10T12:14:50Z"
       }
     ]
+  },
+  "translations": {
+    "en": {
+      "profile": {
+        "title": "Fullstack JavaScript Developer",
+        "location": "Morocco",
+        "availabilityLabel": "Available for a job or a freelance assignment",
+        "headline": "I build complete web products, from the interface to the API.",
+        "rotatingRoles": [
+          "React.js",
+          "Next.js",
+          "Node.js",
+          "secure REST APIs"
+        ],
+        "intro": "Fullstack developer based in Morocco, I build React / Next.js applications and secure Node.js APIs — designed for real users and shipped to production.",
+        "bio": "It all started in 2023 at GOMYCODE, with a Demo Day at the end. Since then, I have been delivering complete platforms: a multi-country car marketplace, a carpooling app with interactive maps, multilingual corporate websites. I start from a need, model the data, build the API and the interface, and take everything all the way to launch.\n\nTrained in cybersecurity by ANSSI, the French national cybersecurity agency (SecNumacadémie), I build security in from the start: JWT authentication, role management, systematic input validation. My years in customer relations taught me the essential lesson — a product is judged from the point of view of the person using it.\n\nI get up to speed quickly on an existing codebase, I document what I do, and I enjoy working hand in hand with product and design.",
+        "softSkills": [
+          "Adaptability to shifting priorities",
+          "Autonomy and curiosity",
+          "Fast learner",
+          "Problem solving",
+          "Teamwork across product / design / dev",
+          "Clear communication",
+          "User focus"
+        ],
+        "languages": [
+          {
+            "name": "French",
+            "level": "Native"
+          },
+          {
+            "name": "English",
+            "level": "Technical"
+          }
+        ],
+        "photoCaption": "GOMYCODE Demo Day — where it all began."
+      },
+      "services": {
+        "svc-fullstack": {
+          "title": "Fullstack web applications",
+          "description": "From data model to screen: React and Next.js on the client, Node.js and Express on the server, MongoDB for persistence."
+        },
+        "svc-api": {
+          "title": "Secure REST APIs",
+          "description": "JWT authentication, roles and permissions, input validation: security best practices applied from the very first route."
+        },
+        "svc-ui": {
+          "title": "Responsive interfaces",
+          "description": "Fast, readable interfaces on mobile and desktop alike, built component by component."
+        },
+        "svc-legacy": {
+          "title": "Taking over and evolving code",
+          "description": "Debugging, refactoring, upgrades: I take over an existing project and move it forward without breaking anything."
+        }
+      },
+      "skills": {
+        "sk-front": {
+          "description": "Modern, accessible and responsive interfaces."
+        },
+        "sk-back": {
+          "description": "Robust APIs and well-modeled data.",
+          "items": [
+            "Node.js",
+            "Express.js",
+            "REST APIs",
+            "JWT authentication",
+            "MongoDB",
+            "Mongoose"
+          ]
+        },
+        "sk-tools": {
+          "title": "Tools & practices",
+          "description": "What keeps a project maintainable over time.",
+          "items": [
+            "Git & GitHub",
+            "Debugging",
+            "Web architecture",
+            "Cybersecurity"
+          ]
+        },
+        "sk-learning": {
+          "title": "Currently learning",
+          "description": "What I am bringing into my projects right now."
+        }
+      },
+      "experiences": {
+        "exp-fullstack": {
+          "role": "Fullstack Developer",
+          "company": "Independent projects",
+          "period": "2024 — present",
+          "location": "Morocco · remote",
+          "summary": "Designing and delivering complete web platforms, from functional scoping to deployment.",
+          "highlights": [
+            "Car marketplace (sales, rentals, import/export): Node.js / Express API, MongoDB, seller and admin areas",
+            "Carpooling platform: JWT authentication, role management, bookings and interactive map",
+            "Advanced search and multi-criteria filters in both the API and the interface",
+            "Route protection, input validation, continuous code refactoring"
+          ]
+        },
+        "exp-audit": {
+          "role": "Security audit contractor",
+          "company": "Contract assignments",
+          "summary": "Assessing system security and guiding organizations toward best practices.",
+          "highlights": [
+            "Conducting security audits",
+            "Best-practice recommendations tailored to each organization"
+          ]
+        },
+        "exp-support": {
+          "role": "Customer relations & user support",
+          "location": "Abidjan, Côte d'Ivoire",
+          "summary": "Supporting customers by phone, email and chat, using CRM tools.",
+          "highlights": [
+            "Handling requests and complaints, solving user issues",
+            "Oral and written communication, managing priorities and pressure"
+          ]
+        }
+      },
+      "education": {
+        "edu-gomycode": {
+          "title": "Full-Stack JavaScript Developer",
+          "period": "Jul. 2023 — Feb. 2024",
+          "highlights": [
+            "React.js, JavaScript ES6+, Node.js, Express.js, REST APIs",
+            "MongoDB (NoSQL), Git & GitHub, collaborative project work"
+          ]
+        },
+        "edu-anssi": {
+          "title": "Cybersecurity",
+          "school": "SecNumacadémie — ANSSI (France)",
+          "highlights": [
+            "Overview of information systems security",
+            "Authentication security",
+            "Internet security",
+            "Workstation security and working on the go"
+          ]
+        }
+      },
+      "projects": {},
+      "repoOverrides": {
+        "vit-auto": {
+          "summary": "International car marketplace: vehicle sales, rentals and import/export, on the web and as a mobile app.",
+          "description": "VIT AUTO brings vehicle buyers, sellers and rental companies together on a single platform, designed for multiple countries, currencies and languages (FR / EN / AR).\n\n### What I built\n\n- **Node.js / Express REST API** split by business domain (controller, service, routes)\n- **JWT authentication** with seller and administrator roles, dedicated areas and listing moderation\n- **Advanced search** and multi-criteria filters in both the API and the interface\n- **Dashboards** and statistics for sellers and administrators\n- **iOS and Android apps** from the same React codebase thanks to Capacitor\n- Background jobs (Redis / BullMQ), input validation, rate limiting\n\n### Stack\n\nReact 19 + Vite, Node.js / Express, MongoDB, Redis, Capacitor — deployed on Vercel and Railway."
+        },
+        "NationalSecurityProgram": {
+          "title": "PSN — National Security Program",
+          "summary": "Emergency management and rescue coordination infrastructure designed for African states.",
+          "description": "PSN is a *Computer-Aided Dispatch* infrastructure: citizen reporting, command center, field app, medical coordination, crisis management and analytics, with strict RBAC access and mandatory human oversight."
+        },
+        "vit-global-technologies": {
+          "summary": "Official multilingual website (FR / EN / AR) with a back office, appointment booking, quotes and job applications."
+        },
+        "covApp": {
+          "title": "CovApp — Carpooling",
+          "summary": "Carpooling platform: trip publishing, seat booking and an interactive map, on a JWT-secured API.",
+          "description": "CovApp connects drivers and passengers.\n\n### Features\n\n- Sign-up, login and **JWT authentication**, private routes on the client\n- **Trip publishing**, filtered search and seat booking\n- Booking tracking and profile management\n- **Interactive map** of trips with Leaflet\n- Responsive interface for mobile and desktop\n\n### Architecture\n\nReact front end (React Router, Axios) and Node.js / Express back end organized into controllers, middlewares and routes."
+        },
+        "african-foods": {
+          "summary": "React app for discovering African cuisine: dishes sorted by country, shopping cart and geolocation.",
+          "description": "African Foods puts the continent's culinary richness one click away: Senegalese mafé, Cameroonian ndolé, Ivorian attiéké… Dishes are sorted by country and can be added to the cart, with a search for nearby restaurants.\n\nOne of my first React projects: components, routing and CSS Modules."
+        },
+        "family-shopping": {
+          "summary": "React online store for the whole family: men's, women's and kids' catalogs, cart and checkout flow."
+        }
+      },
+      "settings": {
+        "seoTitle": "Manassé N'dri — Fullstack JavaScript Developer",
+        "seoDescription": "Fullstack React.js, Next.js and Node.js developer based in Morocco. Complete web applications, secure REST APIs, projects shipped to production."
+      }
+    }
   }
 }

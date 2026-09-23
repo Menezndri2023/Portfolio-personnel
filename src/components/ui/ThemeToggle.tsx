@@ -36,13 +36,19 @@ export function useTheme(): Theme {
   );
 }
 
-export function ThemeToggle({ className = "" }: { className?: string }) {
+export function ThemeToggle({
+  className = "",
+  labels = { toLight: "Passer au thème clair", toDark: "Passer au thème sombre" },
+}: {
+  className?: string;
+  labels?: { toLight: string; toDark: string };
+}) {
   const theme = useTheme();
   return (
     <button
       type="button"
       onClick={toggleTheme}
-      aria-label={theme === "dark" ? "Passer au thème clair" : "Passer au thème sombre"}
+      aria-label={theme === "dark" ? labels.toLight : labels.toDark}
       className={`grid size-9 place-items-center rounded-full border border-line text-muted transition hover:border-line-strong hover:text-fg ${className}`}
     >
       {theme === "dark" ? <Sun className="size-4" /> : <Moon className="size-4" />}

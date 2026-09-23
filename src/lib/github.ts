@@ -1,3 +1,4 @@
+import { getDictionary, type Locale } from "./i18n";
 import type { GithubRepo, ProjectView, RepoOverride, SiteContent } from "./types";
 
 /**
@@ -127,13 +128,13 @@ export async function getRepos(content: SiteContent): Promise<{ repos: GithubRep
 
 /* ------------------------------------------------------------------ Vues */
 
-export function repoToView(repo: GithubRepo, o: RepoOverride = {}): ProjectView {
+export function repoToView(repo: GithubRepo, o: RepoOverride = {}, locale: Locale = "fr"): ProjectView {
   const tags = o.tags?.length ? o.tags : [repo.language, ...repo.topics].filter(Boolean);
   return {
     slug: repo.name,
     source: "github",
     title: o.title || prettify(repo.name),
-    summary: o.summary || repo.description || "Projet publié sur GitHub.",
+    summary: o.summary || repo.description || getDictionary(locale).projects.defaultSummary,
     description: o.description || "",
     tags,
     image: o.image || "",
@@ -187,26 +188,31 @@ export function visibleRepos(content: SiteContent, repos: GithubRepo[]) {
  * Projets mis en avant : les N dépôts les plus récents + les dépôts épinglés
  * + les projets saisis à la main. `archive` contient tous les dépôts visibles.
  */
-export function buildProjects(content: SiteContent, repos: GithubRepo[]) {
+export function buildProjects(content: SiteContent, repos: GithubRepo[], locale: Locale = "fr") {
   const o = content.repoOverrides;
   const visible = visibleRepos(content, repos);
   const recent = visible.slice(0, Math.max(0, content.settings.githubLimit));
   const pinned = visible.filter((r) => o[r.name]?.pinned && !recent.includes(r));
 
   const showcase = [
-    ...[...recent, ...pinned].map((r) => repoToView(r, o[r.name])),
+    ...[...recent, ...pinned].map((r) => repoToView(r, o[r.name], locale)),
     ...content.projects.filter((p) => !p.hidden).map(manualToView),
   ].sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
 
-  const archive = visible.map((r) => repoToView(r, o[r.name]));
+  const archive = visible.map((r) => repoToView(r, o[r.name], locale));
   return { showcase, archive };
 }
 
-export function findProject(content: SiteContent, repos: GithubRepo[], slug: string): ProjectView | null {
+export function findProject(
+  content: SiteContent,
+  repos: GithubRepo[],
+  slug: string,
+  locale: Locale = "fr",
+): ProjectView | null {
   if (slug.startsWith("p-")) {
     const p = content.projects.find((x) => `p-${x.id}` === slug && !x.hidden);
     return p ? manualToView(p) : null;
   }
   const repo = visibleRepos(content, repos).find((r) => r.name === slug);
-  return repo ? repoToView(repo, content.repoOverrides[repo.name]) : null;
+  return repo ? repoToView(repo, content.repoOverrides[repo.name], locale) : null;
 }

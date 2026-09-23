@@ -12,11 +12,14 @@ type Line = { prompt?: string; content: ReactNode };
  * La dernière commande liste les dépôts GitHub réellement mis à jour récemment.
  */
 export function HeroTerminal({
+  recentLabel,
   name,
   title,
   commits,
   stack,
 }: {
+  /** Libellé lu par les lecteurs d'écran (le terminal lui-même est décoratif). */
+  recentLabel: string;
   name: string;
   title: string;
   commits: TerminalCommit[];
@@ -102,7 +105,7 @@ export function HeroTerminal({
         </div>
       </div>
       <p className="sr-only">
-        {name}, {title}. Dépôts récemment mis à jour : {commits.map((c) => c.repo).join(", ")}.
+        {name}, {title}. {recentLabel} : {commits.map((c) => c.repo).join(", ")}.
       </p>
     </motion.div>
   );

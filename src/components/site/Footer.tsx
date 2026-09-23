@@ -1,8 +1,10 @@
 import { ArrowUp } from "lucide-react";
+import { getDictionary, type Locale } from "@/lib/i18n";
 import type { Profile } from "@/lib/types";
 import { GithubIcon, LinkedinIcon, XIcon } from "../ui/Icon";
 
-export function Footer({ profile }: { profile: Profile }) {
+export function Footer({ locale, profile }: { locale: Locale; profile: Profile }) {
+  const t = getDictionary(locale).footer;
   const year = new Date().getFullYear();
   const socials = [
     { href: profile.socials.github, label: "GitHub", Icon: GithubIcon },
@@ -14,7 +16,7 @@ export function Footer({ profile }: { profile: Profile }) {
     <footer className="border-t border-line">
       <div className="container-page flex flex-col items-center justify-between gap-6 py-10 text-sm text-muted md:flex-row">
         <p>
-          © {year} {profile.name}. Conçu et développé avec Next.js.
+          © {year} {profile.name}. {t.madeWith}
         </p>
         <div className="flex items-center gap-5">
           {socials.map(({ href, label, Icon }) => (
@@ -23,7 +25,7 @@ export function Footer({ profile }: { profile: Profile }) {
             </a>
           ))}
           <a href="#top" className="inline-flex items-center gap-1.5 hover:text-fg">
-            Haut de page <ArrowUp className="size-3.5" />
+            {t.top} <ArrowUp className="size-3.5" />
           </a>
         </div>
       </div>

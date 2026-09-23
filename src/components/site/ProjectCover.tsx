@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { getDictionary, type Locale } from "@/lib/i18n";
 import type { ProjectView } from "@/lib/types";
 import { cn, hueFrom } from "@/lib/utils";
 
@@ -7,10 +8,12 @@ import { cn, hueFrom } from "@/lib/utils";
  * générée (teinte stable dérivée du nom, titre et stack).
  */
 export function ProjectCover({
+  locale,
   project,
   className,
   large = false,
 }: {
+  locale: Locale;
   project: Pick<ProjectView, "slug" | "title" | "image" | "tags">;
   className?: string;
   large?: boolean;
@@ -20,7 +23,7 @@ export function ProjectCover({
       <div className={cn("relative overflow-hidden bg-card", className)}>
         <Image
           src={project.image}
-          alt={`Aperçu de ${project.title}`}
+          alt={`${getDictionary(locale).projects.previewOf} ${project.title}`}
           fill
           unoptimized={project.image.startsWith("http")}
           sizes={large ? "(min-width: 1024px) 66vw, 100vw" : "(min-width: 1024px) 33vw, 100vw"}

@@ -8,7 +8,7 @@ import { Navbar } from "@/components/site/Navbar";
 import { ProjectCover } from "@/components/site/ProjectCover";
 import { GithubIcon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
-import { getContent } from "@/lib/content";
+import { getLocalizedContent } from "@/lib/content";
 import {
   buildProjects,
   fetchLanguages,
@@ -17,34 +17,49 @@ import {
   getRepos,
   isBoilerplateReadme,
 } from "@/lib/github";
+import { getDictionary, isLocale, localePath, locales, type Locale } from "@/lib/i18n";
 import { formatMonth, languageColors } from "@/lib/utils";
 
 export const revalidate = 60;
 
-type Props = { params: Promise<{ slug: string }> };
+type Props = PageProps<"/[lang]/projets/[slug]">;
 
-async function load(slug: string) {
-  const content = await getContent();
+async function load(locale: Locale, slug: string) {
+  const content = await getLocalizedContent(locale);
   const { repos } = await getRepos(content);
-  return { content, repos, project: findProject(content, repos, decodeURIComponent(slug)) };
+  return { content, repos, project: findProject(content, repos, decodeURIComponent(slug), locale) };
 }
 
-export async function generateStaticParams() {
-  const content = await getContent();
+export async function generateStaticParams({ params }: { params: { lang: string } }) {
+  if (!isLocale(params.lang)) return [];
+  const content = await getLocalizedContent(params.lang);
   const { repos } = await getRepos(content);
   return buildProjects(content, repos).showcase.map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { project } = await load((await params).slug);
-  if (!project) return { title: "Projet introuvable" };
-  return { title: project.title, description: project.summary };
+  const { lang, slug } = await params;
+  if (!isLocale(lang)) return {};
+  const { project } = await load(lang, slug);
+  if (!project) return { title: getDictionary(lang).project.notFound };
+  const path = `/projets/${encodeURIComponent(project.slug)}`;
+  return {
+    title: project.title,
+    description: project.summary,
+    alternates: {
+      canonical: localePath(lang, path),
+      languages: Object.fromEntries(locales.map((l) => [l, localePath(l, path)])),
+    },
+  };
 }
 
 export default async function ProjectPage({ params }: Props) {
-  const { slug } = await params;
-  const { content, repos, project } = await load(slug);
+  const { lang, slug } = await params;
+  if (!isLocale(lang)) notFound();
+  const t = getDictionary(lang);
+  const { content, repos, project } = await load(lang, slug);
   if (!project) notFound();
+  const path = `/projets/${encodeURIComponent(project.slug)}`;
 
   const owner = content.settings.githubUsername;
   const isGithub = project.source === "github";
@@ -56,13 +71,15 @@ export default async function ProjectPage({ params }: Props) {
     : [[], null];
   const showReadme = readme && !isBoilerplateReadme(readme);
 
-  const { showcase } = buildProjects(content, repos);
+  const { showcase } = buildProjects(content, repos, lang);
   const idx = showcase.findIndex((p) => p.slug === project.slug);
   const next = showcase.length > 1 ? showcase[(idx + 1) % showcase.length] : null;
 
   return (
     <>
       <Navbar
+        locale={lang}
+        switchHref={localePath(lang === "fr" ? "en" : "fr", path)}
         brand={content.profile.shortName}
         email={content.profile.email}
         github={content.profile.socials.github}
@@ -71,8 +88,8 @@ export default async function ProjectPage({ params }: Props) {
       />
       <main id="top" className="pt-28 pb-24">
         <article className="container-page">
-          <Link href="/#projets" className="inline-flex items-center gap-2 text-sm text-muted transition hover:text-fg">
-            <ArrowLeft className="size-4" /> Tous les projets
+          <Link href={localePath(lang, "/#projets")} className="inline-flex items-center gap-2 text-sm text-muted transition hover:text-fg">
+            <ArrowLeft className="size-4" /> {t.project.back}
           </Link>
 
           <Reveal className="mt-8 grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
@@ -95,7 +112,7 @@ export default async function ProjectPage({ params }: Props) {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-accent-fg transition hover:-translate-y-0.5"
                 >
-                  Voir en ligne <ArrowUpRight className="size-4" />
+                  {t.project.demo} <ArrowUpRight className="size-4" />
                 </a>
               )}
               {project.repoUrl && (
@@ -105,14 +122,14 @@ export default async function ProjectPage({ params }: Props) {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 rounded-full border border-line-strong px-5 py-2.5 text-sm font-medium transition hover:border-fg"
                 >
-                  <GithubIcon className="size-4" /> Code source
+                  <GithubIcon className="size-4" /> {t.project.source}
                 </a>
               )}
             </div>
           </Reveal>
 
           <Reveal delay={0.1}>
-            <ProjectCover project={project} large className="mt-12 aspect-[21/9] rounded-3xl border border-line" />
+            <ProjectCover locale={lang} project={project} large className="mt-12 aspect-[21/9] rounded-3xl border border-line" />
           </Reveal>
 
           <div className="mt-14 grid gap-12 lg:grid-cols-[1fr_280px]">
@@ -122,7 +139,7 @@ export default async function ProjectPage({ params }: Props) {
               {showReadme && (
                 <section>
                   <h2 className="mb-6 flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-subtle">
-                    <GithubIcon className="size-4" /> README du dépôt
+                    <GithubIcon className="size-4" /> {t.project.readme}
                   </h2>
                   <div className="rounded-3xl border border-line bg-card p-6 md:p-10">
                     <Markdown repo={{ owner, name: project.slug }}>{readme}</Markdown>
@@ -131,10 +148,7 @@ export default async function ProjectPage({ params }: Props) {
               )}
 
               {!project.description && !showReadme && (
-                <p className="text-muted">
-                  La documentation détaillée de ce projet arrive bientôt. En attendant, le code source est
-                  consultable sur GitHub.
-                </p>
+                <p className="text-muted">{t.project.noDoc}</p>
               )}
             </div>
 
@@ -143,13 +157,13 @@ export default async function ProjectPage({ params }: Props) {
                 <dl className="space-y-4 text-sm">
                   <div className="flex items-center justify-between border-b border-line pb-3">
                     <dt className="flex items-center gap-2 text-muted">
-                      <CalendarClock className="size-4" /> Dernière mise à jour
+                      <CalendarClock className="size-4" /> {t.project.lastUpdate}
                     </dt>
-                    <dd>{formatMonth(project.updatedAt)}</dd>
+                    <dd>{formatMonth(project.updatedAt, lang)}</dd>
                   </div>
                   <div className="flex items-center justify-between border-b border-line pb-3">
                     <dt className="flex items-center gap-2 text-muted">
-                      <Star className="size-4" /> Étoiles
+                      <Star className="size-4" /> {t.project.stars}
                     </dt>
                     <dd>{project.stars}</dd>
                   </div>
@@ -158,7 +172,7 @@ export default async function ProjectPage({ params }: Props) {
 
               {languages.length > 0 && (
                 <div>
-                  <h2 className="mb-3 font-mono text-xs uppercase tracking-widest text-subtle">Langages</h2>
+                  <h2 className="mb-3 font-mono text-xs uppercase tracking-widest text-subtle">{t.project.languages}</h2>
                   <div className="flex h-2 overflow-hidden rounded-full bg-line">
                     {languages.map((l) => (
                       <span
@@ -188,11 +202,11 @@ export default async function ProjectPage({ params }: Props) {
 
           {next && next.slug !== project.slug && (
             <Link
-              href={`/projets/${encodeURIComponent(next.slug)}`}
+              href={localePath(lang, `/projets/${encodeURIComponent(next.slug)}`)}
               className="group mt-24 flex items-center justify-between gap-6 rounded-3xl border border-line p-8 transition hover:border-line-strong hover:bg-elev"
             >
               <span>
-                <span className="block font-mono text-xs uppercase tracking-widest text-subtle">Projet suivant</span>
+                <span className="block font-mono text-xs uppercase tracking-widest text-subtle">{t.project.next}</span>
                 <span className="mt-2 block font-display text-2xl font-semibold tracking-tight md:text-3xl">{next.title}</span>
               </span>
               <ArrowUpRight className="size-8 shrink-0 text-subtle transition group-hover:rotate-45 group-hover:text-accent" />
@@ -200,7 +214,7 @@ export default async function ProjectPage({ params }: Props) {
           )}
         </article>
       </main>
-      <Footer profile={content.profile} />
+      <Footer locale={lang} profile={content.profile} />
     </>
   );
 }

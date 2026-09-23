@@ -17,9 +17,9 @@ function Counter({ value }: { value: number }) {
   return <span ref={ref}>{n}</span>;
 }
 
-export function Stats({ items }: { items: { value: number; suffix?: string; label: string }[] }) {
+export function Stats({ label, items }: { label: string; items: { value: number; suffix?: string; label: string }[] }) {
   return (
-    <section aria-label="Chiffres clés" className="border-y border-line bg-elev/40">
+    <section aria-label={label} className="border-y border-line bg-elev/40">
       <dl className="container-page grid grid-cols-2 md:grid-cols-4">
         {items.map((s, i) => (
           <div

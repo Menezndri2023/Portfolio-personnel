@@ -1,16 +1,21 @@
 import { NextResponse } from "next/server";
 import { errorResponse } from "@/lib/admin";
 import { clientIp, rateLimit } from "@/lib/rate-limit";
+import { getDictionary, type Locale } from "@/lib/i18n";
 import { contactSchema } from "@/lib/schemas";
 import { insertMessage } from "@/lib/store";
 import { getContent } from "@/lib/content";
 
 export async function POST(req: Request) {
+  const body = (await req.json().catch(() => null)) as Record<string, unknown> | null;
+  const lang: Locale = body?.lang === "en" ? "en" : "fr";
+  const t = getDictionary(lang).contactErrors;
+
   if (!rateLimit(`contact:${clientIp(req)}`, 3, 10 * 60_000)) {
-    return NextResponse.json({ error: "Trop de messages envoyés. Réessayez un peu plus tard." }, { status: 429 });
+    return NextResponse.json({ error: t.rateLimit }, { status: 429 });
   }
 
-  const parsed = contactSchema.safeParse(await req.json().catch(() => null));
+  const parsed = contactSchema(t).safeParse(body ?? {});
   if (!parsed.success) {
     return NextResponse.json({ error: parsed.error.issues[0].message }, { status: 422 });
   }
@@ -23,6 +28,7 @@ export async function POST(req: Request) {
     ...data,
     createdAt: new Date().toISOString(),
     read: false,
+    lang,
   };
 
   try {
@@ -36,7 +42,7 @@ export async function POST(req: Request) {
 }
 
 /** Notification e-mail facultative via Resend (RESEND_API_KEY). */
-async function notifyByEmail(m: { name: string; email: string; subject: string; message: string }) {
+async function notifyByEmail(m: { name: string; email: string; subject: string; message: string; lang: Locale }) {
   const key = process.env.RESEND_API_KEY;
   if (!key) return;
   const { profile } = await getContent();
@@ -50,7 +56,7 @@ async function notifyByEmail(m: { name: string; email: string; subject: string; 
       to: [to],
       reply_to: m.email,
       subject: `Portfolio — ${m.subject || "Nouveau message"} (${m.name})`,
-      text: `${m.name} <${m.email}>\n\n${m.message}`,
+      text: `${m.name} <${m.email}>${m.lang === "en" ? " — envoyé depuis la version anglaise du site" : ""}\n\n${m.message}`,
     }),
   });
   // Resend répond en JSON même en cas d'erreur (clé invalide, destinataire non autorisé…).

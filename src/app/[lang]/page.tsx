@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import { About } from "@/components/site/About";
 import { ContactPanel } from "@/components/site/Contact";
 import { Footer } from "@/components/site/Footer";
@@ -8,22 +9,27 @@ import { Projects } from "@/components/site/Projects";
 import { Skills } from "@/components/site/Skills";
 import { Stats } from "@/components/site/Stats";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { getContent } from "@/lib/content";
+import { getLocalizedContent } from "@/lib/content";
 import { buildProjects, getRepos, prettify, visibleRepos } from "@/lib/github";
+import { getDictionary, isLocale, localePath } from "@/lib/i18n";
 import { timeAgo } from "@/lib/utils";
 
 // Régénération au plus toutes les minutes (et dès la visite suivante après une modification dans /admin).
 export const revalidate = 60;
 
-export default async function HomePage() {
-  const content = await getContent();
+export default async function HomePage({ params }: PageProps<"/[lang]">) {
+  const { lang } = await params;
+  if (!isLocale(lang)) notFound();
+  const t = getDictionary(lang);
+
+  const content = await getLocalizedContent(lang);
   const { profile, settings } = content;
   const { repos, live } = await getRepos(content);
-  const { showcase, archive } = buildProjects(content, repos);
+  const { showcase, archive } = buildProjects(content, repos, lang);
 
   const commits = visibleRepos(content, repos)
     .slice(0, 4)
-    .map((r) => ({ repo: content.repoOverrides[r.name]?.title || prettify(r.name), when: timeAgo(r.pushedAt) }));
+    .map((r) => ({ repo: content.repoOverrides[r.name]?.title || prettify(r.name), when: timeAgo(r.pushedAt, lang) }));
 
   // Aperçu « stack.json » du terminal : deux premiers groupes de compétences + ce qui est en apprentissage.
   const learning = content.skills.find((g) => g.learning);
@@ -41,48 +47,50 @@ export default async function HomePage() {
   const technologies = new Set(content.skills.filter((g) => !g.learning).flatMap((g) => g.items)).size;
 
   const stats = [
-    { value: showcase.length, label: "Projets mis en avant" },
-    { value: archive.length, label: "Dépôts publics sur GitHub" },
-    { value: Math.max(1, new Date().getFullYear() - firstYear), suffix: "+", label: "Années à coder au quotidien" },
-    { value: technologies, label: "Technologies maîtrisées" },
+    { value: showcase.length, label: t.stats.showcase },
+    { value: archive.length, label: t.stats.repos },
+    { value: Math.max(1, new Date().getFullYear() - firstYear), suffix: "+", label: t.stats.years },
+    { value: technologies, label: t.stats.technologies },
   ];
 
   return (
     <>
       <Navbar
+        locale={lang}
+        switchHref={localePath(lang === "fr" ? "en" : "fr")}
         brand={profile.shortName}
         email={profile.email}
         github={profile.socials.github}
         projects={showcase.map((p) => ({ slug: p.slug, title: p.title }))}
       />
       <main id="top">
-        <Hero profile={profile} commits={commits} stack={stack} />
-        <Stats items={stats} />
-        <About profile={profile} services={content.services} />
-        <Skills groups={content.skills} />
+        <Hero locale={lang} profile={profile} commits={commits} stack={stack} />
+        <Stats label={t.stats.aria} items={stats} />
+        <About locale={lang} profile={profile} services={content.services} />
+        <Skills locale={lang} groups={content.skills} />
 
         <section id="projets" className="py-24 md:py-32">
           <div className="container-page">
             <SectionHeading
               index="03"
-              eyebrow="Projets"
-              title="Des produits réels, en ligne et en évolution."
-              lead={`Mes ${settings.githubLimit} derniers dépôts GitHub apparaissent ici automatiquement, aux côtés des projets que j'ai choisi de mettre en avant.`}
+              eyebrow={t.projects.eyebrow}
+              title={t.projects.title}
+              lead={t.projects.lead(settings.githubLimit)}
             />
-            <Projects showcase={showcase} archive={archive} githubUrl={profile.socials.github} live={live} />
+            <Projects locale={lang} showcase={showcase} archive={archive} githubUrl={profile.socials.github} live={live} />
           </div>
         </section>
 
-        <Journey experiences={content.experiences} education={content.education} />
+        <Journey locale={lang} experiences={content.experiences} education={content.education} />
 
         <section id="contact" className="py-24 md:py-32">
           <div className="container-page">
-            <SectionHeading index="05" eyebrow="Contact" title="Construisons quelque chose de solide ensemble." />
-            <ContactPanel profile={profile} />
+            <SectionHeading index="05" eyebrow={t.contact.eyebrow} title={t.contact.title} />
+            <ContactPanel locale={lang} profile={profile} />
           </div>
         </section>
       </main>
-      <Footer profile={profile} />
+      <Footer locale={lang} profile={profile} />
     </>
   );
 }
