@@ -80,7 +80,18 @@ export function Navbar({
         )}
       >
         <nav className="container-page flex h-16 items-center justify-between gap-4" aria-label={t.main}>
-          <Link href={localePath(locale)} className="group flex items-center gap-2.5 font-display text-[15px] font-semibold tracking-tight">
+          <Link
+            href={localePath(locale)}
+            onClick={(e) => {
+              // Déjà sur l'accueil : Next.js ne rechargerait pas la page, on remonte donc au hero.
+              if (!home) return;
+              e.preventDefault();
+              setOpen(false);
+              history.replaceState(null, "", localePath(locale));
+              setActive("");
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+            className="group flex items-center gap-2.5 font-display text-[15px] font-semibold tracking-tight">
             <span className="grid size-8 place-items-center rounded-lg bg-fg font-mono text-sm font-bold text-bg transition group-hover:bg-accent">
               M
             </span>
