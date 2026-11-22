@@ -1,6 +1,8 @@
 import type { Locale } from "./i18n";
 import type {
+  Article,
   Education,
+  FaqItem,
   Experience,
   ManualProject,
   Profile,
@@ -41,6 +43,8 @@ export const TRANSLATABLE = {
   education: ["title", "school", "period", "highlights"],
   projects: ["title", "summary", "description"],
   repoOverrides: ["title", "summary", "description"],
+  faq: ["question", "answer"],
+  articles: ["title", "summary", "content"],
   settings: ["seoTitle", "seoDescription"],
 } as const satisfies {
   profile: readonly (keyof Profile)[];
@@ -50,6 +54,8 @@ export const TRANSLATABLE = {
   education: readonly (keyof Education)[];
   projects: readonly (keyof ManualProject)[];
   repoOverrides: readonly (keyof RepoOverride)[];
+  faq: readonly (keyof FaqItem)[];
+  articles: readonly (keyof Article)[];
   settings: readonly (keyof Settings)[];
 };
 
@@ -64,6 +70,8 @@ export type Translations = {
   education: Record<string, Pick2<Education, "education">>;
   projects: Record<string, Pick2<ManualProject, "projects">>;
   repoOverrides: Record<string, Pick2<Required<RepoOverride>, "repoOverrides">>;
+  faq: Record<string, Pick2<FaqItem, "faq">>;
+  articles: Record<string, Pick2<Article, "articles">>;
   settings: Pick2<Settings, "settings">;
 };
 
@@ -77,6 +85,8 @@ export const emptyTranslations = (): Translations => ({
   education: {},
   projects: {},
   repoOverrides: {},
+  faq: {},
+  articles: {},
   settings: {},
 });
 
@@ -127,6 +137,8 @@ export function localize(content: SiteContent, locale: Locale): SiteContent {
     experiences: list(content.experiences, tr.experiences, TRANSLATABLE.experiences),
     education: list(content.education, tr.education, TRANSLATABLE.education),
     projects: list(content.projects, tr.projects, TRANSLATABLE.projects),
+    faq: list(content.faq ?? [], tr.faq ?? {}, TRANSLATABLE.faq),
+    articles: list(content.articles ?? [], tr.articles ?? {}, TRANSLATABLE.articles),
     repoOverrides,
     settings: overlay(content.settings, tr.settings, TRANSLATABLE.settings),
   };

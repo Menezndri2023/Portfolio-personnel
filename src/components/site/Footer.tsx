@@ -1,10 +1,12 @@
 import { ArrowUp } from "lucide-react";
-import { getDictionary, type Locale } from "@/lib/i18n";
+import Link from "next/link";
+import { getDictionary, localePath, type Locale } from "@/lib/i18n";
 import type { Profile } from "@/lib/types";
 import { GithubIcon, LinkedinIcon, XIcon } from "../ui/Icon";
 
 export function Footer({ locale, profile }: { locale: Locale; profile: Profile }) {
-  const t = getDictionary(locale).footer;
+  const dict = getDictionary(locale);
+  const t = dict.footer;
   const year = new Date().getFullYear();
   const socials = [
     { href: profile.socials.github, label: "GitHub", Icon: GithubIcon },
@@ -18,7 +20,12 @@ export function Footer({ locale, profile }: { locale: Locale; profile: Profile }
         <p>
           © {year} {profile.name}. {t.madeWith}
         </p>
-        <div className="flex items-center gap-5">
+        <div className="flex flex-wrap items-center justify-center gap-5">
+          {dict.nav.pages.map((p) => (
+            <Link key={p.path} href={localePath(locale, p.path)} className="hover:text-fg">
+              {p.label}
+            </Link>
+          ))}
           {socials.map(({ href, label, Icon }) => (
             <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="hover:text-fg">
               <Icon className="size-4" />

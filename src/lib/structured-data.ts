@@ -1,5 +1,5 @@
 import { getDictionary, localePath, type Locale } from "./i18n";
-import type { ProjectView, SiteContent } from "./types";
+import type { Article, ProjectView, SiteContent } from "./types";
 
 /**
  * Données structurées Schema.org.
@@ -118,6 +118,126 @@ export function projectJsonLd(project: ProjectView, content: SiteContent, locale
           { "@type": "ListItem", position: 3, name: project.title, item: url },
         ],
       },
+    ],
+  };
+}
+
+function breadcrumb(locale: Locale, base: string, items: { name: string; path: string }[]) {
+  const t = getDictionary(locale).seo;
+  return {
+    "@type": "BreadcrumbList",
+    itemListElement: [{ name: t.home, path: "/" }, ...items].map((item, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: item.name,
+      item: abs(base, localePath(locale, item.path)),
+    })),
+  };
+}
+
+/** Page Services : les services proposés (fournis par la personne) et la FAQ visible sur la page. */
+export function servicesJsonLd(content: SiteContent, locale: Locale, base: string, title: string, description: string) {
+  if (!base) return null;
+  const url = abs(base, localePath(locale, "/services"));
+  const provider = { "@type": "Person", "@id": personId(base), name: content.profile.name };
+  const faq = content.faq ?? [];
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": `${url}#page`,
+        url,
+        name: title,
+        description,
+        inLanguage: locale,
+        isPartOf: { "@id": `${base}/#website` },
+        about: provider,
+      },
+      ...content.services.map((s) => ({
+        "@type": "Service",
+        name: s.title,
+        description: s.description,
+        provider,
+        areaServed: ["Europe", "Africa", "North America"],
+        availableLanguage: ["fr", "en"],
+      })),
+      ...(faq.length
+        ? [
+            {
+              "@type": "FAQPage",
+              "@id": `${url}#faq`,
+              mainEntity: faq.map((q) => ({
+                "@type": "Question",
+                name: q.question,
+                acceptedAnswer: { "@type": "Answer", text: q.answer },
+              })),
+            },
+          ]
+        : []),
+      breadcrumb(locale, base, [{ name: getDictionary(locale).seo.services, path: "/services" }]),
+    ],
+  };
+}
+
+function articleUrl(base: string, locale: Locale, a: Article) {
+  return abs(base, localePath(locale, `/articles/${a.slug}`));
+}
+
+/** Liste des articles : un Blog dont chaque entrée est un BlogPosting. */
+export function articlesIndexJsonLd(content: SiteContent, articles: Article[], locale: Locale, base: string, title: string, description: string) {
+  if (!base) return null;
+  const url = abs(base, localePath(locale, "/articles"));
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Blog",
+        "@id": `${url}#blog`,
+        url,
+        name: title,
+        description,
+        inLanguage: locale,
+        author: { "@type": "Person", "@id": personId(base), name: content.profile.name },
+        blogPost: articles.map((a) => ({
+          "@type": "BlogPosting",
+          headline: a.title,
+          url: articleUrl(base, locale, a),
+          datePublished: a.date,
+        })),
+      },
+      breadcrumb(locale, base, [{ name: getDictionary(locale).seo.articles, path: "/articles" }]),
+    ],
+  };
+}
+
+/** Article : BlogPosting signé par la personne, avec fil d'Ariane. */
+export function articleJsonLd(article: Article, content: SiteContent, locale: Locale, base: string) {
+  if (!base) return null;
+  const url = articleUrl(base, locale, article);
+  const image = article.cover ? (article.cover.startsWith("http") ? article.cover : `${base}${article.cover}`) : undefined;
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BlogPosting",
+        "@id": `${url}#article`,
+        headline: article.title,
+        description: article.summary,
+        url,
+        mainEntityOfPage: url,
+        inLanguage: locale,
+        datePublished: article.date,
+        keywords: article.tags.join(", "),
+        ...(image ? { image } : {}),
+        author: { "@type": "Person", "@id": personId(base), name: content.profile.name, url: abs(base, localePath(locale)) },
+        publisher: { "@type": "Person", "@id": personId(base), name: content.profile.name },
+        isPartOf: { "@id": `${abs(base, localePath(locale, "/articles"))}#blog` },
+      },
+      breadcrumb(locale, base, [
+        { name: getDictionary(locale).seo.articles, path: "/articles" },
+        { name: article.title, path: `/articles/${article.slug}` },
+      ]),
     ],
   };
 }

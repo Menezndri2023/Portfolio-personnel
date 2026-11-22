@@ -1,3 +1,4 @@
+import { publishedArticles } from "@/lib/articles";
 import { getContent, getLocalizedContent } from "@/lib/content";
 import { buildProjects, getRepos } from "@/lib/github";
 import { getDictionary, localePath } from "@/lib/i18n";
@@ -46,8 +47,19 @@ export async function GET() {
     "",
     "## Services",
     "",
+    `Details, engagement models and FAQ: ${url(localePath("en", "/services"))}`,
+    "",
     ...services.map((s) => `- ${s.title}: ${s.description}`),
     "",
+    ...((content.faq ?? []).length ? ["## FAQ", "", ...(content.faq ?? []).flatMap((q) => [`- ${q.question}`, `  ${q.answer}`]), ""] : []),
+    ...(publishedArticles(content).length
+      ? [
+          "## Articles and case studies",
+          "",
+          ...publishedArticles(content).map((a) => `- [${a.title}](${url(localePath("en", `/articles/${a.slug}`))}) (${a.date}): ${a.summary}`),
+          "",
+        ]
+      : []),
     "## Projects",
     "",
     ...showcase.map(

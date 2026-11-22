@@ -17,6 +17,7 @@ export function Navbar({
   github,
   projects,
   home = true,
+  current,
 }: {
   locale: Locale;
   /** Même page dans l'autre langue. */
@@ -27,6 +28,8 @@ export function Navbar({
   projects: PaletteProject[];
   /** Sur la page d'accueil, les liens pointent vers des ancres ; ailleurs vers /#ancre. */
   home?: boolean;
+  /** Page distincte affichée (« /services », « /articles »), pour la marquer comme active. */
+  current?: string;
 }) {
   const dict = getDictionary(locale);
   const t = dict.nav;
@@ -119,6 +122,23 @@ export function Navbar({
                 </a>
               </li>
             ))}
+            {t.pages.map((p) => {
+              const isCurrent = current === p.path;
+              return (
+                <li key={p.path} className="hidden lg:block">
+                  <Link
+                    href={localePath(locale, p.path)}
+                    aria-current={isCurrent ? "page" : undefined}
+                    className={cn(
+                      "relative rounded-full px-3.5 py-2 text-sm transition-colors",
+                      isCurrent ? "bg-accent-soft text-fg" : "text-muted hover:text-fg",
+                    )}
+                  >
+                    {p.label}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
 
           <div className="flex items-center gap-2">
@@ -176,6 +196,18 @@ export function Navbar({
                     >
                       {s.label}
                     </a>
+                  </li>
+                ))}
+                {t.pages.map((p) => (
+                  <li key={p.path}>
+                    <Link
+                      href={localePath(locale, p.path)}
+                      onClick={() => setOpen(false)}
+                      aria-current={current === p.path ? "page" : undefined}
+                      className="block py-3 font-display text-2xl font-medium tracking-tight"
+                    >
+                      {p.label}
+                    </Link>
                   </li>
                 ))}
               </ul>

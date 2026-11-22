@@ -98,6 +98,28 @@ export type ManualProject = {
   status?: ProjectStatus | "";
 };
 
+/** Question fréquente (page Services). */
+export type FaqItem = {
+  id: string;
+  question: string;
+  answer: string;
+};
+
+/** Article ou étude de cas (Markdown), publié sous /articles/[slug]. */
+export type Article = {
+  id: string;
+  /** Adresse de l'article, identique en français et en anglais (ex. « vitpay-ledger »). */
+  slug: string;
+  title: string;
+  summary: string;
+  content: string;
+  /** Date de publication, AAAA-MM-JJ. */
+  date: string;
+  tags: string[];
+  cover: string;
+  published: boolean;
+};
+
 /** Surcharges éditoriales appliquées à un dépôt GitHub synchronisé. */
 export type RepoOverride = {
   title?: string;
@@ -139,6 +161,8 @@ export type SiteContent = {
   education: Education[];
   projects: ManualProject[];
   repoOverrides: Record<string, RepoOverride>;
+  faq: FaqItem[];
+  articles: Article[];
   settings: Settings;
   githubSnapshot: RepoSnapshot | null;
   /** Version anglaise des textes (surcouche du français, voir lib/translations.ts). */

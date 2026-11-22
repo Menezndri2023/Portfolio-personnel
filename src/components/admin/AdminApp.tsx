@@ -6,11 +6,13 @@ import {
   FolderGit2,
   FolderPlus,
   GraduationCap,
+  HelpCircle,
   Inbox,
   LayoutDashboard,
   Layers,
   Loader2,
   LogOut,
+  Newspaper,
   Settings,
   Sparkles,
   User,
@@ -19,7 +21,7 @@ import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import type { EditableSection } from "@/lib/schemas";
 import { TRANSLATABLE, type TranslatableSection, type Translations } from "@/lib/translations";
-import type { Education, Experience, ManualProject, Message, Service, SiteContent, SkillGroup } from "@/lib/types";
+import type { Article, Education, Experience, FaqItem, ManualProject, Message, Service, SiteContent, SkillGroup } from "@/lib/types";
 import { cn, uid } from "@/lib/utils";
 import { ThemeToggle } from "../ui/ThemeToggle";
 import { CollectionEditor } from "./CollectionEditor";
@@ -39,6 +41,8 @@ type Tab =
   | "education"
   | "github"
   | "projects"
+  | "faq"
+  | "articles"
   | "messages"
   | "settings";
 
@@ -51,6 +55,8 @@ const NAV: { id: Tab; label: string; icon: typeof User }[] = [
   { id: "education", label: "Formation", icon: GraduationCap },
   { id: "github", label: "Projets GitHub", icon: FolderGit2 },
   { id: "projects", label: "Projets manuels", icon: FolderPlus },
+  { id: "faq", label: "Questions fréquentes", icon: HelpCircle },
+  { id: "articles", label: "Articles", icon: Newspaper },
   { id: "messages", label: "Messages", icon: Inbox },
   { id: "settings", label: "Paramètres", icon: Settings },
 ];
@@ -150,6 +156,22 @@ const PROJECT_FIELDS: FieldDef[] = [
   { key: "description", label: "Description détaillée (Markdown)", type: "markdown" },
 ];
 
+const FAQ_FIELDS: FieldDef[] = [
+  { key: "question", label: "Question", type: "text", full: true },
+  { key: "answer", label: "Réponse", type: "textarea", help: "Réponse factuelle et courte : elle est aussi lue par les moteurs de recherche et les assistants IA." },
+];
+
+const ARTICLE_FIELDS: FieldDef[] = [
+  { key: "title", label: "Titre", type: "text", full: true },
+  { key: "slug", label: "Adresse (slug)", type: "text", placeholder: "mon-article", help: "Minuscules, chiffres et tirets. L'article sera publié sous /articles/<adresse>. Évitez de la changer après publication." },
+  { key: "date", label: "Date de publication", type: "text", placeholder: "AAAA-MM-JJ" },
+  { key: "summary", label: "Résumé (liste et moteurs de recherche)", type: "textarea" },
+  { key: "tags", label: "Mots-clés", type: "tags", help: "Un mot-clé identique au titre d'un projet (ex. « VITPAY ») affiche un lien vers ce projet." },
+  { key: "cover", label: "Image de couverture", type: "url", full: true, help: "Optionnelle : /images/… ou https://…" },
+  { key: "published", label: "Publié", type: "toggle", full: true, help: "Un article non publié n'apparaît nulle part sur le site." },
+  { key: "content", label: "Contenu (Markdown)", type: "markdown", placeholder: "## Contexte\n…" },
+];
+
 const SETTINGS_SECTIONS: FieldSection[] = [
   {
     title: "GitHub",
@@ -247,7 +269,7 @@ export function AdminApp() {
   /** Onglet en mode anglais (null pour les onglets sans texte à traduire). */
   const translation = (() => {
     if (editLang !== "en") return null;
-    const collection = <S extends "services" | "skills" | "experiences" | "education" | "projects">(
+    const collection = <S extends "services" | "skills" | "experiences" | "education" | "projects" | "faq" | "articles">(
       section: S,
       title: string,
       fields: FieldDef[],
@@ -289,6 +311,10 @@ export function AdminApp() {
         return collection("education", "Formation", EDUCATION_FIELDS, (e) => e.title);
       case "projects":
         return collection("projects", "Projets manuels", PROJECT_FIELDS, (p) => p.title);
+      case "faq":
+        return collection("faq", "Questions fréquentes", FAQ_FIELDS, (q) => q.question);
+      case "articles":
+        return collection("articles", "Articles", ARTICLE_FIELDS, (a) => a.title);
       case "github":
         return (
           <TranslateGithub
@@ -495,6 +521,44 @@ export function AdminApp() {
                 })}
                 fields={PROJECT_FIELDS}
                 onSave={(items) => save("projects", items)}
+              />
+            )}
+
+            {tab === "faq" && (
+              <CollectionEditor<FaqItem>
+                title="Questions fréquentes"
+                description="Affichées sur la page Services (et dans les données structurées)."
+                items={content.faq ?? []}
+                addLabel="Nouvelle question"
+                itemTitle={(q) => q.question}
+                createItem={() => ({ id: uid("faq"), question: "", answer: "" })}
+                fields={FAQ_FIELDS}
+                onSave={(items) => save("faq", items)}
+              />
+            )}
+
+            {tab === "articles" && (
+              <CollectionEditor<Article>
+                title="Articles"
+                description="Études de cas et retours d'expérience, publiés sous /articles."
+                items={content.articles ?? []}
+                addLabel="Nouvel article"
+                itemTitle={(a) => a.title}
+                itemSubtitle={(a) => `${a.date} · /articles/${a.slug}`}
+                isHidden={(a) => !a.published}
+                createItem={() => ({
+                  id: uid("art"),
+                  slug: "",
+                  title: "",
+                  summary: "",
+                  content: "",
+                  date: new Date().toISOString().slice(0, 10),
+                  tags: [],
+                  cover: "",
+                  published: false,
+                })}
+                fields={ARTICLE_FIELDS}
+                onSave={(items) => save("articles", items)}
               />
             )}
 

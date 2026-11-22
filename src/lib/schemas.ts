@@ -84,6 +84,20 @@ const manualProject = z.object({
   status,
 });
 
+const faqItem = z.object({ id, question: text(300).min(1), answer: text(1500) });
+
+const article = z.object({
+  id,
+  slug: z.string().trim().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Adresse invalide : minuscules, chiffres et tirets (ex. mon-article)").max(100),
+  title: text(200).min(1),
+  summary: text(400),
+  content: longText(40000),
+  date: z.string().trim().regex(/^\d{4}-\d{2}-\d{2}$/, "Date au format AAAA-MM-JJ"),
+  tags: list(12, 40),
+  cover: safeUrl,
+  published: z.boolean(),
+});
+
 const repoOverride = z.object({
   title: text(160).optional(),
   summary: text(400).optional(),
@@ -134,6 +148,8 @@ const translations = z.object({
     ),
     education: byId(education.pick({ title: true, school: true, period: true, highlights: true })),
     projects: byId(manualProject.pick({ title: true, summary: true, description: true })),
+    faq: byId(faqItem.pick({ question: true, answer: true })),
+    articles: byId(article.pick({ title: true, summary: true, content: true })),
     repoOverrides: byId(z.object({ title: text(160), summary: text(400), description: longText(10000) })),
     settings: settings.pick({ seoTitle: true, seoDescription: true }).partial(),
   }),
@@ -148,6 +164,11 @@ export const sectionSchemas = {
   education: z.array(education).max(40),
   projects: z.array(manualProject).max(60),
   repoOverrides: z.record(z.string().max(100), repoOverride),
+  faq: z.array(faqItem).max(40),
+  articles: z
+    .array(article)
+    .max(200)
+    .refine((items) => new Set(items.map((a) => a.slug)).size === items.length, "Deux articles ont la même adresse"),
   settings,
   translations,
 } satisfies Partial<Record<ContentSection, z.ZodType>>;
