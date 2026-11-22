@@ -11,6 +11,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
+    "@vercel/speed-insights": "^2.1.0",
     "jose": "^6.2.12",
     "lucide-react": "^1.47.0",
     "mongodb": "^7.6.0",

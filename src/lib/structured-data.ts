@@ -16,6 +16,12 @@ function personId(base: string) {
   return `${base}/#person`;
 }
 
+/** Autres formes du nom (nom complet du CV, nom court), sans doublon. */
+function alternateNames(profile: SiteContent["profile"]) {
+  const names = [...new Set([profile.fullName, profile.shortName].filter((n): n is string => Boolean(n) && n !== profile.name))];
+  return names.length ? { alternateName: names.length === 1 ? names[0] : names } : {};
+}
+
 /** Personne : identité, métier, réseaux, compétences affichées. */
 function person(content: SiteContent, locale: Locale, base: string) {
   const { profile, skills, experiences } = content;
@@ -27,7 +33,7 @@ function person(content: SiteContent, locale: Locale, base: string) {
     "@type": "Person",
     "@id": personId(base),
     name: profile.name,
-    ...(profile.shortName && profile.shortName !== profile.name ? { alternateName: profile.shortName } : {}),
+    ...alternateNames(profile),
     jobTitle: profile.title,
     description: profile.intro,
     url: abs(base, localePath(locale)),

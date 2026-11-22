@@ -4,7 +4,8 @@ import { buildProjects, getRepos } from "@/lib/github";
 import { alternateLanguages, localePath, locales } from "@/lib/i18n";
 import { siteUrl } from "@/lib/site";
 
-export const revalidate = 3600;
+// Généré à chaque requête : toujours aligné sur le contenu de l'admin (lecture légère, dépôts GitHub en cache 1 h).
+export const dynamic = "force-dynamic";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const content = await getContent();

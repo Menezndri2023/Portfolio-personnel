@@ -61,7 +61,8 @@ const PROFILE_SECTIONS: FieldSection[] = [
   {
     title: "Identité",
     fields: [
-      { key: "name", label: "Nom complet", type: "text" },
+      { key: "name", label: "Nom affiché", type: "text" },
+      { key: "fullName", label: "Nom complet (état civil)", type: "text", help: "Utilisé par les moteurs de recherche pour relier les deux formes de votre nom (CV, LinkedIn)." },
       { key: "shortName", label: "Nom court (navigation)", type: "text" },
       { key: "title", label: "Titre professionnel", type: "text" },
       { key: "location", label: "Localisation", type: "text" },

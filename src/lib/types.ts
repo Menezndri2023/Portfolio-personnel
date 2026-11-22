@@ -15,6 +15,8 @@ export type SocialLinks = {
 
 export type Profile = {
   name: string;
+  /** Nom complet (état civil), s'il diffère du nom affiché : repris dans les données structurées. */
+  fullName?: string;
   shortName: string;
   title: string;
   /** Mots qui défilent dans le hero ("React.js", "Next.js"…). */

@@ -11,13 +11,11 @@ export async function requireAdmin(): Promise<NextResponse | null> {
 }
 
 /**
- * Régénère tout le site public après une modification : les pages, mais aussi
- * le sitemap, robots.txt et le manifeste, qui ne dépendent pas du layout
- * (sinon ils gardent l'URL ou la liste de projets du moment du build).
+ * Régénère les pages du site public après une modification.
+ * (sitemap.xml, robots.txt, manifest et llms.txt sont générés à chaque requête.)
  */
 export function revalidateSite() {
   revalidatePath("/", "layout");
-  for (const file of ["/sitemap.xml", "/robots.txt", "/manifest.webmanifest"]) revalidatePath(file);
 }
 
 export function errorResponse(err: unknown) {

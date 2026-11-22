@@ -1,7 +1,8 @@
 import type { MetadataRoute } from "next";
 import { getContent } from "@/lib/content";
 
-export const revalidate = 3600;
+// Généré à chaque requête : toujours aligné sur le contenu de l'admin (lecture légère, dépôts GitHub en cache 1 h).
+export const dynamic = "force-dynamic";
 
 export default async function manifest(): Promise<MetadataRoute.Manifest> {
   const { profile, settings } = await getContent();

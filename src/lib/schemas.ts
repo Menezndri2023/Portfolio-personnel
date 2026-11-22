@@ -22,6 +22,7 @@ const status = z.union([z.literal(""), z.enum(PROJECT_STATUSES)]).optional();
 
 const profile = z.object({
   name: text(120).min(1),
+  fullName: text(160).optional(),
   shortName: text(80),
   title: text(120),
   rotatingRoles: list(10, 60),

@@ -1,6 +1,7 @@
 {
   "profile": {
     "name": "Manassé N'Dri",
+    "fullName": "Manassé N'Dri N'Guessan",
     "shortName": "Manassé N'Dri",
     "title": "Développeur Full Stack · Ingénierie logicielle & SaaS",
     "rotatingRoles": [
@@ -282,7 +283,8 @@
       "featured": true,
       "showReadme": false,
       "status": "production",
-      "pinned": true
+      "pinned": true,
+      "image": "/images/projects/vit-auto.webp"
     },
     "NationalSecurityProgram": {
       "title": "PSN — Programme de Sécurité Nationale",
@@ -316,7 +318,8 @@
       "status": "production",
       "demoUrl": "https://vit-global.tech",
       "showReadme": false,
-      "description": "Site officiel de VIT GLOBAL TECHNOLOGIES GROUP : présentation de l'entreprise, des services, des filiales et des réalisations, avec de vrais parcours de conversion.\n\n### Ce que j'ai construit\n\n- **Next.js (App Router) + TypeScript**, design system Tailwind CSS v4\n- **Multilingue FR / EN / AR** avec next-intl, arabe en RTL natif\n- Formulaires **contact, devis, prise de rendez-vous, candidatures et partenariats**, enregistrés en base (Prisma)\n- **Back-office** protégé qui affiche les soumissions de chaque formulaire\n\n### État\n\nEn ligne sur vit-global.tech. Pas encore connectés : passerelle de paiement, génération de PDF, CRM externe, assistant IA relié à un LLM et authentification complète des espaces client et partenaire."
+      "description": "Site officiel de VIT GLOBAL TECHNOLOGIES GROUP : présentation de l'entreprise, des services, des filiales et des réalisations, avec de vrais parcours de conversion.\n\n### Ce que j'ai construit\n\n- **Next.js (App Router) + TypeScript**, design system Tailwind CSS v4\n- **Multilingue FR / EN / AR** avec next-intl, arabe en RTL natif\n- Formulaires **contact, devis, prise de rendez-vous, candidatures et partenariats**, enregistrés en base (Prisma)\n- **Back-office** protégé qui affiche les soumissions de chaque formulaire\n\n### État\n\nEn ligne sur vit-global.tech. Pas encore connectés : passerelle de paiement, génération de PDF, CRM externe, assistant IA relié à un LLM et authentification complète des espaces client et partenaire.",
+      "image": "/images/projects/vit-global-technologies.webp"
     },
     "covApp": {
       "title": "CovApp — Covoiturage",
@@ -424,7 +427,8 @@
       ],
       "demoUrl": "https://margokit.com",
       "showReadme": false,
-      "status": "production"
+      "status": "production",
+      "image": "/images/projects/margokit.webp"
     },
     "Portfolio-personnel": {
       "title": "Portfolio — manasse.dev",

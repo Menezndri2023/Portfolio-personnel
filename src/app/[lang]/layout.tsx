@@ -1,3 +1,5 @@
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import { RootHtml } from "@/components/RootHtml";
@@ -58,5 +60,12 @@ export const viewport: Viewport = {
 export default async function SiteLayout({ children, params }: LayoutProps<"/[lang]">) {
   const { lang } = await params;
   if (!isLocale(lang)) notFound();
-  return <RootHtml lang={lang}>{children}</RootHtml>;
+  return (
+    <RootHtml lang={lang}>
+      {children}
+      {/* Mesure d'audience et Core Web Vitals réels (sans cookie), sur le site public uniquement. */}
+      <Analytics />
+      <SpeedInsights />
+    </RootHtml>
+  );
 }
