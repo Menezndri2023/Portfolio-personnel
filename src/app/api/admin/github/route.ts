@@ -1,6 +1,6 @@
-import { revalidatePath, revalidateTag } from "next/cache";
+import { revalidateTag } from "next/cache";
 import { NextResponse } from "next/server";
-import { errorResponse, requireAdmin } from "@/lib/admin";
+import { errorResponse, requireAdmin, revalidateSite } from "@/lib/admin";
 import { GITHUB_TAG, fetchRepos } from "@/lib/github";
 import { readContent, writeContent } from "@/lib/store";
 
@@ -33,7 +33,7 @@ export async function POST() {
     const syncedAt = new Date().toISOString();
     await writeContent({ ...content, githubSnapshot: { syncedAt, repos } });
     revalidateTag(GITHUB_TAG, { expire: 0 });
-    revalidatePath("/", "layout");
+    revalidateSite();
     return NextResponse.json({ ok: true, count: repos.length, syncedAt });
   } catch (err) {
     return errorResponse(err);

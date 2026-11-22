@@ -1,6 +1,8 @@
 import type { MetadataRoute } from "next";
 import { getContent } from "@/lib/content";
 
+export const revalidate = 3600;
+
 export default async function manifest(): Promise<MetadataRoute.Manifest> {
   const { profile, settings } = await getContent();
   return {

@@ -1,6 +1,5 @@
-import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
-import { errorResponse, requireAdmin } from "@/lib/admin";
+import { errorResponse, requireAdmin, revalidateSite } from "@/lib/admin";
 import { sectionSchemas, type EditableSection } from "@/lib/schemas";
 import { readContent, storeKind, writeContent } from "@/lib/store";
 
@@ -37,7 +36,7 @@ export async function PUT(req: Request) {
   try {
     const content = await readContent();
     await writeContent({ ...content, [section]: parsed.data });
-    revalidatePath("/", "layout");
+    revalidateSite();
     return NextResponse.json({ ok: true });
   } catch (err) {
     return errorResponse(err);
