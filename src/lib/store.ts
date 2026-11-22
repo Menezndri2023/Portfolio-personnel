@@ -45,9 +45,14 @@ function withDefaults(stored: Partial<SiteContent> | null | undefined): SiteCont
 
 const globalForMongo = globalThis as unknown as { _mongo?: Promise<MongoClient> };
 
-async function mongo(): Promise<Db> {
+export async function mongo(): Promise<Db> {
   const uri = process.env.MONGODB_URI!;
-  globalForMongo._mongo ??= new MongoClient(uri).connect();
+  // Délai court : une base injoignable ne doit pas bloquer une page 30 secondes.
+  globalForMongo._mongo ??= new MongoClient(uri, { serverSelectionTimeoutMS: 8000 }).connect().catch((err) => {
+    // Sans cette remise à zéro, un échec de connexion resterait en cache jusqu'au redémarrage de l'instance.
+    globalForMongo._mongo = undefined;
+    throw err;
+  });
   const client = await globalForMongo._mongo;
   return client.db(process.env.MONGODB_DB || "portfolio");
 }
@@ -81,6 +86,11 @@ async function writeJson(file: string, data: unknown) {
 const mongoEnabled = () => Boolean(process.env.MONGODB_URI);
 
 export const storeKind = () => (mongoEnabled() ? "mongodb" : "fichier local");
+
+export const isMongoEnabled = mongoEnabled;
+
+/** Contenu de secours embarqué dans le build (data/content.json). */
+export const seedContent = (): SiteContent => withDefaults(SEED);
 
 export async function readContent(): Promise<SiteContent> {
   if (mongoEnabled()) {

@@ -8,10 +8,13 @@ import { Navbar } from "@/components/site/Navbar";
 import { Projects } from "@/components/site/Projects";
 import { Skills } from "@/components/site/Skills";
 import { Stats } from "@/components/site/Stats";
+import { JsonLd } from "@/components/JsonLd";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { getLocalizedContent } from "@/lib/content";
 import { buildProjects, getRepos, prettify, visibleRepos } from "@/lib/github";
 import { getDictionary, isLocale, localePath } from "@/lib/i18n";
+import { siteUrl } from "@/lib/site";
+import { homeJsonLd } from "@/lib/structured-data";
 import { timeAgo } from "@/lib/utils";
 
 // Régénération au plus toutes les minutes (et dès la visite suivante après une modification dans /admin).
@@ -49,12 +52,13 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
   const stats = [
     { value: showcase.length, label: t.stats.showcase },
     { value: archive.length, label: t.stats.repos },
-    { value: Math.max(1, new Date().getFullYear() - firstYear), suffix: "+", label: t.stats.years },
+    { value: Math.max(1, new Date().getFullYear() - firstYear), label: t.stats.years(firstYear) },
     { value: technologies, label: t.stats.technologies },
   ];
 
   return (
     <>
+      <JsonLd data={homeJsonLd(content, lang, siteUrl(settings))} />
       <Navbar
         locale={lang}
         switchHref={localePath(lang === "fr" ? "en" : "fr")}

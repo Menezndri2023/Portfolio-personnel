@@ -31,8 +31,7 @@ export function Journey({
             </h3>
             <ol className="relative space-y-10 border-l border-line pl-8">
               {experiences.map((e, i) => (
-                <Reveal key={e.id} delay={i * 0.05}>
-                  <li className="relative">
+                <Reveal as="li" key={e.id} delay={i * 0.05} className="relative">
                     <span
                       className={`absolute -left-[37px] top-1.5 size-[11px] rounded-full border-2 ${
                         e.current ? "border-accent bg-accent" : "border-line-strong bg-bg"
@@ -70,7 +69,6 @@ export function Journey({
                         ))}
                       </ul>
                     )}
-                  </li>
                 </Reveal>
               ))}
             </ol>

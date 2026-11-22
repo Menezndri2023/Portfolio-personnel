@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
-import { ArrowUpRight, Check, Copy, Loader2, Mail, MapPin, Phone, Send } from "lucide-react";
+import { ArrowUpRight, Check, Copy, Globe, Loader2, Mail, MapPin, Phone, Send } from "lucide-react";
 import { useState } from "react";
 import { getDictionary, type Locale } from "@/lib/i18n";
 import type { Profile } from "@/lib/types";
@@ -100,7 +100,7 @@ export function ContactPanel({ locale, profile }: { locale: Locale; profile: Pro
           </li>
         </ul>
 
-        <div className="mt-6 flex gap-3">
+        <div className="mt-6 flex flex-wrap gap-3">
           {profile.socials.linkedin && (
             <a
               href={profile.socials.linkedin}
@@ -119,6 +119,17 @@ export function ContactPanel({ locale, profile }: { locale: Locale; profile: Pro
               className="inline-flex items-center gap-2 rounded-full border border-line px-4 py-2 text-sm text-muted transition hover:border-fg hover:text-fg"
             >
               <GithubIcon className="size-4" /> GitHub <ArrowUpRight className="size-3.5" />
+            </a>
+          )}
+          {profile.socials.website && (
+            <a
+              href={profile.socials.website}
+              target="_blank"
+              rel="noopener"
+              className="inline-flex items-center gap-2 rounded-full border border-line px-4 py-2 text-sm text-muted transition hover:border-fg hover:text-fg"
+            >
+              <Globe className="size-4" /> {profile.socials.website.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "")}
+              <ArrowUpRight className="size-3.5" />
             </a>
           )}
         </div>

@@ -1,23 +1,23 @@
 {
   "profile": {
-    "name": "Manassé N'dri N'guessan",
-    "shortName": "Manassé N'dri",
-    "title": "Développeur Fullstack JavaScript",
+    "name": "Manassé N'Dri",
+    "shortName": "Manassé N'Dri",
+    "title": "Développeur Full Stack · Ingénierie logicielle & SaaS",
     "rotatingRoles": [
-      "React.js",
-      "Next.js",
-      "Node.js",
-      "des API REST sécurisées"
+      "Next.js & React",
+      "Node.js & NestJS",
+      "API REST sécurisées",
+      "plateformes SaaS"
     ],
-    "headline": "Je conçois des produits web complets, de l'interface à l'API.",
-    "intro": "Développeur fullstack basé au Maroc, je construis des applications React / Next.js et des API Node.js sécurisées — pensées pour de vrais utilisateurs et livrées en production.",
-    "bio": "Tout a commencé en 2023 sur les bancs de GOMYCODE, un Demo Day à la clé. Depuis, je livre des plateformes complètes : marketplace automobile multi-pays, covoiturage avec cartographie interactive, sites institutionnels multilingues. Je pars d'un besoin, je modélise les données, je construis l'API et l'interface, et je mène le tout jusqu'à la mise en ligne.\n\nFormé à la sécurité numérique par l'ANSSI (SecNumacadémie), j'intègre la sécurité dès la conception : authentification JWT, gestion des rôles, validation systématique des entrées. Mes années en relation client m'ont appris l'essentiel — un produit se juge du point de vue de celui qui l'utilise.\n\nJe m'approprie vite un code existant, je documente ce que je fais et j'aime travailler main dans la main avec le produit et le design.",
+    "headline": "Je construis des produits SaaS complets, de l'API à l'interface.",
+    "intro": "Développeur Full Stack basé au Maroc et fondateur de VIT GLOBAL TECHNOLOGIES GROUP, je conçois des applications Next.js / React et des back-ends Node.js / NestJS : API sécurisées, bases de données, architecture et mise en ligne. Disponible pour un poste, une mission freelance ou une prestation, à distance, en français ou en anglais.",
+    "bio": "J'ai commencé en 2023 avec la formation Développeur Full-Stack JavaScript de GOMYCODE, conclue par un Demo Day. Depuis, je conçois des produits complets : je pars du besoin, je modélise les données, je construis l'API et l'interface, puis je teste, je documente et je mets en ligne.\n\nFondateur de VIT GLOBAL TECHNOLOGIES GROUP, société basée au Maroc, je développe les produits du groupe : VIT AUTO, une marketplace automobile en production sur le web et le mobile ; VITPAY, une plateforme d'encaissement par lien et QR code, aujourd'hui en sandbox ; KORVA OS, un SaaS multi-tenant pour PME, en développement. Ces projets reposent sur TypeScript, NestJS, PostgreSQL, MongoDB, Redis et Docker, avec des tests automatisés et une documentation d'architecture tenue à jour.\n\nLa sécurité fait partie de ma façon de concevoir. Certifié par la SecNumacadémie de l'ANSSI, j'applique dès la première route l'authentification forte, la gestion des rôles, la validation des entrées et la limitation des abus. Mon expérience de téléconseiller m'a appris l'essentiel : un produit se juge du point de vue de celui qui l'utilise.\n\nJe m'approprie vite un code existant, je documente mes choix techniques et j'aime travailler avec le produit et le design. Je recherche un poste, des missions freelance ou des contrats de développement avec des entreprises, des startups et des entrepreneurs, en Europe, en Afrique et en Amérique du Nord.",
     "location": "Maroc",
     "email": "ndrimanasse437@gmail.com",
     "phone": "",
     "showPhone": false,
     "available": true,
-    "availabilityLabel": "Disponible pour un poste ou une mission",
+    "availabilityLabel": "Disponible : poste, freelance ou prestation",
     "photo": "/images/moi.png",
     "photoCaption": "Demo Day GOMYCODE — là où tout a commencé.",
     "avatar": "/images/avatar.png",
@@ -26,7 +26,7 @@
       "github": "https://github.com/Menezndri2023",
       "linkedin": "https://www.linkedin.com/in/manass%C3%A9-ndri-959b80263/",
       "twitter": "",
-      "website": ""
+      "website": "https://vit-global.tech"
     },
     "languages": [
       {
@@ -35,7 +35,7 @@
       },
       {
         "name": "Anglais",
-        "level": "Technique"
+        "level": "Intermédiaire · anglais technique"
       }
     ],
     "softSkills": [
@@ -50,138 +50,182 @@
   },
   "services": [
     {
-      "id": "svc-fullstack",
-      "title": "Applications web fullstack",
-      "description": "Du schéma de données à l'écran : React et Next.js côté client, Node.js et Express côté serveur, MongoDB pour la persistance.",
-      "icon": "layers"
+      "id": "svc-saas",
+      "icon": "layers",
+      "title": "Applications web & plateformes SaaS",
+      "description": "Next.js et React côté interface, Node.js et NestJS côté serveur : espaces utilisateurs, tableaux de bord, rôles, multi-tenant et multilingue."
     },
     {
       "id": "svc-api",
-      "title": "API REST sécurisées",
-      "description": "Authentification JWT, rôles et permissions, validation des entrées : les bonnes pratiques SSI appliquées dès la première route.",
-      "icon": "shield"
+      "icon": "server",
+      "title": "Conception d'API & back-end",
+      "description": "API REST documentées et testées : authentification JWT / MFA, permissions, validation des entrées, webhooks et tâches en file d'attente."
     },
     {
-      "id": "svc-ui",
-      "title": "Interfaces responsives",
-      "description": "Des interfaces rapides et lisibles sur mobile comme sur desktop, construites composant par composant.",
-      "icon": "layout"
+      "id": "svc-data",
+      "icon": "database",
+      "title": "Bases de données & architecture",
+      "description": "Modélisation MongoDB ou PostgreSQL, cache Redis, architecture modulaire, monorepo et conteneurs Docker prêts pour la production."
     },
     {
       "id": "svc-legacy",
-      "title": "Reprise et évolution de code",
-      "description": "Débogage, refactorisation, montée de version : je reprends un projet existant et je le fais avancer sans rien casser.",
-      "icon": "wrench"
+      "icon": "wrench",
+      "title": "Reprise, sécurisation et évolution",
+      "description": "Audit d'un code existant, corrections, montée de version et renforcement de la sécurité, sans interrompre ce qui fonctionne."
     }
   ],
   "skills": [
     {
       "id": "sk-front",
-      "title": "Front-end",
-      "description": "Interfaces modernes, accessibles et responsives.",
       "icon": "monitor",
+      "learning": false,
+      "title": "Frontend",
+      "description": "Interfaces rapides, accessibles et responsives.",
       "items": [
-        "React.js",
+        "React",
         "Next.js",
-        "JavaScript ES6+",
+        "TypeScript",
+        "JavaScript (ES6+)",
+        "Tailwind CSS",
         "HTML5 / CSS3",
-        "Responsive design"
-      ],
-      "learning": false
+        "Responsive design",
+        "Capacitor (iOS / Android)",
+        "Internationalisation (FR / EN / AR)"
+      ]
     },
     {
       "id": "sk-back",
-      "title": "Back-end",
-      "description": "API robustes et données bien modélisées.",
       "icon": "server",
+      "learning": false,
+      "title": "Backend",
+      "description": "API robustes, sécurisées et testées.",
       "items": [
         "Node.js",
+        "NestJS",
         "Express.js",
         "API REST",
-        "Authentification JWT",
-        "MongoDB",
-        "Mongoose"
-      ],
-      "learning": false
+        "Authentification JWT / MFA",
+        "Validation (Zod)",
+        "Files d'attente (BullMQ)"
+      ]
+    },
+    {
+      "id": "sk-data",
+      "icon": "database",
+      "learning": false,
+      "title": "Bases de données",
+      "description": "Des données bien modélisées et fiables.",
+      "items": [
+        "MongoDB / Mongoose",
+        "PostgreSQL",
+        "Prisma",
+        "Redis",
+        "MySQL",
+        "SQLite"
+      ]
     },
     {
       "id": "sk-tools",
-      "title": "Outils & pratiques",
-      "description": "Ce qui rend un projet maintenable dans la durée.",
       "icon": "git",
+      "learning": false,
+      "title": "Outils & infrastructure",
+      "description": "Ce qui rend un projet livrable et maintenable.",
       "items": [
         "Git & GitHub",
-        "Débogage",
-        "Architecture web",
-        "Sécurité numérique (SSI)"
-      ],
-      "learning": false
+        "Docker / Docker Compose",
+        "GitHub Actions (CI)",
+        "Vercel",
+        "Monorepo pnpm",
+        "Tests automatisés (unitaires, e2e, Playwright)"
+      ]
     },
     {
-      "id": "sk-learning",
-      "title": "En montée en compétence",
-      "description": "Ce que j'intègre actuellement à mes projets.",
-      "icon": "sparkles",
+      "id": "sk-archi",
+      "icon": "layers",
+      "learning": false,
+      "title": "Architecture & ingénierie logicielle",
+      "description": "Des choix techniques pensés pour durer.",
       "items": [
-        "TypeScript",
-        "Tailwind CSS",
-        "Prisma",
-        "PostgreSQL",
-        "MySQL"
-      ],
-      "learning": true
+        "Architecture modulaire",
+        "SaaS multi-tenant",
+        "RBAC (rôles et permissions)",
+        "Sécurité applicative (SSI)",
+        "Modélisation de données",
+        "Documentation technique (ADR)"
+      ]
+    },
+    {
+      "id": "sk-integrations",
+      "icon": "braces",
+      "learning": false,
+      "title": "Intégrations & services",
+      "description": "Relier une application à son écosystème.",
+      "items": [
+        "Webhooks",
+        "Prestataires de paiement (sandbox)",
+        "E-mails transactionnels (Resend)",
+        "API GitHub",
+        "Cartographie (Leaflet)",
+        "Swagger / OpenAPI"
+      ]
     }
   ],
   "experiences": [
     {
+      "id": "exp-vit",
+      "role": "Fondateur & CEO",
+      "company": "VIT GLOBAL TECHNOLOGIES GROUP",
+      "location": "Maroc",
+      "period": "2026 — aujourd'hui",
+      "current": true,
+      "summary": "Création de la société et conception des produits technologiques du groupe, de l'architecture au déploiement.",
+      "highlights": [
+        "Site officiel multilingue FR / EN / AR (Next.js, TypeScript, Prisma) : services, devis, rendez-vous, candidatures et back-office, en ligne sur vit-global.tech",
+        "VIT AUTO : marketplace automobile en production, web et mobile (Capacitor), API Node.js / Express, MongoDB, Redis / BullMQ",
+        "VITPAY : encaissement par lien et QR code (NestJS, PostgreSQL), ledger, webhooks, MFA et validations à quatre yeux, en sandbox avec 113 tests API",
+        "KORVA OS : SaaS multi-tenant pour PME (Next.js, NestJS, MongoDB, Redis), MVP développé, pas encore hébergé"
+      ],
+      "tags": [
+        "TypeScript",
+        "Next.js",
+        "NestJS",
+        "PostgreSQL",
+        "MongoDB",
+        "Redis",
+        "Docker"
+      ]
+    },
+    {
       "id": "exp-fullstack",
-      "role": "Développeur Fullstack",
+      "role": "Développeur Full Stack",
       "company": "Projets indépendants",
       "location": "Maroc · à distance",
       "period": "2024 — aujourd'hui",
       "current": true,
-      "summary": "Conception et livraison de plateformes web complètes, du cadrage fonctionnel au déploiement.",
+      "summary": "Conception et développement d'applications web complètes, du cadrage fonctionnel au déploiement.",
       "highlights": [
-        "Marketplace automobile (vente, location, import/export) : API Node.js / Express, MongoDB, espaces vendeur et admin",
-        "Plateforme de covoiturage : authentification JWT, gestion des rôles, réservations et carte interactive",
-        "Recherche avancée et filtres multicritères côté API et interface",
-        "Sécurisation des routes, validation des entrées, refactorisation continue du code"
+        "Margokit : outils pour vendeurs en ligne et freelances (calculateur de marge, devis, factures et avoirs), en ligne sur margokit.com",
+        "PSN : prototype d'infrastructure de gestion des urgences (NestJS, PostgreSQL, Kafka, Elasticsearch) avec 60 tests automatisés",
+        "CovApp : plateforme de covoiturage avec authentification JWT, réservations et carte interactive",
+        "Sécurisation des routes, validation des entrées et refactorisation continue du code"
       ],
       "tags": [
-        "React.js",
+        "React",
         "Next.js",
         "Node.js",
-        "Express",
+        "NestJS",
         "MongoDB",
-        "JWT"
-      ]
-    },
-    {
-      "id": "exp-audit",
-      "role": "Prestataire d'audit de sécurité",
-      "company": "Missions de prestation",
-      "location": "",
-      "period": "",
-      "current": false,
-      "summary": "Évaluation de la sécurité de systèmes et accompagnement vers les bonnes pratiques.",
-      "highlights": [
-        "Réalisation d'audits de sécurité",
-        "Recommandations de bonnes pratiques adaptées à chaque structure"
-      ],
-      "tags": [
-        "SSI",
-        "Audit",
-        "Bonnes pratiques"
+        "PostgreSQL"
       ]
     },
     {
       "id": "exp-support",
-      "role": "Relation client & support utilisateur",
+      "role": "Téléconseiller · relation client",
       "company": "Ecom by CS",
       "location": "Abidjan, Côte d'Ivoire",
       "period": "2023",
       "current": false,
-      "summary": "Accompagnement des clients par téléphone, e-mail et chat, avec outils CRM.",
+      "summary": "Accompagnement des clients par téléphone, e-mail et chat, avec des outils CRM.",
       "highlights": [
         "Traitement des demandes et réclamations, résolution de problèmes utilisateurs",
         "Communication orale et écrite, gestion des priorités et du stress"
@@ -206,14 +250,15 @@
     },
     {
       "id": "edu-anssi",
-      "title": "Sécurité numérique",
-      "school": "SecNumacadémie — ANSSI (France)",
-      "period": "",
+      "title": "Certification SecNumacadémie : sécurité numérique",
+      "school": "ANSSI (Agence nationale de la sécurité des systèmes d'information, France)",
+      "period": "2021 — 2022",
       "highlights": [
         "Panorama de la sécurité des systèmes d'information",
         "Sécurité de l'authentification",
         "Sécurité sur Internet",
-        "Sécurité du poste de travail et nomadisme"
+        "Sécurité du poste de travail et nomadisme",
+        "Mise en pratique : audits de sécurité et recommandations de bonnes pratiques"
       ]
     }
   ],
@@ -222,7 +267,7 @@
     "vit-auto": {
       "title": "VIT AUTO",
       "summary": "Marketplace automobile internationale : vente, location et import/export de véhicules, sur le web et en application mobile.",
-      "description": "VIT AUTO réunit acheteurs, vendeurs et loueurs de véhicules sur une même plateforme, pensée pour plusieurs pays, devises et langues (FR / EN / AR).\n\n### Ce que j'ai construit\n\n- **API REST Node.js / Express** découpée par domaine métier (contrôleur, service, routes)\n- **Authentification JWT** avec rôles vendeur et administrateur, espaces dédiés et modération des annonces\n- **Recherche avancée** et filtres multicritères côté API et côté interface\n- **Tableaux de bord** et statistiques pour les vendeurs et l'administration\n- **Applications iOS et Android** à partir de la même base React grâce à Capacitor\n- Tâches asynchrones (Redis / BullMQ), validation des entrées, rate limiting\n\n### Stack\n\nReact 19 + Vite, Node.js / Express, MongoDB, Redis, Capacitor — déployé sur Vercel et Railway.",
+      "description": "VIT AUTO réunit acheteurs, vendeurs et loueurs de véhicules sur une même plateforme, pensée pour plusieurs pays, devises et langues (FR / EN / AR).\n\n### Ce que j'ai construit\n\n- **API REST Node.js / Express** découpée par domaine métier (contrôleur, service, routes)\n- **Authentification JWT** avec rôles vendeur et administrateur, espaces dédiés et modération des annonces\n- **Recherche avancée** et filtres multicritères côté API et côté interface\n- **Tableaux de bord** et statistiques pour les vendeurs et l'administration\n- **Applications iOS et Android** à partir de la même base React grâce à Capacitor\n- Tâches asynchrones (Redis / BullMQ), validation des entrées, rate limiting\n\n### Stack\n\nReact 19 + Vite, Node.js / Express, MongoDB, Redis, Capacitor — déployé sur Vercel et Railway.\n\n### État\n\nEn production sur vit-auto.com. Le paiement en ligne fonctionne aujourd'hui en mode simulé ; l'intégration d'un prestataire réel est prévue.",
       "tags": [
         "React",
         "Vite",
@@ -235,12 +280,13 @@
       ],
       "demoUrl": "https://vit-auto.com",
       "featured": true,
-      "showReadme": false
+      "showReadme": false,
+      "status": "production"
     },
     "NationalSecurityProgram": {
       "title": "PSN — Programme de Sécurité Nationale",
       "summary": "Infrastructure de gestion des urgences et de coordination des secours conçue pour les États africains.",
-      "description": "PSN est une infrastructure de type *Computer-Aided Dispatch* : signalement citoyen, centre de commandement, application terrain, coordination médicale, gestion de crise et analytique, avec des accès RBAC stricts et une supervision humaine obligatoire.",
+      "description": "PSN est une infrastructure de type *Computer-Aided Dispatch* pensée pour les États africains : signalement citoyen, centre de commandement, application terrain, coordination médicale, gestion de crise et analytique, avec des accès RBAC stricts et une supervision humaine obligatoire.\n\n### Ce que j'ai construit\n\n- **API NestJS** : authentification MFA / RBAC, alertes, incidents et dispatch, unités, terrain, santé, crise, rapports, journal d'audit immuable\n- **PSN Dispatch** (web) : carte, file d'incidents filtrable, affectation avec contrôle de compétence\n- **Applications mobiles** citoyen et terrain : SOS, signalements avec photo, vidéo et message vocal, suivi de position\n- Temps réel (WebSocket, Kafka), recherche plein texte (Elasticsearch), itinéraires (OSRM), mode dégradé SMS / USSD\n\n### Qualité et état\n\n60 tests automatisés (45 unitaires, 15 e2e sur infrastructure réelle via Docker). **Prototype non déployé**, accompagné d'un dossier de projet complet (architecture, sécurité, conformité, déploiement).",
       "tags": [
         "TypeScript",
         "NestJS",
@@ -250,7 +296,10 @@
         "Elasticsearch",
         "Docker"
       ],
-      "featured": true
+      "featured": true,
+      "status": "prototype",
+      "pinned": true,
+      "showReadme": false
     },
     "vit-global-technologies": {
       "title": "VIT Global Technologies",
@@ -262,7 +311,11 @@
         "Prisma",
         "next-intl"
       ],
-      "featured": true
+      "featured": true,
+      "status": "production",
+      "demoUrl": "https://vit-global.tech",
+      "showReadme": false,
+      "description": "Site officiel de VIT GLOBAL TECHNOLOGIES GROUP : présentation de l'entreprise, des services, des filiales et des réalisations, avec de vrais parcours de conversion.\n\n### Ce que j'ai construit\n\n- **Next.js (App Router) + TypeScript**, design system Tailwind CSS v4\n- **Multilingue FR / EN / AR** avec next-intl, arabe en RTL natif\n- Formulaires **contact, devis, prise de rendez-vous, candidatures et partenariats**, enregistrés en base (Prisma)\n- **Back-office** protégé qui affiche les soumissions de chaque formulaire\n\n### État\n\nEn ligne sur vit-global.tech. Pas encore connectés : passerelle de paiement, génération de PDF, CRM externe, assistant IA relié à un LLM et authentification complète des espaces client et partenaire."
     },
     "covApp": {
       "title": "CovApp — Covoiturage",
@@ -291,7 +344,8 @@
       ],
       "pinned": true,
       "showReadme": false,
-      "image": "/images/projects/african-foods.png"
+      "image": "/images/projects/african-foods.png",
+      "status": "training"
     },
     "family-shopping": {
       "title": "Family Shopping",
@@ -323,15 +377,80 @@
     },
     "projet-africanFoods": {
       "hidden": true
+    },
+    "korva-os": {
+      "title": "KORVA OS",
+      "summary": "SaaS multi-tenant pour PME et entreprises de services : CRM, catalogue, réservations, e-commerce, facturation et assistant IA sur une seule plateforme.",
+      "description": "KORVA OS est un *Business Operating System* : chaque organisation configure sa propre plateforme de gestion, quel que soit son secteur d'activité.\n\n### Objectif\n\nRéunir dans un seul outil ce que beaucoup de PME gèrent avec plusieurs logiciels séparés : clients, offres, réservations, commandes, facturation et communication.\n\n### Ce que j'ai construit\n\n- **Monorepo pnpm** : dashboard Next.js, API NestJS, site public par organisation et packages partagés (UI, types, schémas Zod)\n- **Isolation multi-tenant** des données sur chaque requête\n- Modules **CRM, catalogue, réservations, commandes, facturation, workflows et communication**\n- **Assistant IA** qui n'accède jamais directement à la base : il passe par des outils soumis aux mêmes permissions que l'application\n- Files d'attente Redis / BullMQ, documentation Swagger, tests unitaires et e2e, intégration continue, images Docker de production\n\n### État\n\nMVP développé en 12 phases, des fondations au durcissement, avec des décisions d'architecture documentées (ADR). **Pas encore hébergé ni commercialisé.**",
+      "tags": [
+        "TypeScript",
+        "Next.js",
+        "NestJS",
+        "MongoDB",
+        "Redis",
+        "BullMQ",
+        "Docker"
+      ],
+      "featured": true,
+      "showReadme": false,
+      "status": "development"
+    },
+    "VitPay": {
+      "title": "VITPAY",
+      "summary": "Plateforme d'encaissement par lien et QR code : le client paie chez un prestataire agréé, VITPAY confirme uniquement sur preuve serveur. En sandbox.",
+      "description": "### Principe\n\nUn commerçant saisit un montant, VITPAY génère un lien ou un QR code, et le client règle chez un **prestataire de paiement agréé**. VITPAY ne détient jamais de fonds et ne valide un paiement que sur **preuve côté serveur**.\n\n### Ce que j'ai construit\n\n- **API NestJS** : moteur de paiement, ledger (grand livre), webhooks, administration et prestataire simulé\n- **Type monétaire strict** (`bigint`, devise obligatoire) pour écarter les erreurs d'arrondi\n- Page de paiement publique **FR / AR / EN**, avec prise en charge de l'arabe (RTL)\n- **Espace Business** : demandes de paiement, caisse QR, remboursements, gestion d'équipe\n- **Administration interne** avec MFA obligatoire et validations à quatre yeux\n- Environnement de staging conteneurisé (Docker Compose, Caddy, HTTPS automatique)\n\n### Qualité\n\n113 tests API (unitaires et intégration sur PostgreSQL réel), 9 tests du module monétaire, 11 tests navigateur Playwright.\n\n### État\n\n**Mode sandbox uniquement** : le mode réel reste verrouillé dans le code tant que les points de conformité réglementaire ne sont pas levés.",
+      "tags": [
+        "TypeScript",
+        "NestJS",
+        "PostgreSQL",
+        "Docker",
+        "Playwright"
+      ],
+      "featured": true,
+      "showReadme": false,
+      "status": "sandbox"
+    },
+    "Vit-SellerKit": {
+      "title": "Margokit",
+      "summary": "Outils pour vendeurs en ligne et freelances : connaître ses vrais bénéfices, organiser ses commandes et émettre devis et factures.",
+      "description": "Margokit répond à une question simple : *combien est-ce que je garde vraiment ?*\n\n### Contenu\n\n- **Profit Calculator** gratuit (Next.js), déployable seul\n- **Margokit Pro** : site principal avec devis, factures et avoirs (Next.js, MongoDB), génération de PDF\n- Templates Google Sheets (suivi des ventes, Seller Pack)\n- Supports marketing : pages produit, vidéos et messages de prospection\n\n### Stack\n\nNext.js, TypeScript, MongoDB / Mongoose, next-intl, Tailwind CSS, React PDF.",
+      "tags": [
+        "Next.js",
+        "TypeScript",
+        "MongoDB",
+        "next-intl",
+        "Tailwind CSS"
+      ],
+      "demoUrl": "https://margokit.com",
+      "showReadme": false,
+      "status": "production"
+    },
+    "Portfolio-personnel": {
+      "title": "Portfolio — manasse.dev",
+      "summary": "Ce portfolio : Next.js 16, back-office intégré, synchronisation automatique des dépôts GitHub, version bilingue FR / EN et SEO technique.",
+      "description": "### Ce que j'ai construit\n\n- **Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS v4**\n- **Back-office** : profil, services, compétences, parcours, projets, messages reçus et réglages SEO, avec régénération immédiate des pages\n- **Synchronisation GitHub** : les derniers dépôts publics apparaissent automatiquement, avec un instantané de secours\n- **Bilingue FR / EN** : URL distinctes, balises hreflang, contenu traduit depuis l'admin\n- **SEO technique** : sitemap dynamique, données structurées Schema.org, images de partage générées\n- **Sécurité** : session JWT en cookie httpOnly, limitation des tentatives, validation Zod, en-têtes CSP",
+      "tags": [
+        "Next.js",
+        "TypeScript",
+        "React",
+        "Tailwind CSS",
+        "MongoDB",
+        "Zod"
+      ],
+      "showReadme": false,
+      "status": "production"
+    },
+    "family-shop": {
+      "hidden": true
     }
   },
   "settings": {
     "githubUsername": "Menezndri2023",
     "githubLimit": 5,
     "excludeForks": true,
-    "seoTitle": "Manassé N'dri — Développeur Fullstack JavaScript",
-    "seoDescription": "Développeur fullstack React.js, Next.js et Node.js basé au Maroc. Applications web complètes, API REST sécurisées, projets livrés en production.",
-    "siteUrl": ""
+    "seoTitle": "Manassé N'Dri — Développeur Full Stack, SaaS & API",
+    "seoDescription": "Développeur Full Stack basé au Maroc : applications web Next.js / React, API Node.js / NestJS et plateformes SaaS. Disponible en freelance, prestation ou CDI, à distance.",
+    "siteUrl": "https://manasse.dev"
   },
   "githubSnapshot": {
     "syncedAt": "2026-09-23T14:28:44.725Z",
@@ -1001,18 +1120,18 @@
   "translations": {
     "en": {
       "profile": {
-        "title": "Fullstack JavaScript Developer",
+        "title": "Full Stack Software Developer · Software Engineering & SaaS Solutions",
         "location": "Morocco",
-        "availabilityLabel": "Available for a job or a freelance assignment",
-        "headline": "I build complete web products, from the interface to the API.",
+        "availabilityLabel": "Available for full-time, freelance or contract work",
+        "headline": "I build complete SaaS products, from the API to the interface.",
         "rotatingRoles": [
-          "React.js",
-          "Next.js",
-          "Node.js",
-          "secure REST APIs"
+          "Next.js & React",
+          "Node.js & NestJS",
+          "secure REST APIs",
+          "SaaS platforms"
         ],
-        "intro": "Fullstack developer based in Morocco, I build React / Next.js applications and secure Node.js APIs — designed for real users and shipped to production.",
-        "bio": "It all started in 2023 at GOMYCODE, with a Demo Day at the end. Since then, I have been delivering complete platforms: a multi-country car marketplace, a carpooling app with interactive maps, multilingual corporate websites. I start from a need, model the data, build the API and the interface, and take everything all the way to launch.\n\nTrained in cybersecurity by ANSSI, the French national cybersecurity agency (SecNumacadémie), I build security in from the start: JWT authentication, role management, systematic input validation. My years in customer relations taught me the essential lesson — a product is judged from the point of view of the person using it.\n\nI get up to speed quickly on an existing codebase, I document what I do, and I enjoy working hand in hand with product and design.",
+        "intro": "Full Stack developer based in Morocco and founder of VIT GLOBAL TECHNOLOGIES GROUP. I build Next.js / React applications and Node.js / NestJS back ends: secure APIs, databases, architecture and deployment. Open to full-time roles, freelance work and development contracts, remotely, in English or French.",
+        "bio": "I started in 2023 with GOMYCODE's Full-Stack JavaScript Developer program, which ended with a Demo Day. Since then, I have been building complete products: I start from the need, model the data, build the API and the interface, then test, document and ship.\n\nAs the founder of VIT GLOBAL TECHNOLOGIES GROUP, a company based in Morocco, I build the group's products: VIT AUTO, a car marketplace live on web and mobile; VITPAY, a payment-link and QR code collection platform, currently in sandbox; and KORVA OS, a multi-tenant SaaS for small businesses, in development. They run on TypeScript, NestJS, PostgreSQL, MongoDB, Redis and Docker, backed by automated tests and up-to-date architecture documentation.\n\nSecurity is part of how I design software. Certified through ANSSI's SecNumacadémie (the French national cybersecurity agency), I apply strong authentication, role management, input validation and abuse limits from the very first route. My time as a call-center customer service representative taught me the essential lesson: a product is judged from the point of view of the person using it.\n\nI get up to speed quickly on an existing codebase, document my technical decisions, and enjoy working closely with product and design. I am looking for a full-time role, freelance assignments or development contracts with companies, startups and entrepreneurs in Europe, Africa and North America.",
         "softSkills": [
           "Adaptability to shifting priorities",
           "Autonomy and curiosity",
@@ -1029,84 +1148,135 @@
           },
           {
             "name": "English",
-            "level": "Technical"
+            "level": "Intermediate · technical English"
           }
         ],
         "photoCaption": "GOMYCODE Demo Day — where it all began."
       },
       "services": {
-        "svc-fullstack": {
-          "title": "Fullstack web applications",
-          "description": "From data model to screen: React and Next.js on the client, Node.js and Express on the server, MongoDB for persistence."
+        "svc-saas": {
+          "title": "Web applications & SaaS platforms",
+          "description": "Next.js and React on the front end, Node.js and NestJS on the server: user areas, dashboards, roles, multi-tenancy and multilingual support."
         },
         "svc-api": {
-          "title": "Secure REST APIs",
-          "description": "JWT authentication, roles and permissions, input validation: security best practices applied from the very first route."
+          "title": "API design & back end",
+          "description": "Documented, tested REST APIs: JWT / MFA authentication, permissions, input validation, webhooks and queued background jobs."
         },
-        "svc-ui": {
-          "title": "Responsive interfaces",
-          "description": "Fast, readable interfaces on mobile and desktop alike, built component by component."
+        "svc-data": {
+          "title": "Databases & architecture",
+          "description": "MongoDB or PostgreSQL data modeling, Redis caching, modular architecture, monorepos and production-ready Docker containers."
         },
         "svc-legacy": {
-          "title": "Taking over and evolving code",
-          "description": "Debugging, refactoring, upgrades: I take over an existing project and move it forward without breaking anything."
+          "title": "Takeover, hardening & evolution",
+          "description": "Reviewing an existing codebase, fixing, upgrading and strengthening security, without breaking what already works."
         }
       },
       "skills": {
         "sk-front": {
-          "description": "Modern, accessible and responsive interfaces."
+          "title": "Frontend",
+          "description": "Fast, accessible and responsive interfaces.",
+          "items": [
+            "React",
+            "Next.js",
+            "TypeScript",
+            "JavaScript (ES6+)",
+            "Tailwind CSS",
+            "HTML5 / CSS3",
+            "Responsive design",
+            "Capacitor (iOS / Android)",
+            "Internationalization (FR / EN / AR)"
+          ]
         },
         "sk-back": {
-          "description": "Robust APIs and well-modeled data.",
+          "title": "Backend",
+          "description": "Robust, secure and tested APIs.",
           "items": [
             "Node.js",
+            "NestJS",
             "Express.js",
             "REST APIs",
-            "JWT authentication",
-            "MongoDB",
-            "Mongoose"
+            "JWT / MFA authentication",
+            "Validation (Zod)",
+            "Job queues (BullMQ)"
+          ]
+        },
+        "sk-data": {
+          "title": "Databases",
+          "description": "Well-modeled, reliable data.",
+          "items": [
+            "MongoDB / Mongoose",
+            "PostgreSQL",
+            "Prisma",
+            "Redis",
+            "MySQL",
+            "SQLite"
           ]
         },
         "sk-tools": {
-          "title": "Tools & practices",
-          "description": "What keeps a project maintainable over time.",
+          "title": "Tools & infrastructure",
+          "description": "What makes a project shippable and maintainable.",
           "items": [
             "Git & GitHub",
-            "Debugging",
-            "Web architecture",
-            "Cybersecurity"
+            "Docker / Docker Compose",
+            "GitHub Actions (CI)",
+            "Vercel",
+            "pnpm monorepo",
+            "Automated testing (unit, e2e, Playwright)"
           ]
         },
-        "sk-learning": {
-          "title": "Currently learning",
-          "description": "What I am bringing into my projects right now."
+        "sk-archi": {
+          "title": "Architecture & software engineering",
+          "description": "Technical choices built to last.",
+          "items": [
+            "Modular architecture",
+            "Multi-tenant SaaS",
+            "RBAC (roles & permissions)",
+            "Application security",
+            "Data modeling",
+            "Technical documentation (ADR)"
+          ]
+        },
+        "sk-integrations": {
+          "title": "Integrations & services",
+          "description": "Connecting an application to its ecosystem.",
+          "items": [
+            "Webhooks",
+            "Payment providers (sandbox)",
+            "Transactional email (Resend)",
+            "GitHub API",
+            "Mapping (Leaflet)",
+            "Swagger / OpenAPI"
+          ]
         }
       },
       "experiences": {
+        "exp-vit": {
+          "role": "Founder & CEO",
+          "location": "Morocco",
+          "summary": "Founded the company and design the group's technology products, from architecture to deployment.",
+          "highlights": [
+            "Official multilingual website FR / EN / AR (Next.js, TypeScript, Prisma): services, quotes, appointments, job applications and back office, live at vit-global.tech",
+            "VIT AUTO: car marketplace live on web and mobile (Capacitor), Node.js / Express API, MongoDB, Redis / BullMQ",
+            "VITPAY: payment-link and QR code collection (NestJS, PostgreSQL), ledger, webhooks, MFA and four-eyes approvals, in sandbox with 113 API tests",
+            "KORVA OS: multi-tenant SaaS for small businesses (Next.js, NestJS, MongoDB, Redis), MVP built, not hosted yet"
+          ],
+          "period": "2026 — present"
+        },
         "exp-fullstack": {
-          "role": "Fullstack Developer",
+          "role": "Full Stack Developer",
           "company": "Independent projects",
           "period": "2024 — present",
           "location": "Morocco · remote",
-          "summary": "Designing and delivering complete web platforms, from functional scoping to deployment.",
+          "summary": "Designing and building complete web applications, from functional scoping to deployment.",
           "highlights": [
-            "Car marketplace (sales, rentals, import/export): Node.js / Express API, MongoDB, seller and admin areas",
-            "Carpooling platform: JWT authentication, role management, bookings and interactive map",
-            "Advanced search and multi-criteria filters in both the API and the interface",
-            "Route protection, input validation, continuous code refactoring"
-          ]
-        },
-        "exp-audit": {
-          "role": "Security audit contractor",
-          "company": "Contract assignments",
-          "summary": "Assessing system security and guiding organizations toward best practices.",
-          "highlights": [
-            "Conducting security audits",
-            "Best-practice recommendations tailored to each organization"
+            "Margokit: tools for online sellers and freelancers (margin calculator, quotes, invoices and credit notes), live at margokit.com",
+            "PSN: emergency-management infrastructure prototype (NestJS, PostgreSQL, Kafka, Elasticsearch) with 60 automated tests",
+            "CovApp: carpooling platform with JWT authentication, bookings and an interactive map",
+            "Route protection, input validation and continuous refactoring"
           ]
         },
         "exp-support": {
-          "role": "Customer relations & user support",
+          "role": "Call-center customer service representative",
           "location": "Abidjan, Côte d'Ivoire",
           "summary": "Supporting customers by phone, email and chat, using CRM tools.",
           "highlights": [
@@ -1125,29 +1295,32 @@
           ]
         },
         "edu-anssi": {
-          "title": "Cybersecurity",
-          "school": "SecNumacadémie — ANSSI (France)",
+          "title": "SecNumacadémie certification: cybersecurity",
+          "school": "ANSSI (French National Cybersecurity Agency)",
           "highlights": [
             "Overview of information systems security",
             "Authentication security",
             "Internet security",
-            "Workstation security and working on the go"
-          ]
+            "Workstation security and working on the go",
+            "Hands-on application: security audits and best-practice recommendations"
+          ],
+          "period": "2021 — 2022"
         }
       },
       "projects": {},
       "repoOverrides": {
         "vit-auto": {
           "summary": "International car marketplace: vehicle sales, rentals and import/export, on the web and as a mobile app.",
-          "description": "VIT AUTO brings vehicle buyers, sellers and rental companies together on a single platform, designed for multiple countries, currencies and languages (FR / EN / AR).\n\n### What I built\n\n- **Node.js / Express REST API** split by business domain (controller, service, routes)\n- **JWT authentication** with seller and administrator roles, dedicated areas and listing moderation\n- **Advanced search** and multi-criteria filters in both the API and the interface\n- **Dashboards** and statistics for sellers and administrators\n- **iOS and Android apps** from the same React codebase thanks to Capacitor\n- Background jobs (Redis / BullMQ), input validation, rate limiting\n\n### Stack\n\nReact 19 + Vite, Node.js / Express, MongoDB, Redis, Capacitor — deployed on Vercel and Railway."
+          "description": "VIT AUTO brings vehicle buyers, sellers and rental companies together on a single platform, designed for multiple countries, currencies and languages (FR / EN / AR).\n\n### What I built\n\n- **Node.js / Express REST API** split by business domain (controller, service, routes)\n- **JWT authentication** with seller and administrator roles, dedicated areas and listing moderation\n- **Advanced search** and multi-criteria filters in both the API and the interface\n- **Dashboards** and statistics for sellers and administrators\n- **iOS and Android apps** from the same React codebase thanks to Capacitor\n- Background jobs (Redis / BullMQ), input validation, rate limiting\n\n### Stack\n\nReact 19 + Vite, Node.js / Express, MongoDB, Redis, Capacitor — deployed on Vercel and Railway.\n\n### Status\n\nLive at vit-auto.com. Online payment currently runs in simulated mode; integration with a real provider is planned."
         },
         "NationalSecurityProgram": {
           "title": "PSN — National Security Program",
           "summary": "Emergency management and rescue coordination infrastructure designed for African states.",
-          "description": "PSN is a *Computer-Aided Dispatch* infrastructure: citizen reporting, command center, field app, medical coordination, crisis management and analytics, with strict RBAC access and mandatory human oversight."
+          "description": "PSN is a *Computer-Aided Dispatch* infrastructure designed for African states: citizen reporting, command center, field app, medical coordination, crisis management and analytics, with strict RBAC access and mandatory human oversight.\n\n### What I built\n\n- **NestJS API**: MFA / RBAC authentication, alerts, incidents and dispatch, units, field, health, crisis, reports, tamper-proof audit log\n- **PSN Dispatch** (web): map, filterable incident queue, assignment with skill checks\n- **Citizen and field mobile apps**: SOS, reports with photo, video and voice notes, live location tracking\n- Real time (WebSocket, Kafka), full-text search (Elasticsearch), routing (OSRM), SMS / USSD fallback mode\n\n### Quality and status\n\n60 automated tests (45 unit, 15 e2e against real infrastructure via Docker). **Prototype, not deployed**, with a complete project file (architecture, security, compliance, deployment)."
         },
         "vit-global-technologies": {
-          "summary": "Official multilingual website (FR / EN / AR) with a back office, appointment booking, quotes and job applications."
+          "summary": "Official multilingual website (FR / EN / AR) with a back office, appointment booking, quotes and job applications.",
+          "description": "Official website of VIT GLOBAL TECHNOLOGIES GROUP: the company, its services, subsidiaries and work, with real conversion flows.\n\n### What I built\n\n- **Next.js (App Router) + TypeScript**, Tailwind CSS v4 design system\n- **Multilingual FR / EN / AR** with next-intl, native right-to-left Arabic\n- **Contact, quote, appointment, job application and partnership** forms, stored in a database (Prisma)\n- Password-protected **back office** listing every form submission\n\n### Status\n\nLive at vit-global.tech. Not connected yet: payment gateway, PDF generation, external CRM, LLM-powered assistant and full authentication for client and partner areas."
         },
         "covApp": {
           "title": "CovApp — Carpooling",
@@ -1160,11 +1333,27 @@
         },
         "family-shopping": {
           "summary": "React online store for the whole family: men's, women's and kids' catalogs, cart and checkout flow."
+        },
+        "korva-os": {
+          "summary": "Multi-tenant SaaS for small businesses and service companies: CRM, catalog, bookings, e-commerce, invoicing and an AI assistant on a single platform.",
+          "description": "KORVA OS is a *Business Operating System*: each organization configures its own management platform, whatever its industry.\n\n### Goal\n\nBring together in one tool what many small businesses run across separate software: customers, offers, bookings, orders, invoicing and communication.\n\n### What I built\n\n- **pnpm monorepo**: Next.js dashboard, NestJS API, a public site per organization and shared packages (UI, types, Zod schemas)\n- **Multi-tenant data isolation** on every request\n- **CRM, catalog, booking, orders, invoicing, workflow and communication** modules\n- An **AI assistant** that never touches the database directly: it goes through tools subject to the same permissions as the rest of the app\n- Redis / BullMQ queues, Swagger docs, unit and e2e tests, continuous integration, production Docker images\n\n### Status\n\nMVP built in 12 phases, from foundations to hardening, with documented architecture decisions (ADRs). **Not hosted or commercially available yet.**"
+        },
+        "VitPay": {
+          "summary": "Payment-link and QR code collection platform: customers pay through a licensed provider, and VITPAY confirms only on server-side proof. In sandbox.",
+          "description": "### How it works\n\nA merchant enters an amount, VITPAY generates a link or a QR code, and the customer pays through a **licensed payment provider**. VITPAY never holds funds and only confirms a payment on **server-side proof**.\n\n### What I built\n\n- **NestJS API**: payment engine, ledger, webhooks, administration and a simulated provider\n- A **strict money type** (`bigint`, mandatory currency) to rule out rounding errors\n- Public payment page in **French, Arabic and English**, with right-to-left support\n- **Business area**: payment requests, QR checkout, refunds, team management\n- **Internal admin** with mandatory MFA and four-eyes approvals\n- Containerized staging environment (Docker Compose, Caddy, automatic HTTPS)\n\n### Quality\n\n113 API tests (unit and integration against a real PostgreSQL), 9 tests for the money module, 11 Playwright browser tests.\n\n### Status\n\n**Sandbox only**: live mode stays locked in the code until the regulatory compliance points are cleared."
+        },
+        "Vit-SellerKit": {
+          "summary": "Tools for online sellers and freelancers: know your real profit, organize orders and send professional quotes and invoices.",
+          "description": "Margokit answers a simple question: *how much do I really keep?*\n\n### What's inside\n\n- A free **Profit Calculator** (Next.js), deployable on its own\n- **Margokit Pro**: main site with quotes, invoices and credit notes (Next.js, MongoDB), PDF generation\n- Google Sheets templates (sales tracker, Seller Pack)\n- Marketing assets: product pages, videos and outreach messages\n\n### Stack\n\nNext.js, TypeScript, MongoDB / Mongoose, next-intl, Tailwind CSS, React PDF."
+        },
+        "Portfolio-personnel": {
+          "summary": "This portfolio: Next.js 16, built-in back office, automatic GitHub repository sync, bilingual FR / EN and technical SEO.",
+          "description": "### What I built\n\n- **Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS v4**\n- **Back office**: profile, services, skills, journey, projects, incoming messages and SEO settings, with instant page regeneration\n- **GitHub sync**: the latest public repositories show up automatically, with a fallback snapshot\n- **Bilingual FR / EN**: separate URLs, hreflang tags, content translated from the admin\n- **Technical SEO**: dynamic sitemap, Schema.org structured data, generated share images\n- **Security**: JWT session in an httpOnly cookie, login throttling, Zod validation, CSP headers"
         }
       },
       "settings": {
-        "seoTitle": "Manassé N'dri — Fullstack JavaScript Developer",
-        "seoDescription": "Fullstack React.js, Next.js and Node.js developer based in Morocco. Complete web applications, secure REST APIs, projects shipped to production."
+        "seoTitle": "Manassé N'Dri — Full Stack Software Developer",
+        "seoDescription": "Full Stack Software Developer based in Morocco: Next.js / React web apps, Node.js / NestJS APIs and SaaS platforms. Available for freelance, contract or full-time work, remotely."
       }
     }
   }

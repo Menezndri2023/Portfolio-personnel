@@ -31,6 +31,9 @@ async function guardAdmin(request: NextRequest, pathname: string) {
  */
 function routeLocale(request: NextRequest, pathname: string) {
   const prefix = `/${defaultLocale}`;
+  // Images de partage générées (opengraph-image) : servies telles quelles, sans redirection
+  // (certains robots de réseaux sociaux ne suivent pas les redirections d'image).
+  if (/\/opengraph-image(?:-\w+)?$/.test(pathname)) return NextResponse.next();
   if (pathname === prefix || pathname.startsWith(`${prefix}/`)) {
     // /fr/projets/x → /projets/x : une seule adresse publique par page.
     const url = request.nextUrl.clone();

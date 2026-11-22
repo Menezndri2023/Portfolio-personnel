@@ -76,6 +76,10 @@ export type Education = {
   highlights: string[];
 };
 
+/** État réel d'un projet, affiché sur sa carte et sa page. */
+export const PROJECT_STATUSES = ["production", "beta", "sandbox", "development", "prototype", "training"] as const;
+export type ProjectStatus = (typeof PROJECT_STATUSES)[number];
+
 /** Projet saisi à la main (hors GitHub, ex. projet client privé). */
 export type ManualProject = {
   id: string;
@@ -89,6 +93,7 @@ export type ManualProject = {
   year: string;
   featured: boolean;
   hidden: boolean;
+  status?: ProjectStatus | "";
 };
 
 /** Surcharges éditoriales appliquées à un dépôt GitHub synchronisé. */
@@ -105,6 +110,7 @@ export type RepoOverride = {
   pinned?: boolean;
   /** Afficher le README GitHub sur la page projet (défaut : auto). */
   showReadme?: boolean;
+  status?: ProjectStatus | "";
 };
 
 export type Settings = {
@@ -173,6 +179,7 @@ export type ProjectView = {
   updatedAt: string;
   year: string;
   showReadme: boolean;
+  status: ProjectStatus | "";
 };
 
 export type Message = {

@@ -5,13 +5,14 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { buildProjects } from "@/lib/github";
 import type { GithubRepo, RepoOverride, SiteContent } from "@/lib/types";
 import { cn, formatMonth, languageColors } from "@/lib/utils";
-import { FieldGrid, Toggle, type FieldDef } from "./fields";
+import { FieldGrid, Toggle, statusField, type FieldDef } from "./fields";
 import { SaveBar } from "./ui";
 
 export const overrideFields: FieldDef[] = [
   { key: "title", label: "Titre affiché", type: "text", placeholder: "Par défaut : nom du dépôt" },
   { key: "demoUrl", label: "Lien de démo", type: "url", placeholder: "https://… (par défaut : homepage GitHub)" },
   { key: "summary", label: "Résumé (carte)", type: "textarea", placeholder: "Par défaut : description GitHub" },
+  statusField,
   { key: "tags", label: "Technologies", type: "tags", placeholder: "Par défaut : langage + topics GitHub" },
   { key: "image", label: "Image de couverture", type: "url", placeholder: "/images/projet.png ou https://…", help: "Laissez vide pour une couverture générée automatiquement." },
   { key: "showReadme", label: "Afficher le README GitHub", type: "toggle", help: "Les README générés par les outils (Create React App, Vite…) sont masqués automatiquement." },

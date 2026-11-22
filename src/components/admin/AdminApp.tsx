@@ -23,7 +23,7 @@ import type { Education, Experience, ManualProject, Message, Service, SiteConten
 import { cn, uid } from "@/lib/utils";
 import { ThemeToggle } from "../ui/ThemeToggle";
 import { CollectionEditor } from "./CollectionEditor";
-import type { FieldDef } from "./fields";
+import { statusField, type FieldDef } from "./fields";
 import { GithubManager, overrideFields } from "./GithubManager";
 import { MessagesInbox } from "./MessagesInbox";
 import { ObjectEditor, type FieldSection } from "./ObjectEditor";
@@ -85,7 +85,7 @@ const PROFILE_SECTIONS: FieldSection[] = [
     fields: [
       { key: "photo", label: "Photo (À propos)", type: "url", help: "Chemin dans /public (ex. /images/moi.png) ou URL https." },
       { key: "photoCaption", label: "Légende de la photo", type: "text" },
-      { key: "cvUrl", label: "Lien du CV (PDF)", type: "url", help: "Déposez le fichier dans public/ (ex. /cv.pdf) ou collez une URL. Vide = bouton masqué." },
+      { key: "cvUrl", label: "Lien du CV (PDF)", type: "url", help: "Déposez le fichier dans public/ (ex. /cv/cv-fr.pdf) ou collez une URL. Vide = bouton masqué. Le CV anglais se renseigne dans la version English de l'admin." },
       { key: "avatar", label: "Avatar", type: "url" },
     ],
   },
@@ -138,6 +138,7 @@ const EDUCATION_FIELDS: FieldDef[] = [
 const PROJECT_FIELDS: FieldDef[] = [
   { key: "title", label: "Titre", type: "text" },
   { key: "year", label: "Année", type: "text" },
+  statusField,
   { key: "summary", label: "Résumé (carte)", type: "textarea" },
   { key: "tags", label: "Technologies", type: "tags" },
   { key: "demoUrl", label: "Lien de démo", type: "url" },

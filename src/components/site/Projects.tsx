@@ -5,7 +5,7 @@ import { ArrowUpRight, ChevronDown, Pin, Search, Star } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { getDictionary, localePath, type Locale } from "@/lib/i18n";
-import type { ProjectView } from "@/lib/types";
+import type { ProjectStatus, ProjectView } from "@/lib/types";
 import { cn, formatMonth, languageColors } from "@/lib/utils";
 import { GithubIcon } from "../ui/Icon";
 import { ProjectCover } from "./ProjectCover";
@@ -178,6 +178,16 @@ export function Projects({
   );
 }
 
+/** État réel du projet : pastille verte pour ce qui est en production, neutre sinon. */
+export function StatusBadge({ locale, status }: { locale: Locale; status: ProjectStatus }) {
+  return (
+    <span className="inline-flex items-center gap-1.5">
+      <span className={cn("size-1.5 rounded-full", status === "production" ? "bg-ok" : "bg-subtle")} />
+      {getDictionary(locale).projects.status[status]}
+    </span>
+  );
+}
+
 function ProjectCard({ locale, project: p, big }: { locale: Locale; project: ProjectView; big: boolean }) {
   const t = getDictionary(locale).projects;
   return (
@@ -194,6 +204,7 @@ function ProjectCard({ locale, project: p, big }: { locale: Locale; project: Pro
               <Pin className="size-3" /> {t.pinned}
             </span>
           )}
+          {p.status && <StatusBadge locale={locale} status={p.status} />}
           <span>{p.source === "github" ? t.updated(formatMonth(p.updatedAt, locale)) : p.year}</span>
           {p.stars > 0 && (
             <span className="inline-flex items-center gap-1">

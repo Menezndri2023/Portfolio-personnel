@@ -28,8 +28,15 @@ export function Stats({ label, items }: { label: string; items: { value: number;
           >
             <dt className="mt-1 text-sm text-muted md:px-6">{s.label}</dt>
             <dd className="font-display text-4xl font-semibold tracking-tight md:px-6 md:text-5xl">
-              <Counter value={s.value} />
-              <span className="text-accent">{s.suffix}</span>
+              {/* Valeur réelle dans le HTML (robots, lecteurs d'écran) ; le compteur animé est décoratif. */}
+              <span className="sr-only">
+                {s.value}
+                {s.suffix}
+              </span>
+              <span aria-hidden>
+                <Counter value={s.value} />
+                <span className="text-accent">{s.suffix}</span>
+              </span>
             </dd>
           </div>
         ))}

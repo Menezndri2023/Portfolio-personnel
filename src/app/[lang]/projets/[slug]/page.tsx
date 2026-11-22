@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import { ArrowLeft, ArrowUpRight, CalendarClock, Star } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { JsonLd } from "@/components/JsonLd";
 import { Footer } from "@/components/site/Footer";
 import { Markdown } from "@/components/site/Markdown";
 import { Navbar } from "@/components/site/Navbar";
 import { ProjectCover } from "@/components/site/ProjectCover";
+import { StatusBadge } from "@/components/site/Projects";
 import { GithubIcon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { getLocalizedContent } from "@/lib/content";
@@ -17,7 +19,9 @@ import {
   getRepos,
   isBoilerplateReadme,
 } from "@/lib/github";
-import { getDictionary, isLocale, localePath, locales, type Locale } from "@/lib/i18n";
+import { alternateLanguages, getDictionary, isLocale, localePath, type Locale } from "@/lib/i18n";
+import { siteUrl } from "@/lib/site";
+import { projectJsonLd } from "@/lib/structured-data";
 import { formatMonth, languageColors } from "@/lib/utils";
 
 export const revalidate = 60;
@@ -40,16 +44,30 @@ export async function generateStaticParams({ params }: { params: { lang: string 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang, slug } = await params;
   if (!isLocale(lang)) return {};
-  const { project } = await load(lang, slug);
+  const { project, content } = await load(lang, slug);
   if (!project) return { title: getDictionary(lang).project.notFound };
   const path = `/projets/${encodeURIComponent(project.slug)}`;
+  const title = `${project.title} — ${content.profile.shortName}`;
   return {
     title: project.title,
     description: project.summary,
+    keywords: project.tags,
     alternates: {
       canonical: localePath(lang, path),
-      languages: Object.fromEntries(locales.map((l) => [l, localePath(l, path)])),
+      languages: alternateLanguages(path),
     },
+    // Partage propre à chaque projet (l'image vient de opengraph-image.tsx).
+    openGraph: {
+      type: "article",
+      siteName: content.profile.name,
+      locale: getDictionary(lang).ogLocale,
+      url: localePath(lang, path),
+      title,
+      description: project.summary,
+      ...(project.updatedAt ? { modifiedTime: project.updatedAt } : {}),
+      tags: project.tags,
+    },
+    twitter: { card: "summary_large_image", title, description: project.summary },
   };
 }
 
@@ -77,6 +95,7 @@ export default async function ProjectPage({ params }: Props) {
 
   return (
     <>
+      <JsonLd data={projectJsonLd(project, content, lang, siteUrl(content.settings))} />
       <Navbar
         locale={lang}
         switchHref={localePath(lang === "fr" ? "en" : "fr", path)}
@@ -153,8 +172,18 @@ export default async function ProjectPage({ params }: Props) {
             </div>
 
             <aside className="space-y-8 lg:sticky lg:top-24 lg:self-start">
-              {isGithub && (
+              {(isGithub || project.status) && (
                 <dl className="space-y-4 text-sm">
+                  {project.status && (
+                    <div className="flex items-center justify-between border-b border-line pb-3">
+                      <dt className="text-muted">{t.project.status}</dt>
+                      <dd>
+                        <StatusBadge locale={lang} status={project.status} />
+                      </dd>
+                    </div>
+                  )}
+                  {isGithub && (
+                  <>
                   <div className="flex items-center justify-between border-b border-line pb-3">
                     <dt className="flex items-center gap-2 text-muted">
                       <CalendarClock className="size-4" /> {t.project.lastUpdate}
@@ -167,6 +196,8 @@ export default async function ProjectPage({ params }: Props) {
                     </dt>
                     <dd>{project.stars}</dd>
                   </div>
+                  </>
+                  )}
                 </dl>
               )}
 

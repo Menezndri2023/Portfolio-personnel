@@ -3,7 +3,7 @@ import { errorResponse } from "@/lib/admin";
 import { clientIp, rateLimit } from "@/lib/rate-limit";
 import { getDictionary, type Locale } from "@/lib/i18n";
 import { contactSchema } from "@/lib/schemas";
-import { insertMessage } from "@/lib/store";
+import { ReadOnlyStoreError, insertMessage } from "@/lib/store";
 import { getContent } from "@/lib/content";
 
 export async function POST(req: Request) {
@@ -11,7 +11,7 @@ export async function POST(req: Request) {
   const lang: Locale = body?.lang === "en" ? "en" : "fr";
   const t = getDictionary(lang).contactErrors;
 
-  if (!rateLimit(`contact:${clientIp(req)}`, 3, 10 * 60_000)) {
+  if (!(await rateLimit(`contact:${clientIp(req)}`, 3, 10 * 60_000))) {
     return NextResponse.json({ error: t.rateLimit }, { status: 429 });
   }
 
@@ -34,6 +34,11 @@ export async function POST(req: Request) {
   try {
     await insertMessage(message);
   } catch (err) {
+    // Stockage indisponible : message dans la langue du visiteur, détail technique dans les logs.
+    if (err instanceof ReadOnlyStoreError) {
+      console.error(err);
+      return NextResponse.json({ error: t.unavailable }, { status: 503 });
+    }
     return errorResponse(err);
   }
 

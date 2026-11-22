@@ -20,6 +20,16 @@ export function localePath(locale: Locale, path = "/") {
   return path === "/" ? `/${locale}` : `/${locale}${path.startsWith("/#") ? path.slice(1) : path}`;
 }
 
+/**
+ * Liens hreflang d'une page : une entrée par langue + x-default.
+ * x-default pointe vers l'anglais, langue de repli pour un visiteur international.
+ */
+export function alternateLanguages(path: string, prefix = ""): Record<string, string> {
+  const entries: [string, string][] = locales.map((l) => [l, `${prefix}${localePath(l, path)}`]);
+  entries.push(["x-default", `${prefix}${localePath("en", path)}`]);
+  return Object.fromEntries(entries);
+}
+
 const fr = {
   htmlLang: "fr",
   ogLocale: "fr_FR",
@@ -65,8 +75,9 @@ const fr = {
     aria: "Chiffres clés",
     showcase: "Projets mis en avant",
     repos: "Dépôts publics sur GitHub",
-    years: "Années à coder au quotidien",
-    technologies: "Technologies maîtrisées",
+    /** Calculé depuis le premier dépôt GitHub : ancienneté de pratique, pas d'expérience salariée. */
+    years: (since: number) => `Années de pratique (depuis ${since})`,
+    technologies: "Compétences techniques",
   },
   about: {
     eyebrow: "À propos",
@@ -77,14 +88,14 @@ const fr = {
   },
   skills: {
     eyebrow: "Compétences",
-    title: "Une stack JavaScript de bout en bout.",
-    lead: "Le même langage de la base de données jusqu'au navigateur : moins de friction, plus de vitesse de livraison.",
+    title: "Du navigateur à la base de données.",
+    lead: "TypeScript de bout en bout, des API typées et validées, des données bien modélisées : la même rigueur à chaque couche.",
   },
   projects: {
     eyebrow: "Projets",
-    title: "Des produits réels, en ligne et en évolution.",
+    title: "Des produits conçus et développés de bout en bout.",
     lead: (n: number) =>
-      `Mes ${n} derniers dépôts GitHub apparaissent ici automatiquement, aux côtés des projets que j'ai choisi de mettre en avant.`,
+      `Chaque projet affiche son état réel : en production, en test ou en développement. Mes ${n} derniers dépôts GitHub s'ajoutent ici automatiquement.`,
     all: "Tous",
     filterAria: "Filtrer par technologie",
     live: "Synchronisé avec GitHub",
@@ -100,9 +111,18 @@ const fr = {
     updated: (date: string) => `Mis à jour ${date}`,
     previewOf: "Aperçu de",
     defaultSummary: "Projet publié sur GitHub.",
+    status: {
+      production: "En production",
+      beta: "En test",
+      sandbox: "Démo sandbox",
+      development: "En développement",
+      prototype: "Prototype",
+      training: "Projet de formation",
+    },
   },
   project: {
     back: "Tous les projets",
+    status: "Statut",
     demo: "Voir en ligne",
     source: "Code source",
     readme: "README du dépôt",
@@ -117,7 +137,7 @@ const fr = {
   journey: {
     eyebrow: "Parcours",
     title: "Expériences et formation.",
-    lead: "Du support client à l'architecture d'API : chaque étape a façonné ma manière de construire.",
+    lead: "De la relation client à la création de VIT GLOBAL TECHNOLOGIES GROUP : chaque étape a façonné ma manière de construire.",
     experiences: "Expériences",
     education: "Formation",
     current: "En cours",
@@ -126,7 +146,7 @@ const fr = {
     eyebrow: "Contact",
     title: "Construisons quelque chose de solide ensemble.",
     intro:
-      "Un poste, une mission freelance ou une idée à structurer ? Décrivez-moi votre besoin : je vous réponds sous 48 heures avec une première analyse.",
+      "Un poste, une mission freelance, une prestation ou une plateforme à concevoir ? Décrivez-moi votre besoin et votre contexte : je vous réponds rapidement, en français ou en anglais.",
     email: "E-mail",
     copy: "Copier",
     copied: "Copié",
@@ -137,7 +157,7 @@ const fr = {
     namePlaceholder: "Votre nom",
     emailPlaceholder: "vous@entreprise.com",
     subject: "Sujet",
-    subjectPlaceholder: "Poste de développeur fullstack, mission…",
+    subjectPlaceholder: "Poste de développeur Full Stack, mission freelance…",
     message: "Message",
     messagePlaceholder: "Parlez-moi de votre projet, de votre équipe, de vos délais…",
     send: "Envoyer le message",
@@ -152,8 +172,10 @@ const fr = {
     tooLong: "Ce champ est trop long",
     invalid: "Formulaire invalide",
     rateLimit: "Trop de messages envoyés. Réessayez un peu plus tard.",
+    unavailable: "Le formulaire est momentanément indisponible. Écrivez-moi directement par e-mail.",
   },
   footer: { madeWith: "Conçu et développé avec Next.js.", top: "Haut de page" },
+  seo: { home: "Accueil", projects: "Projets" },
   notFound: {
     code: "Erreur 404",
     title: "Page introuvable.",
@@ -216,8 +238,8 @@ const en: Dictionary = {
     aria: "Key figures",
     showcase: "Featured projects",
     repos: "Public repositories on GitHub",
-    years: "Years coding every day",
-    technologies: "Technologies mastered",
+    years: (since: number) => `Years of hands-on practice (since ${since})`,
+    technologies: "Technical skills",
   },
   about: {
     eyebrow: "About",
@@ -228,14 +250,14 @@ const en: Dictionary = {
   },
   skills: {
     eyebrow: "Skills",
-    title: "An end-to-end JavaScript stack.",
-    lead: "One language from the database to the browser: less friction, faster delivery.",
+    title: "From the browser to the database.",
+    lead: "TypeScript end to end, typed and validated APIs, well-modeled data: the same rigor at every layer.",
   },
   projects: {
     eyebrow: "Projects",
-    title: "Real products, live and evolving.",
+    title: "Products designed and built end to end.",
     lead: (n: number) =>
-      `My ${n} latest GitHub repositories show up here automatically, alongside the projects I chose to highlight.`,
+      `Each project shows its actual status: live, in testing or in development. My ${n} latest GitHub repositories are added here automatically.`,
     all: "All",
     filterAria: "Filter by technology",
     live: "Synced with GitHub",
@@ -251,9 +273,18 @@ const en: Dictionary = {
     updated: (date: string) => `Updated ${date}`,
     previewOf: "Preview of",
     defaultSummary: "Project published on GitHub.",
+    status: {
+      production: "Live",
+      beta: "In testing",
+      sandbox: "Sandbox demo",
+      development: "In development",
+      prototype: "Prototype",
+      training: "Training project",
+    },
   },
   project: {
     back: "All projects",
+    status: "Status",
     demo: "View live",
     source: "Source code",
     readme: "Repository README",
@@ -267,7 +298,7 @@ const en: Dictionary = {
   journey: {
     eyebrow: "Journey",
     title: "Experience and education.",
-    lead: "From customer support to API architecture: every step shaped the way I build.",
+    lead: "From customer relations to founding VIT GLOBAL TECHNOLOGIES GROUP: every step shaped the way I build.",
     experiences: "Experience",
     education: "Education",
     current: "Current",
@@ -276,7 +307,7 @@ const en: Dictionary = {
     eyebrow: "Contact",
     title: "Let's build something solid together.",
     intro:
-      "A job opening, a freelance assignment or an idea to shape? Tell me what you need: I'll get back to you within 48 hours with a first analysis.",
+      "A job opening, a freelance assignment, a development contract or a platform to design? Tell me what you need and the context: I'll get back to you quickly, in English or French.",
     email: "Email",
     copy: "Copy",
     copied: "Copied",
@@ -287,7 +318,7 @@ const en: Dictionary = {
     namePlaceholder: "Your name",
     emailPlaceholder: "you@company.com",
     subject: "Subject",
-    subjectPlaceholder: "Fullstack developer position, assignment…",
+    subjectPlaceholder: "Full Stack developer role, freelance assignment…",
     message: "Message",
     messagePlaceholder: "Tell me about your project, your team, your timeline…",
     send: "Send message",
@@ -301,8 +332,10 @@ const en: Dictionary = {
     tooLong: "This field is too long",
     invalid: "Invalid form",
     rateLimit: "Too many messages sent. Please try again a little later.",
+    unavailable: "The form is temporarily unavailable. Please email me directly.",
   },
   footer: { madeWith: "Designed and built with Next.js.", top: "Back to top" },
+  seo: { home: "Home", projects: "Projects" },
   notFound: {
     code: "Error 404",
     title: "Page not found.",

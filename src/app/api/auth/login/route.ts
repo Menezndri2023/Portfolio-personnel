@@ -3,7 +3,7 @@ import { SESSION_COOKIE, SESSION_TTL_SECONDS, checkPassword, createSessionToken 
 import { clientIp, rateLimit } from "@/lib/rate-limit";
 
 export async function POST(req: Request) {
-  if (!rateLimit(`login:${clientIp(req)}`, 5, 15 * 60_000)) {
+  if (!(await rateLimit(`login:${clientIp(req)}`, 5, 15 * 60_000))) {
     return NextResponse.json({ error: "Trop de tentatives. Réessayez dans 15 minutes." }, { status: 429 });
   }
   if (!process.env.ADMIN_PASSWORD) {

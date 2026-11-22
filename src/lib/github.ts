@@ -147,6 +147,7 @@ export function repoToView(repo: GithubRepo, o: RepoOverride = {}, locale: Local
     updatedAt: repo.pushedAt,
     year: repo.pushedAt.slice(0, 4),
     showReadme: o.showReadme ?? true,
+    status: o.status || "",
   };
 }
 
@@ -168,6 +169,7 @@ function manualToView(p: SiteContent["projects"][number]): ProjectView {
     updatedAt: p.year ? `${p.year}-12-31T00:00:00Z` : "",
     year: p.year,
     showReadme: false,
+    status: p.status || "",
   };
 }
 

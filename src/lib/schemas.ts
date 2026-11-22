@@ -1,6 +1,6 @@
 import { z } from "zod";
 import type { Dictionary } from "./i18n";
-import type { ContentSection } from "./types";
+import { PROJECT_STATUSES, type ContentSection } from "./types";
 
 /**
  * Validation des données envoyées par le back-office.
@@ -17,6 +17,8 @@ export const safeUrl = z
   .trim()
   .max(1000)
   .refine((v) => v === "" || /^(https?:\/\/|mailto:|\/(?!\/))/i.test(v), "Lien invalide (http(s)://, mailto: ou /chemin)");
+
+const status = z.union([z.literal(""), z.enum(PROJECT_STATUSES)]).optional();
 
 const profile = z.object({
   name: text(120).min(1),
@@ -78,6 +80,7 @@ const manualProject = z.object({
   year: text(10),
   featured: z.boolean(),
   hidden: z.boolean(),
+  status,
 });
 
 const repoOverride = z.object({
@@ -91,6 +94,7 @@ const repoOverride = z.object({
   hidden: z.boolean().optional(),
   pinned: z.boolean().optional(),
   showReadme: z.boolean().optional(),
+  status,
 });
 
 const settings = z.object({
@@ -119,6 +123,7 @@ const translations = z.object({
         softSkills: true,
         languages: true,
         photoCaption: true,
+        cvUrl: true,
       })
       .partial(),
     services: byId(service.pick({ title: true, description: true })),
@@ -155,6 +160,6 @@ export const contactSchema = (t: Dictionary["contactErrors"]) =>
     email: z.email({ error: t.email }).max(200, t.tooLong),
     subject: z.string({ error: t.invalid }).trim().max(150, t.tooLong).default(""),
     message: z.string({ error: t.message }).trim().min(10, t.message).max(5000, t.tooLong),
-    /** Champ piège invisible : rempli uniquement par les robots. */
-    website: z.string().max(0).optional(),
+    /** Champ piège invisible : rempli uniquement par les robots (la route répond « ok » sans rien enregistrer). */
+    website: z.string().max(2000).optional(),
   });

@@ -38,13 +38,14 @@ export function Hero({
             </p>
           )}
 
-          <p className="mb-4 font-mono text-sm text-muted">
+          {/* Le H1 porte le nom et le métier (requêtes de marque et de métier) ; l'accroche garde son style de titre. */}
+          <h1 className="mb-4 font-mono text-sm text-muted">
             {profile.name} <span className="text-subtle">—</span> {profile.title}
-          </p>
-
-          <h1 className="font-display text-[2.6rem] leading-[1.05] font-semibold tracking-tight text-balance sm:text-6xl lg:text-[4.2rem]">
-            {profile.headline}
           </h1>
+
+          <p className="font-display text-[2.6rem] leading-[1.05] font-semibold tracking-tight text-balance sm:text-6xl lg:text-[4.2rem]">
+            {profile.headline}
+          </p>
 
           <p className="mt-6 text-lg text-muted md:text-xl">
             {t.specialized} <RotatingWord words={profile.rotatingRoles} />

@@ -9,18 +9,37 @@ import { Icon, iconNames } from "../ui/Icon";
 export type FieldDef = {
   key: string;
   label: string;
-  type: "text" | "textarea" | "markdown" | "tags" | "lines" | "toggle" | "url" | "number" | "icon" | "pairs";
+  type: "text" | "textarea" | "markdown" | "tags" | "lines" | "toggle" | "url" | "number" | "icon" | "pairs" | "select";
   placeholder?: string;
   help?: string;
   /** Occupe toute la largeur de la grille. */
   full?: boolean;
   /** Pour `pairs` : libellés des deux colonnes. */
   pairLabels?: [string, string];
+  /** Pour `select` : valeurs proposées (la valeur "" signifie « aucune »). */
+  options?: { value: string; label: string }[];
   /** Traduction : texte français affiché au-dessus du champ, avec sa valeur pour le recopier. */
   reference?: { text: string; value: unknown };
 };
 
 type AnyObj = Record<string, unknown>;
+
+/** Statut réel d'un projet (projets GitHub et manuels). */
+export const statusField: FieldDef = {
+  key: "status",
+  label: "Statut du projet",
+  type: "select",
+  help: "Affiché sur la carte et la page projet. Ne présentez jamais un projet en développement comme en production.",
+  options: [
+    { value: "", label: "— Aucun badge —" },
+    { value: "production", label: "En production" },
+    { value: "beta", label: "En test" },
+    { value: "sandbox", label: "Démo sandbox" },
+    { value: "development", label: "En développement" },
+    { value: "prototype", label: "Prototype" },
+    { value: "training", label: "Projet de formation" },
+  ],
+};
 
 export function getPath(obj: AnyObj, path: string): unknown {
   return path.split(".").reduce<unknown>((o, k) => (o as AnyObj | undefined)?.[k], obj);
@@ -122,6 +141,16 @@ function renderInput(def: FieldDef, id: string, value: unknown, onChange: (v: un
           onChange={(e) => onChange(Number(e.target.value))}
           className="field"
         />
+      );
+    case "select":
+      return (
+        <select id={id} value={(value as string) ?? ""} onChange={(e) => onChange(e.target.value)} className="field">
+          {(def.options ?? []).map((o) => (
+            <option key={o.value} value={o.value}>
+              {o.label}
+            </option>
+          ))}
+        </select>
       );
     case "icon":
       return (

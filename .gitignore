@@ -16,5 +16,6 @@ next-env.d.ts
 
 # divers
 .DS_Store
+*.code-workspace
 npm-debug.log*
 .vercel

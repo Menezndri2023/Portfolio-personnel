@@ -32,6 +32,8 @@ export const TRANSLATABLE = {
     "softSkills",
     "languages",
     "photoCaption",
+    // Un CV par langue : le lien anglais remplace le français sur /en.
+    "cvUrl",
   ],
   services: ["title", "description"],
   skills: ["title", "description", "items"],
