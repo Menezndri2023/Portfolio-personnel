@@ -21,7 +21,7 @@
     "photo": "/images/moi.png",
     "photoCaption": "Demo Day GOMYCODE — là où tout a commencé.",
     "avatar": "/images/avatar.png",
-    "cvUrl": "",
+    "cvUrl": "/cv/cv-manasse-ndri-fr.pdf",
     "socials": {
       "github": "https://github.com/Menezndri2023",
       "linkedin": "https://www.linkedin.com/in/manass%C3%A9-ndri-959b80263/",
@@ -281,7 +281,8 @@
       "demoUrl": "https://vit-auto.com",
       "featured": true,
       "showReadme": false,
-      "status": "production"
+      "status": "production",
+      "pinned": true
     },
     "NationalSecurityProgram": {
       "title": "PSN — Programme de Sécurité Nationale",
@@ -1151,7 +1152,8 @@
             "level": "Intermediate · technical English"
           }
         ],
-        "photoCaption": "GOMYCODE Demo Day — where it all began."
+        "photoCaption": "GOMYCODE Demo Day — where it all began.",
+        "cvUrl": "/cv/cv-manasse-ndri-en.pdf"
       },
       "services": {
         "svc-saas": {
