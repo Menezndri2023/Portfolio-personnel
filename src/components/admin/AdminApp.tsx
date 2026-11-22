@@ -189,6 +189,23 @@ const SETTINGS_SECTIONS: FieldSection[] = [
       { key: "siteUrl", label: "URL publique du site", type: "url", placeholder: "https://manasse.dev", full: true },
     ],
   },
+  {
+    title: "Notifications par e-mail",
+    fields: [
+      {
+        key: "notifyEmail",
+        label: "Adresse qui reçoit les alertes",
+        type: "text",
+        full: true,
+        placeholder: "vous@exemple.com",
+        help: "Vide = adresse CONTACT_TO_EMAIL du serveur, sinon l'e-mail du profil. Envoi via Resend (RESEND_API_KEY).",
+      },
+      { key: "alerts.contact", label: "Nouveau message de contact", type: "toggle", help: "Contenu du message ; répondez directement à l'e-mail." },
+      { key: "alerts.login", label: "Connexion au back-office", type: "toggle", help: "Date, adresse IP, pays et navigateur de chaque connexion réussie." },
+      { key: "alerts.loginBlocked", label: "Connexion bloquée", type: "toggle", help: "Trop de mots de passe incorrects depuis une même adresse (au plus une alerte par quart d'heure)." },
+      { key: "alerts.outage", label: "Base de données injoignable", type: "toggle", help: "Le site bascule sur le contenu de secours (au plus une alerte par heure)." },
+    ],
+  },
 ];
 
 export function AdminApp() {
@@ -567,19 +584,48 @@ export function AdminApp() {
             )}
 
             {tab === "settings" && (
-              <ObjectEditor
-                title="Paramètres"
-                description="Synchronisation GitHub et référencement."
-                value={content.settings}
-                onSave={(v) => save("settings", v)}
-                sections={SETTINGS_SECTIONS}
-              />
+              <>
+                <ObjectEditor
+                  title="Paramètres"
+                  description="Synchronisation GitHub, référencement et notifications."
+                  value={content.settings}
+                  onSave={(v) => save("settings", v)}
+                  sections={SETTINGS_SECTIONS}
+                />
+                <TestAlertButton notify={notify} />
+              </>
             )}
           </>
         )}
       </main>
 
       <Toasts toasts={toasts} />
+    </div>
+  );
+}
+
+/** Envoie un e-mail de test au destinataire des alertes (paramètres enregistrés). */
+function TestAlertButton({ notify }: { notify: (kind: Toast["kind"], text: string) => void }) {
+  const [sending, setSending] = useState(false);
+  const send = async () => {
+    setSending(true);
+    const res = await fetch("/api/admin/notify-test", { method: "POST" });
+    const data = (await res.json().catch(() => ({}))) as { to?: string; error?: string };
+    setSending(false);
+    if (res.ok) notify("success", `E-mail de test envoyé à ${data.to}. Vérifiez aussi les indésirables.`);
+    else notify("error", data.error ?? "Envoi impossible");
+  };
+  return (
+    <div className="mt-6 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-line bg-card p-6">
+      <p className="text-sm text-muted">Enregistrez d&apos;abord vos réglages, puis vérifiez que les alertes arrivent bien.</p>
+      <button
+        type="button"
+        onClick={send}
+        disabled={sending}
+        className="inline-flex items-center gap-2 rounded-full bg-fg px-4 py-2 text-sm font-medium text-bg transition hover:bg-accent hover:text-accent-fg disabled:opacity-60"
+      >
+        {sending && <Loader2 className="size-4 animate-spin" />} Envoyer un e-mail de test
+      </button>
     </div>
   );
 }

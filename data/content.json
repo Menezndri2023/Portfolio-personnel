@@ -583,7 +583,14 @@
     "excludeForks": true,
     "seoTitle": "Manassé N'Dri — Développeur Full Stack, SaaS & API",
     "seoDescription": "Développeur Full Stack basé au Maroc : applications web Next.js / React, API Node.js / NestJS et plateformes SaaS. Disponible en freelance, prestation ou CDI, à distance.",
-    "siteUrl": "https://manasse.dev"
+    "siteUrl": "https://manasse.dev",
+    "notifyEmail": "",
+    "alerts": {
+      "contact": true,
+      "login": true,
+      "loginBlocked": true,
+      "outage": true
+    }
   },
   "githubSnapshot": {
     "syncedAt": "2026-09-23T14:28:44.725Z",

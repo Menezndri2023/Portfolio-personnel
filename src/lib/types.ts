@@ -145,6 +145,19 @@ export type Settings = {
   seoTitle: string;
   seoDescription: string;
   siteUrl: string;
+  /** Destinataire des alertes e-mail (vide = CONTACT_TO_EMAIL, puis e-mail du profil). */
+  notifyEmail: string;
+  /** Types d'alertes envoyées par e-mail. */
+  alerts: {
+    /** Nouveau message reçu via le formulaire de contact. */
+    contact: boolean;
+    /** Connexion réussie au back-office. */
+    login: boolean;
+    /** Connexion bloquée après trop de tentatives. */
+    loginBlocked: boolean;
+    /** Base de données injoignable (site servi avec le contenu de secours). */
+    outage: boolean;
+  };
 };
 
 /** Instantané des dépôts, utilisé si l'API GitHub est indisponible. */

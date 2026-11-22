@@ -2,9 +2,9 @@ import { NextResponse } from "next/server";
 import { errorResponse } from "@/lib/admin";
 import { clientIp, rateLimit } from "@/lib/rate-limit";
 import { getDictionary, type Locale } from "@/lib/i18n";
+import { sendAlert } from "@/lib/notify";
 import { contactSchema } from "@/lib/schemas";
 import { ReadOnlyStoreError, insertMessage } from "@/lib/store";
-import { getContent } from "@/lib/content";
 
 export async function POST(req: Request) {
   const body = (await req.json().catch(() => null)) as Record<string, unknown> | null;
@@ -31,39 +31,38 @@ export async function POST(req: Request) {
     lang,
   };
 
+  // Le message est enregistré ET envoyé par e-mail : si l'un des deux échoue, l'autre suffit.
+  let stored = true;
+  let storeError: unknown = null;
   try {
     await insertMessage(message);
   } catch (err) {
-    // Stockage indisponible : message dans la langue du visiteur, détail technique dans les logs.
-    if (err instanceof ReadOnlyStoreError) {
-      console.error(err);
-      return NextResponse.json({ error: t.unavailable }, { status: 503 });
-    }
-    return errorResponse(err);
+    stored = false;
+    storeError = err;
+    console.error("Message non enregistré", err);
   }
 
-  await notifyByEmail(message).catch((err) => console.error("Notification e-mail échouée", err));
-  return NextResponse.json({ ok: true });
-}
-
-/** Notification e-mail facultative via Resend (RESEND_API_KEY). */
-async function notifyByEmail(m: { name: string; email: string; subject: string; message: string; lang: Locale }) {
-  const key = process.env.RESEND_API_KEY;
-  if (!key) return;
-  const { profile } = await getContent();
-  const to = process.env.CONTACT_TO_EMAIL || profile.email;
-  if (!to) return;
-  const res = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
-    body: JSON.stringify({
-      from: process.env.CONTACT_FROM_EMAIL || "Portfolio <onboarding@resend.dev>",
-      to: [to],
-      reply_to: m.email,
-      subject: `Portfolio — ${m.subject || "Nouveau message"} (${m.name})`,
-      text: `${m.name} <${m.email}>${m.lang === "en" ? " — envoyé depuis la version anglaise du site" : ""}\n\n${m.message}`,
-    }),
+  const alert = await sendAlert({
+    kind: "contact",
+    subject: `Nouveau message : ${message.subject || "sans sujet"} (${message.name})`,
+    replyTo: message.email,
+    lines: [
+      `De : ${message.name} <${message.email}>`,
+      `Sujet : ${message.subject || "(aucun)"}`,
+      `Langue du site : ${lang === "en" ? "anglais" : "français"}`,
+      "",
+      message.message,
+      "",
+      "Répondez directement à cet e-mail pour écrire à l'expéditeur.",
+      ...(stored ? [] : ["", "⚠ Ce message n'a pas pu être enregistré dans le back-office (base indisponible) : cet e-mail en est la seule copie."]),
+    ],
   });
-  // Resend répond en JSON même en cas d'erreur (clé invalide, destinataire non autorisé…).
-  if (!res.ok) throw new Error(`Resend ${res.status} : ${await res.text()}`);
+
+  if (!stored && !alert.ok) {
+    // Ni enregistré ni envoyé : le visiteur doit le savoir pour réessayer ou écrire directement.
+    return storeError instanceof ReadOnlyStoreError
+      ? NextResponse.json({ error: t.unavailable }, { status: 503 })
+      : errorResponse(storeError);
+  }
+  return NextResponse.json({ ok: true });
 }

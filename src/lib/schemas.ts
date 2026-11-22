@@ -119,6 +119,8 @@ const settings = z.object({
   seoTitle: text(120),
   seoDescription: text(300),
   siteUrl: safeUrl,
+  notifyEmail: z.union([z.literal(""), z.email("Adresse e-mail invalide").max(200)]),
+  alerts: z.object({ contact: z.boolean(), login: z.boolean(), loginBlocked: z.boolean(), outage: z.boolean() }),
 });
 
 /** Version anglaise : mêmes limites que le français, tous les champs facultatifs. */
